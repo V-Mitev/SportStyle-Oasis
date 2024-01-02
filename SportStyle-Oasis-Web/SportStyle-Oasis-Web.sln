@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.7.34302.85
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SportStyle-Oasis", "SportStyle-Oasis\SportStyle-Oasis.csproj", "{39236DAA-A344-4B72-B30D-47FDC69DB737}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{39236DAA-A344-4B72-B30D-47FDC69DB737}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{39236DAA-A344-4B72-B30D-47FDC69DB737}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{39236DAA-A344-4B72-B30D-47FDC69DB737}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{39236DAA-A344-4B72-B30D-47FDC69DB737}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {8BCD17E5-5A4B-4E80-B272-D3DBE6589D67}
+	EndGlobalSection
+EndGlobal
