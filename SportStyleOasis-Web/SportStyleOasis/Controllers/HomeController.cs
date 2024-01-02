@@ -1,7 +1,7 @@
-﻿namespace SportStyle_Oasis.Controllers
+﻿namespace SportStyleOasis.Controllers
 {
     using Microsoft.AspNetCore.Mvc;
-    using SportStyle_Oasis.Models;
+    using SportStyleOasis.Models;
     using System.Diagnostics;
 
     public class HomeController : Controller

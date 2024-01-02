@@ -1,4 +1,4 @@
-namespace SportStyle_Oasis.Models
+namespace SportStyleOasis.Models
 {
     public class ErrorViewModel
     {
