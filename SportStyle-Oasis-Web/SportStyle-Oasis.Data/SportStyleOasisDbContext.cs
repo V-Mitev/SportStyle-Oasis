@@ -3,11 +3,12 @@
     using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore;
 
-    public class ApplicationDbContext : IdentityDbContext
+    public class SportStyleOasisDbContext : IdentityDbContext
     {
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+        public SportStyleOasisDbContext(DbContextOptions<SportStyleOasisDbContext> options) 
             : base(options)
         {
+            
         }
     }
 }
