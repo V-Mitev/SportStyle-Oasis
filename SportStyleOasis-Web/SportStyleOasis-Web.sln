@@ -3,17 +3,19 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.7.34302.85
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SportStyleOasis", "SportStyleOasis\SportStyleOasis.csproj", "{B084A261-BB69-40E1-976D-0084D13C93B4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SportStyleOasis", "SportStyleOasis\SportStyleOasis.csproj", "{B084A261-BB69-40E1-976D-0084D13C93B4}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{4C4FE26B-DDBB-457E-A867-D0ED6B8C1BF8}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{874206ED-5DEC-425A-A633-528216108293}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SportStyleOasis.Data", "SportStyleOasis.Data\SportStyleOasis.Data.csproj", "{BC5914A0-EF2F-482B-B158-4AF48C1E83FE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SportStyleOasis.Data", "SportStyleOasis.Data\SportStyleOasis.Data.csproj", "{BC5914A0-EF2F-482B-B158-4AF48C1E83FE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SportStyleOasis.Data.Models", "SportStyleOasis.Data.Models\SportStyleOasis.Data.Models.csproj", "{534D67A4-242C-4E63-8468-08ADA701CF2F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SportStyleOasis.Data.Models", "SportStyleOasis.Data.Models\SportStyleOasis.Data.Models.csproj", "{534D67A4-242C-4E63-8468-08ADA701CF2F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SportStyleOasis.Common", "SportStyleOasis.Common\SportStyleOasis.Common.csproj", "{E00AADED-75D9-4C95-8C50-B523572A0C55}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SportStyleOasis.Common", "SportStyleOasis.Common\SportStyleOasis.Common.csproj", "{E00AADED-75D9-4C95-8C50-B523572A0C55}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SportStyleOasis.Web.ViewModels", "SportStyleOasis.Web.ViewModels\SportStyleOasis.Web.ViewModels.csproj", "{20FB2F6E-7A77-4BF9-9EFE-064AF93E4FA2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -37,6 +39,10 @@ Global
 		{E00AADED-75D9-4C95-8C50-B523572A0C55}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E00AADED-75D9-4C95-8C50-B523572A0C55}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E00AADED-75D9-4C95-8C50-B523572A0C55}.Release|Any CPU.Build.0 = Release|Any CPU
+		{20FB2F6E-7A77-4BF9-9EFE-064AF93E4FA2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{20FB2F6E-7A77-4BF9-9EFE-064AF93E4FA2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{20FB2F6E-7A77-4BF9-9EFE-064AF93E4FA2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{20FB2F6E-7A77-4BF9-9EFE-064AF93E4FA2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -45,6 +51,7 @@ Global
 		{B084A261-BB69-40E1-976D-0084D13C93B4} = {874206ED-5DEC-425A-A633-528216108293}
 		{BC5914A0-EF2F-482B-B158-4AF48C1E83FE} = {4C4FE26B-DDBB-457E-A867-D0ED6B8C1BF8}
 		{534D67A4-242C-4E63-8468-08ADA701CF2F} = {4C4FE26B-DDBB-457E-A867-D0ED6B8C1BF8}
+		{20FB2F6E-7A77-4BF9-9EFE-064AF93E4FA2} = {874206ED-5DEC-425A-A633-528216108293}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DA4F2D79-AE2B-48B6-BFF5-94F3FB0E7B98}

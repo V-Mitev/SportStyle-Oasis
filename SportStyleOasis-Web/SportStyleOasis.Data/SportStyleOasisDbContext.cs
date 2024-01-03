@@ -9,10 +9,21 @@
     {
         public SportStyleOasisDbContext(DbContextOptions<SportStyleOasisDbContext> options)
             : base(options)
-        {
-            
-        }
+        {}
 
         public DbSet<ApplicationUser> ApplicationUsers { get; set; } = null!;
+
+        public DbSet<Clothes> Clothes { get; set; } = null!;
+
+        public DbSet<ProteinPowder> ProteinPowder { get; set;} = null!;
+
+        public DbSet<Review> Review { get; set; } = null!;
+
+        public DbSet<ShoppingCart> ShoppingCarts { get; set; } = null!;
+
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
+        }
     }
 }

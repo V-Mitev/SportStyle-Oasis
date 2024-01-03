@@ -23,6 +23,7 @@
     <ProjectReference Include="..\SportStyleOasis.Common\SportStyleOasis.Common.csproj" />
     <ProjectReference Include="..\SportStyleOasis.Data.Models\SportStyleOasis.Data.Models.csproj" />
     <ProjectReference Include="..\SportStyleOasis.Data\SportStyleOasis.Data.csproj" />
+    <ProjectReference Include="..\SportStyleOasis.Web.ViewModels\SportStyleOasis.Web.ViewModels.csproj" />
   </ItemGroup>
 
 </Project>
