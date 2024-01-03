@@ -20,6 +20,9 @@
         [Range(typeof(decimal), MinProteinPowderPrice, MaxProteinPowderPrice)]
         public decimal Price { get; set; }
 
+        [Required]
+        public string Image { get; set; } = null!;
+
         public int QuantityOrder { get; set; }
 
         public int AvailabeQuantity { get; set; }

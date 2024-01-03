@@ -8,7 +8,7 @@
     {
         public Clothes()
         {
-            Reviews = new HashSet<Review>();    
+            Reviews = new HashSet<Review>();
         }
 
         [Key]
@@ -21,6 +21,9 @@
         [Required]
         [MaxLength(ClothesNameMaxLength)]
         public string Color { get; set; } = null!;
+
+        [Required]
+        public string Image { get; set; } = null!;
 
         public ClothesSize Size { get; set; }
 
