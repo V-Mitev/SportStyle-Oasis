@@ -17,6 +17,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SportStyleOasis.Common", "S
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SportStyleOasis.Web.ViewModels", "SportStyleOasis.Web.ViewModels\SportStyleOasis.Web.ViewModels.csproj", "{20FB2F6E-7A77-4BF9-9EFE-064AF93E4FA2}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{49CA8FC5-7C1E-43AA-8C69-F9E109208242}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SportStyleOasis.Services", "SportStyleOasis.Services\SportStyleOasis.Services.csproj", "{F599744D-6B2D-41D9-AAB4-F6E01BFEB5F5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -43,6 +47,10 @@ Global
 		{20FB2F6E-7A77-4BF9-9EFE-064AF93E4FA2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{20FB2F6E-7A77-4BF9-9EFE-064AF93E4FA2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{20FB2F6E-7A77-4BF9-9EFE-064AF93E4FA2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F599744D-6B2D-41D9-AAB4-F6E01BFEB5F5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F599744D-6B2D-41D9-AAB4-F6E01BFEB5F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F599744D-6B2D-41D9-AAB4-F6E01BFEB5F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F599744D-6B2D-41D9-AAB4-F6E01BFEB5F5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -52,6 +60,7 @@ Global
 		{BC5914A0-EF2F-482B-B158-4AF48C1E83FE} = {4C4FE26B-DDBB-457E-A867-D0ED6B8C1BF8}
 		{534D67A4-242C-4E63-8468-08ADA701CF2F} = {4C4FE26B-DDBB-457E-A867-D0ED6B8C1BF8}
 		{20FB2F6E-7A77-4BF9-9EFE-064AF93E4FA2} = {874206ED-5DEC-425A-A633-528216108293}
+		{F599744D-6B2D-41D9-AAB4-F6E01BFEB5F5} = {49CA8FC5-7C1E-43AA-8C69-F9E109208242}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DA4F2D79-AE2B-48B6-BFF5-94F3FB0E7B98}

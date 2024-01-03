@@ -24,9 +24,9 @@
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            builder.ApplyConfiguration<Review>(new ReviewConfiguration());
+            builder.ApplyConfiguration<Clothes>(new ClothesConfiguration());
 
-            builder.ApplyConfiguration<ShoppingCart>(new ShoppingCartConfiguration());
+            builder.ApplyConfiguration<Review>(new ReviewConfiguration());
 
             base.OnModelCreating(builder);
         }

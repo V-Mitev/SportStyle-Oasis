@@ -12,8 +12,8 @@ using SportStyleOasis.Data;
 namespace SportStyleOasis.Data.Migrations
 {
     [DbContext(typeof(SportStyleOasisDbContext))]
-    [Migration("20240103150206_AddConfigurationToClothesProteinAndUser")]
-    partial class AddConfigurationToClothesProteinAndUser
+    [Migration("20240103155530_AddConfigurationToReview")]
+    partial class AddConfigurationToReview
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -215,9 +215,6 @@ namespace SportStyleOasis.Data.Migrations
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("ShoppingCartId")
-                        .HasColumnType("int");
-
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("bit");
 
@@ -234,8 +231,6 @@ namespace SportStyleOasis.Data.Migrations
                         .IsUnique()
                         .HasDatabaseName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
-
-                    b.HasIndex("ShoppingCartId");
 
                     b.ToTable("AspNetUsers", (string)null);
                 });
@@ -285,6 +280,44 @@ namespace SportStyleOasis.Data.Migrations
                     b.HasIndex("ShoppingCartId");
 
                     b.ToTable("Clothes");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            AvailabeQuantity = 10,
+                            Color = "Gray",
+                            Image = "gray_tshirt.jpg",
+                            Name = "T-shirt-Gray",
+                            Price = 13.99m,
+                            QuantityOrder = 0,
+                            Size = 2,
+                            TypeOfClothes = 0
+                        },
+                        new
+                        {
+                            Id = 2,
+                            AvailabeQuantity = 10,
+                            Color = "Black",
+                            Image = "black_tshirt.jpg",
+                            Name = "T-shirt-Black",
+                            Price = 9.99m,
+                            QuantityOrder = 0,
+                            Size = 3,
+                            TypeOfClothes = 0
+                        },
+                        new
+                        {
+                            Id = 3,
+                            AvailabeQuantity = 10,
+                            Color = "White",
+                            Image = "white_tshirt.jpg",
+                            Name = "T-shirt-White",
+                            Price = 10.99m,
+                            QuantityOrder = 0,
+                            Size = 4,
+                            TypeOfClothes = 0
+                        });
                 });
 
             modelBuilder.Entity("SportStyleOasis.Data.Models.ProteinPowder", b =>
@@ -374,7 +407,8 @@ namespace SportStyleOasis.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("UserId")
+                        .IsUnique();
 
                     b.ToTable("ShoppingCarts");
                 });
@@ -430,17 +464,6 @@ namespace SportStyleOasis.Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("SportStyleOasis.Data.Models.ApplicationUser", b =>
-                {
-                    b.HasOne("SportStyleOasis.Data.Models.ShoppingCart", "ShoppingCart")
-                        .WithMany()
-                        .HasForeignKey("ShoppingCartId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("ShoppingCart");
-                });
-
             modelBuilder.Entity("SportStyleOasis.Data.Models.Clothes", b =>
                 {
                     b.HasOne("SportStyleOasis.Data.Models.ShoppingCart", null)
@@ -475,12 +498,18 @@ namespace SportStyleOasis.Data.Migrations
             modelBuilder.Entity("SportStyleOasis.Data.Models.ShoppingCart", b =>
                 {
                     b.HasOne("SportStyleOasis.Data.Models.ApplicationUser", "ApplicationUser")
-                        .WithMany()
-                        .HasForeignKey("UserId")
+                        .WithOne("ShoppingCart")
+                        .HasForeignKey("SportStyleOasis.Data.Models.ShoppingCart", "UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("ApplicationUser");
+                });
+
+            modelBuilder.Entity("SportStyleOasis.Data.Models.ApplicationUser", b =>
+                {
+                    b.Navigation("ShoppingCart")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("SportStyleOasis.Data.Models.Clothes", b =>
