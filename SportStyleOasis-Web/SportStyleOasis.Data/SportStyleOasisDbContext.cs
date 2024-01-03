@@ -3,6 +3,7 @@
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore;
+    using SportStyleOasis.Data.Configuration;
     using SportStyleOasis.Data.Models;
 
     public class SportStyleOasisDbContext : IdentityDbContext<ApplicationUser, IdentityRole<Guid>, Guid>
@@ -23,6 +24,10 @@
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            builder.ApplyConfiguration<Review>(new ReviewConfiguration());
+
+            builder.ApplyConfiguration<ShoppingCart>(new ShoppingCartConfiguration());
+
             base.OnModelCreating(builder);
         }
     }
