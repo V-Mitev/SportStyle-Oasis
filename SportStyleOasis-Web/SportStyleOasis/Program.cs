@@ -1,8 +1,11 @@
 namespace SportStyleOasis
 {
+    using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
     using SportStyleOasis.Data;
     using SportStyleOasis.Data.Models;
+    using SportStyleOasis.Services.Interfces;
+    using static SportStyleOasis.Web.Infrastructure.Extensions.WebApplicationBuilderExtensions;
 
     public class Program
     {
@@ -19,11 +22,25 @@ namespace SportStyleOasis
 
             builder.Services.AddDefaultIdentity<ApplicationUser>(options =>
             {
-                options.SignIn.RequireConfirmedAccount = true;
+                options.SignIn.RequireConfirmedAccount =
+                    builder.Configuration.GetValue<bool>("Identity:SignIn:RequireConfirmedAccount");
+                options.Password.RequireLowercase =
+                    builder.Configuration.GetValue<bool>("Identity:Password:RequireLowercase");
+                options.Password.RequireUppercase =
+                    builder.Configuration.GetValue<bool>("Identity:Password:RequireUppercase");
+                options.Password.RequireNonAlphanumeric =
+                    builder.Configuration.GetValue<bool>("Identity:Password:RequireNonAlphanumeric");
+                options.Password.RequiredLength =
+                    builder.Configuration.GetValue<int>("Identity:Password:RequiredLength");
+                options.Password.RequireDigit =
+                    builder.Configuration.GetValue<bool>("Identity:Password:RequireDigit");
             })
-                .AddEntityFrameworkStores<SportStyleOasisDbContext>();
+               .AddRoles<IdentityRole<Guid>>()
+               .AddEntityFrameworkStores<SportStyleOasisDbContext>();
 
             builder.Services.AddControllersWithViews();
+
+            builder.Services.AddApplicationServices(typeof(IClothesService));
 
             var app = builder.Build();
 
