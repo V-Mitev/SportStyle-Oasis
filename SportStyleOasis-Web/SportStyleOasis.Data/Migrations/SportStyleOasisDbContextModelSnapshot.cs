@@ -277,7 +277,7 @@ namespace SportStyleOasis.Data.Migrations
 
                     b.HasIndex("ShoppingCartId");
 
-                    b.ToTable("Clothes");
+                    b.ToTable("Clothes", (string)null);
 
                     b.HasData(
                         new
@@ -357,7 +357,7 @@ namespace SportStyleOasis.Data.Migrations
 
                     b.HasIndex("ShoppingCartId");
 
-                    b.ToTable("ProteinPowder");
+                    b.ToTable("ProteinPowder", (string)null);
                 });
 
             modelBuilder.Entity("SportStyleOasis.Data.Models.Review", b =>
@@ -386,7 +386,7 @@ namespace SportStyleOasis.Data.Migrations
 
                     b.HasIndex("ProteinPowderId");
 
-                    b.ToTable("Review");
+                    b.ToTable("Review", (string)null);
                 });
 
             modelBuilder.Entity("SportStyleOasis.Data.Models.ShoppingCart", b =>
@@ -408,7 +408,7 @@ namespace SportStyleOasis.Data.Migrations
                     b.HasIndex("UserId")
                         .IsUnique();
 
-                    b.ToTable("ShoppingCarts");
+                    b.ToTable("ShoppingCarts", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>

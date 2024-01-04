@@ -16,6 +16,9 @@
             public const int ClothesNameMinLength = 3;
             public const int ClothesNameMaxLength = 50;
 
+            public const int DescriptionMinLength = 15;
+            public const int DescriptionMaxLength = 100;
+
             public const int MinColorLength = 3;
             public const int MaxColorLength = 50;
 

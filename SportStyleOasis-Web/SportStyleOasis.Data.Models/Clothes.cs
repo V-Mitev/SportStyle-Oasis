@@ -23,9 +23,17 @@
         public string Color { get; set; } = null!;
 
         [Required]
-        public string Image { get; set; } = null!;
+        [MaxLength(DescriptionMaxLength)]
+        public string Description { get; set; } = null!;
+
+        public ClothesBrands ClothesBrands { get; set; }
+
+        public Gender ClothesForGender { get; set; }
 
         public ClothesSize Size { get; set; }
+
+        [Required]
+        public string Image { get; set; } = null!;
 
         [Range(typeof(decimal), MinClothePrice, MaxClothePrice)]
         public decimal Price { get; set; }

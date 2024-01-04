@@ -22,10 +22,13 @@
                     Name = "T-shirt-Gray",
                     Price = 13.99M,
                     Color = "Gray",
+                    ClothesBrands = ClothesBrands.Nike,
                     Image = "gray_tshirt.jpg",
                     AvailabeQuantity = 10,
                     Size = ClothesSize.M,
                     TypeOfClothes = TypeOfClothes.TShirt,
+                    ClothesForGender = Gender.Male,
+                    Description = "This is test description about this tshirt"
                 },
                 new Clothes()
                 {
@@ -33,10 +36,13 @@
                     Name = "T-shirt-Black",
                     Price = 9.99M,
                     Color = "Black",
+                    ClothesBrands = ClothesBrands.UnderArmour,
                     Image = "black_tshirt.jpg",
                     AvailabeQuantity = 10,
                     Size = ClothesSize.L,
                     TypeOfClothes = TypeOfClothes.TShirt,
+                    ClothesForGender = Gender.Male,
+                    Description = "This is test description about this tshirt"
                 },
                 new Clothes()
                 {
@@ -44,10 +50,13 @@
                     Name = "T-shirt-White",
                     Price = 10.99M,
                     Color = "White",
+                    ClothesBrands = ClothesBrands.Puma,
                     Image = "white_tshirt.jpg",
                     AvailabeQuantity = 10,
                     Size = ClothesSize.XL,
                     TypeOfClothes = TypeOfClothes.TShirt,
+                    ClothesForGender = Gender.Female,
+                    Description = "This is test description about this tshirt"
                 }
             };
 
