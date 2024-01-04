@@ -17,6 +17,10 @@
         [MaxLength(ProteinPowderNameMaxLength)]
         public string Name { get; set; } = null!;
 
+        [Required]
+        [MaxLength(ProteinPowderTasteMaxLength)]
+        public string Taste { get; set; } = null!;
+
         [Range(typeof(decimal), MinProteinPowderPrice, MaxProteinPowderPrice)]
         public decimal Price { get; set; }
 
@@ -31,6 +35,8 @@
         public double Weight { get; set; }
 
         public TypeOfProtein TypeOfProtein { get; set; }
+
+        public ProteinPowderBrands ProteinPowderBrands { get; set; }
 
         public ICollection<Review> Reviews { get; set; }
     }

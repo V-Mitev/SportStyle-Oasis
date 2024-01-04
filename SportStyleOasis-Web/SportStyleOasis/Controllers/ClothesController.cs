@@ -15,9 +15,9 @@
         [HttpGet]
         public async Task<IActionResult> All()
         {
-            var meals = await clothesService.AllAsync();
+            var clothes = await clothesService.AllAsync();
 
-            return View(meals);
+            return View(clothes);
         }
     }
 }

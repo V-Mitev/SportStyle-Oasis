@@ -16,7 +16,7 @@
             this.dbContext = data;
         }
 
-        public async Task<ICollection<AllClothesModel>> AllAsync()
+        public async Task<IEnumerable<AllClothesModel>> AllAsync()
         {
             return await dbContext.Clothes
                 .Select(c => new AllClothesModel()

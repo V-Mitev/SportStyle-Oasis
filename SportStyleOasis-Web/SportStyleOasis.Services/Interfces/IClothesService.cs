@@ -4,6 +4,6 @@
 
     public interface IClothesService
     {
-        public Task<ICollection<AllClothesModel>> AllAsync();
+        public Task<IEnumerable<AllClothesModel>> AllAsync();
     }
 }

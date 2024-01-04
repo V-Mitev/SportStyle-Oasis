@@ -31,6 +31,9 @@
             public const int ProteinPowderNameMinLength = 3;
             public const int ProteinPowderNameMaxLength = 50;
 
+            public const int ProteinPowderTasteMinLength = 5;
+            public const int ProteinPowderTasteMaxLength = 20;
+
             public const string MinProteinPowderPrice = "1";
             public const string MaxProteinPowderPrice = "300";
 
