@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SportStyleOasis.Data;
 
@@ -11,9 +12,10 @@ using SportStyleOasis.Data;
 namespace SportStyleOasis.Data.Migrations
 {
     [DbContext(typeof(SportStyleOasisDbContext))]
-    partial class SportStyleOasisDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240104232943_SeedNewDataAndAddNewProps")]
+    partial class SeedNewDataAndAddNewProps
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -386,47 +388,6 @@ namespace SportStyleOasis.Data.Migrations
                     b.HasIndex("ShoppingCartId");
 
                     b.ToTable("ProteinPowder");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            AvailabeQuantity = 10,
-                            Image = "impact_whey_protein.jpg",
-                            Name = "Impact Whey Protein",
-                            Price = 33.99m,
-                            ProteinPowderBrands = 3,
-                            QuantityOrder = 0,
-                            Taste = "Banana",
-                            TypeOfProtein = 0,
-                            Weight = 1000.0
-                        },
-                        new
-                        {
-                            Id = 2,
-                            AvailabeQuantity = 10,
-                            Image = "bulk_isolate_protein.jpg",
-                            Name = "Pure Whey Protein Isolate",
-                            Price = 54.99m,
-                            ProteinPowderBrands = 0,
-                            QuantityOrder = 0,
-                            Taste = "Iced Late",
-                            TypeOfProtein = 2,
-                            Weight = 1000.0
-                        },
-                        new
-                        {
-                            Id = 3,
-                            AvailabeQuantity = 10,
-                            Image = "proteinWorks_vegan_protein.jpg",
-                            Name = "Vegan Protein",
-                            Price = 11.99m,
-                            ProteinPowderBrands = 5,
-                            QuantityOrder = 0,
-                            Taste = "Cookies & Cream",
-                            TypeOfProtein = 1,
-                            Weight = 1000.0
-                        });
                 });
 
             modelBuilder.Entity("SportStyleOasis.Data.Models.Review", b =>

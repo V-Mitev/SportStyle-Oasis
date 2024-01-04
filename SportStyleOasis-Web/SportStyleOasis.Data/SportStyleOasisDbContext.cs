@@ -28,6 +28,8 @@
 
             builder.ApplyConfiguration<Review>(new ReviewConfiguration());
 
+            builder.ApplyConfiguration<ProteinPowder>(new ProteinPowderConfiguration());
+
             base.OnModelCreating(builder);
         }
     }
