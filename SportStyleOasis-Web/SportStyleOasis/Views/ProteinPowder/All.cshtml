@@ -1,0 +1,35 @@
+﻿@model IEnumerable<AllProteinPowderViewModel>
+
+@{
+    TempData["Title"] = "Here you can see all our protein powders";
+}
+
+<h1 class="text-center">@TempData["Title"]</h1>
+
+<table>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Brand</th>
+            <th>Taste</th>
+            <th>Weight</th>
+            <th>Price</th>
+            <th>Image</th>
+            <th>Protein Type</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var proteinPowder in Model)
+        {
+            <tr>
+                <td>@proteinPowder.Name</td>
+                <td>@proteinPowder.Brand</td>
+                <td>@proteinPowder.Taste</td>
+                <td>@proteinPowder.Weight</td>
+                <td>@proteinPowder.Price</td>
+                <td><img src="~/images/@proteinPowder.Image" alt="Product Image" width="100" height="100" /></td>
+                <td>@proteinPowder.ProteinType</td>
+            </tr>
+        }
+    </tbody>
+</table>
