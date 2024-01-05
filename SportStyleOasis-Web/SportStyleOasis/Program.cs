@@ -34,6 +34,14 @@ namespace SportStyleOasis
                     builder.Configuration.GetValue<int>("Identity:Password:RequiredLength");
                 options.Password.RequireDigit =
                     builder.Configuration.GetValue<bool>("Identity:Password:RequireDigit");
+
+                //To add in production
+                //options.Lockout.MaxFailedAccessAttempts = 
+                //    builder.Configuration.GetValue<int>("Identity:Lockout:MaxFailedAccessAttempts");
+                //options.Lockout.DefaultLockoutTimeSpan = 
+                //    TimeSpan.FromMinutes(builder.Configuration.GetValue<int>("Identity:Lockout:DefaultLockoutTimeSpan"));
+                //options.Lockout.AllowedForNewUsers = 
+                //    builder.Configuration.GetValue<bool>("Identity:Lockout:AllowedForNewUsers");
             })
                .AddRoles<IdentityRole<Guid>>()
                .AddEntityFrameworkStores<SportStyleOasisDbContext>();
@@ -41,6 +49,11 @@ namespace SportStyleOasis
             builder.Services.AddControllersWithViews();
 
             builder.Services.AddApplicationServices(typeof(IClothesService));
+
+            builder.Services.ConfigureApplicationCookie(cfg =>
+            {
+                cfg.LoginPath = "/User/Login";
+            });
 
             var app = builder.Build();
 

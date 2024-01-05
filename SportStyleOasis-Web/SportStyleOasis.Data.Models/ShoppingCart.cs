@@ -19,8 +19,6 @@
 
         public ApplicationUser ApplicationUser { get; set; } = null!;
 
-        public decimal TotalPrice { get; set; }
-
         public ICollection<Clothes> Clothes { get; set; }
 
         public ICollection<ProteinPowder> ProteinPowders { get; set; }
