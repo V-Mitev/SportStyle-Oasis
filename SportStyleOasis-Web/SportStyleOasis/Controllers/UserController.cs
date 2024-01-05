@@ -5,6 +5,7 @@
     using Microsoft.AspNetCore.Mvc;
     using SportStyleOasis.Data.Models;
     using SportStyleOasis.Web.ViewModels.User;
+    using static SportStyleOasis.Common.NotificationMessagesConstant;
 
     public class UserController : Controller
     {
@@ -91,28 +92,28 @@
 
             if (user == null)
             {
-                //To add notification
-                ModelState.AddModelError(string.Empty, "Email or password are invalid");
+                TempData[ErrorMessage] = "Email or password are invalid";
 
                 return View(model);
             }
 
-            var isPasswordMatch = await signInManager.CheckPasswordSignInAsync(user, model.Password, false);
+            var isPasswordMatch = 
+                await signInManager.CheckPasswordSignInAsync(user, model.Password, false);
 
             if (!isPasswordMatch.Succeeded)
             {
-                //To add notification
-                ModelState.AddModelError(string.Empty, "Email or password are invalid");
+                TempData[ErrorMessage] = "Email or password are invalid";
 
                 return View(model);
             }
 
-            var result =
+            var result = 
                 await signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, false);
 
             if (!result.Succeeded)
             {
-                //To add notification message
+                TempData[ErrorMessage] = 
+                    "There was an error while loggin in! Please try again latter or cantact an administrator.";
 
                 return View(model);
             }
