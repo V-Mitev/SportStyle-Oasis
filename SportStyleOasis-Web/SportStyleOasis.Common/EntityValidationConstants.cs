@@ -9,6 +9,12 @@
 
             public const int LastNameMinLength = 5;
             public const int LastNameMaxLength = 50;
+
+            public const int PasswordMinLength = 6;
+            public const int PasswordMaxLenght = 100;
+
+            public const int PhoneNumberMinLenght = 10;
+            public const int PhoneNumberMaxLenght = 10;
         }
 
         public static class Clothes

@@ -6,6 +6,11 @@
 
     public class ApplicationUser : IdentityUser<Guid>
     {
+        public ApplicationUser()
+        {
+            Id = Guid.NewGuid();
+        }
+
         [Required]
         [MaxLength(FirstNameMaxLength)]
         public string FirstName { get; set; } = null!;

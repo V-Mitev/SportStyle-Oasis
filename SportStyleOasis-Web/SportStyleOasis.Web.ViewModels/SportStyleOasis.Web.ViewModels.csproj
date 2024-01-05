@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\SportStyleOasis.Common\SportStyleOasis.Common.csproj" />
+  </ItemGroup>
+
 </Project>
