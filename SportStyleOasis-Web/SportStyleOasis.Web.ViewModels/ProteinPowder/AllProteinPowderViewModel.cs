@@ -2,13 +2,18 @@
 {
     public class AllProteinPowderViewModel
     {
+        public AllProteinPowderViewModel()
+        {
+            ProteinFlavor = new HashSet<string>();
+        }
+
         public string Name { get; set; } = null!;
 
         public string Brand { get; set; } = null!;
 
-        public string Taste { get; set; } = null!;
+        public ICollection<string> ProteinFlavor { get; set; }
 
-        public double Weight { get; set; }
+        public int Weight { get; set; }
 
         public decimal Price { get; set; }
 

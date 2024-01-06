@@ -11,7 +11,7 @@
 
         public ProteinPowderService(SportStyleOasisDbContext dbContext)
         {
-            this.dbContext = dbContext;       
+            this.dbContext = dbContext;
         }
 
         public async Task<IEnumerable<AllProteinPowderViewModel>> AllAsync()
@@ -20,7 +20,10 @@
                 .Select(pp => new AllProteinPowderViewModel()
                 {
                     Name = pp.Name,
-                    //Taste = pp.Taste,
+                    ProteinFlavor = pp.ProteinFlavors
+                        .Where(pf => pf.ProteinId == pp.Id)
+                        .Select(pf => pf.FlavorName)
+                        .ToList(),
                     Price = pp.Price,
                     Image = pp.Image,
                     Weight = pp.Weight,

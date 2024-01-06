@@ -24,7 +24,14 @@
             <tr>
                 <td>@proteinPowder.Name</td>
                 <td>@proteinPowder.Brand</td>
-                <td>@proteinPowder.Taste</td>
+                <td>
+                    <ul>
+                        @foreach (var flavor in proteinPowder.ProteinFlavor)
+                        {
+                            <li>@flavor</li>
+                        }
+                    </ul>
+                </td>
                 <td>@proteinPowder.Weight</td>
                 <td>@proteinPowder.Price</td>
                 <td><img src="~/images/@proteinPowder.Image" alt="Product Image" width="100" height="100" /></td>
