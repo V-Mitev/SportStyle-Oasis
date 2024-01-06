@@ -20,7 +20,7 @@
                 .Select(pp => new AllProteinPowderViewModel()
                 {
                     Name = pp.Name,
-                    Taste = pp.Taste,
+                    //Taste = pp.Taste,
                     Price = pp.Price,
                     Image = pp.Image,
                     Weight = pp.Weight,

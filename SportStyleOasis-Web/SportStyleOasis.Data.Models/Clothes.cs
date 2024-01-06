@@ -38,8 +38,6 @@
         [Range(typeof(decimal), MinClothePrice, MaxClothePrice)]
         public decimal Price { get; set; }
 
-        public int QuantityOrder { get; set; }
-
         public int AvailabeQuantity { get; set; }
 
         public TypeOfClothes TypeOfClothes { get; set; }

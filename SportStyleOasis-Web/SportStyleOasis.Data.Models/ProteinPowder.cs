@@ -9,6 +9,7 @@
         public ProteinPowder()
         {
             Reviews = new HashSet<Review>();
+            ProteinFlavors = new HashSet<ProteinFlavor>();
         }
 
         [Key]
@@ -17,27 +18,20 @@
         [MaxLength(ProteinPowderNameMaxLength)]
         public string Name { get; set; } = null!;
 
-        [Required]
-        [MaxLength(ProteinPowderTasteMaxLength)]
-        public string Taste { get; set; } = null!;
-
         [Range(typeof(decimal), MinProteinPowderPrice, MaxProteinPowderPrice)]
         public decimal Price { get; set; }
 
         [Required]
         public string Image { get; set; } = null!;
 
-        public int QuantityOrder { get; set; }
+        public int Weight { get; set; }
 
-        public int AvailabeQuantity { get; set; }
-
-        [Range(typeof(double), MinProteinPowderWeight, MaxProteinPowderWeight)]
-        public double Weight { get; set; }
+        public ICollection<Review> Reviews { get; set; }
 
         public TypeOfProtein TypeOfProtein { get; set; }
 
         public ProteinPowderBrands ProteinPowderBrands { get; set; }
 
-        public ICollection<Review> Reviews { get; set; }
+        public ICollection<ProteinFlavor> ProteinFlavors { get; set; }
     }
 }

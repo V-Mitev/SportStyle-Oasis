@@ -42,9 +42,15 @@
 
             public const string MinProteinPowderPrice = "1";
             public const string MaxProteinPowderPrice = "300";
+        }
 
-            public const string MinProteinPowderWeight = "1";
-            public const string MaxProteinPowderWeight = "3000";
+        public static class ProteinFlavor
+        {
+            public const int ProteinFlavorNameMinLength = 3;
+            public const int ProteinFlavorNameMaxLength = 50;
+
+            public const int ProteinFlavorMinQuantity = 0;
+            public const int ProteinFlavorMaxQuantity = 250;
         }
     }
 }
