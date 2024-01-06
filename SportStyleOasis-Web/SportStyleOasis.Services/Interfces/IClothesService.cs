@@ -5,5 +5,7 @@
     public interface IClothesService
     {
         public Task<IEnumerable<AllClothesModel>> AllAsync();
+
+        public Task AddClotheAsync(AddClotheViewModel model);
     }
 }

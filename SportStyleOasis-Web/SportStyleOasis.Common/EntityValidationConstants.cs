@@ -30,6 +30,9 @@
 
             public const string MinClothePrice = "1"; 
             public const string MaxClothePrice = "999";
+
+            public const int ClotheMinAvailableQuantity = 0;
+            public const int ClotheMaxAvailableQuantity = 150;
         }
 
         public static class ProteinPowder

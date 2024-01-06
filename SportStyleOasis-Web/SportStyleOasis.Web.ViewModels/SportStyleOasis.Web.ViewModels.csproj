@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\SportStyleOasis.Common\SportStyleOasis.Common.csproj" />
+    <ProjectReference Include="..\SportStyleOasis.Data.Models\SportStyleOasis.Data.Models.csproj" />
   </ItemGroup>
 
 </Project>
