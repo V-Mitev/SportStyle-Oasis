@@ -30,6 +30,8 @@
 
             builder.ApplyConfiguration<ProteinPowder>(new ProteinPowderConfiguration());
 
+            builder.ApplyConfiguration<ProteinFlavor>(new ProteinFlavorConfiguration());
+
             base.OnModelCreating(builder);
         }
     }
