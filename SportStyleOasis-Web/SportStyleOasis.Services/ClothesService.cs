@@ -26,7 +26,10 @@
                     Price = c.Price,
                     Color = c.Color,
                     Image = c.Image,
-                    ClothSize = c.Size.ToString(),
+                    ClothSizes = c.ClotheInventories
+                        .Where(ci => ci.Id == c.Id)
+                        .Select(ci => ci.ClothesSize.ToString())
+                        .ToList(),
                     ClothType = c.TypeOfClothes.ToString()
                 })
                 .ToListAsync();

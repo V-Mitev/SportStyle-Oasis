@@ -8,10 +8,10 @@
     {
         public void Configure(EntityTypeBuilder<ProteinFlavor> builder)
         {
-            builder.HasData(GenereteProteinFlavor());
+            builder.HasData(GenerateProteinFlavor());
         }
 
-        private static IEnumerable<ProteinFlavor> GenereteProteinFlavor()
+        private static IEnumerable<ProteinFlavor> GenerateProteinFlavor()
         {
             IEnumerable<ProteinFlavor> proteinFlavors = new HashSet<ProteinFlavor>()
             {

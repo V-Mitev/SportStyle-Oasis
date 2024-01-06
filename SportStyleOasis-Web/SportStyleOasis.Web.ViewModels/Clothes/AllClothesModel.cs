@@ -2,6 +2,11 @@
 {
     public class AllClothesModel
     {
+        public AllClothesModel()
+        {
+            ClothSizes = new HashSet<string>();    
+        }
+
         public int Id { get; set; }
 
         public string Name { get; set; } = null!;
@@ -12,7 +17,7 @@
 
         public string ClothType { get; set; } = null!;
 
-        public string ClothSize { get; set; } = null!;
+        public IEnumerable<string> ClothSizes { get; set; } = null!;
 
         public decimal Price { get; set; }
     }

@@ -24,6 +24,7 @@
         [Required]
         public string Image { get; set; } = null!;
 
+        [Range(ProteinPowderTasteMinWeight, ProteinPowderTasteMaxWeight)]
         public int Weight { get; set; }
 
         public ICollection<Review> Reviews { get; set; }

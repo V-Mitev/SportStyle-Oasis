@@ -9,6 +9,7 @@
         public Clothes()
         {
             Reviews = new HashSet<Review>();
+            ClotheInventories = new HashSet<ClotheInventory>();
         }
 
         [Key]
@@ -30,18 +31,16 @@
 
         public Gender ClothesForGender { get; set; }
 
-        public ClothesSize Size { get; set; }
-
         [Required]
         public string Image { get; set; } = null!;
 
         [Range(typeof(decimal), MinClothePrice, MaxClothePrice)]
         public decimal Price { get; set; }
 
-        public int AvailabeQuantity { get; set; }
-
         public TypeOfClothes TypeOfClothes { get; set; }
 
         public ICollection<Review> Reviews { get; set; }
+
+        public ICollection<ClotheInventory> ClotheInventories { get; set; }
     }
 }

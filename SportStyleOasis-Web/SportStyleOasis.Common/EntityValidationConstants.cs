@@ -42,6 +42,9 @@
 
             public const string MinProteinPowderPrice = "1";
             public const string MaxProteinPowderPrice = "300";
+
+            public const int ProteinPowderTasteMinWeight = 25;
+            public const int ProteinPowderTasteMaxWeight = 3000;
         }
 
         public static class ProteinFlavor

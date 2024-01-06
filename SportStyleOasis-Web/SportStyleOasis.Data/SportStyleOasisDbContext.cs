@@ -26,11 +26,13 @@
         {
             builder.ApplyConfiguration<Clothes>(new ClothesConfiguration());
 
-            builder.ApplyConfiguration<Review>(new ReviewConfiguration());
+            builder.ApplyConfiguration<ClotheInventory>(new ClotheInventoryConfiguration());
 
             builder.ApplyConfiguration<ProteinPowder>(new ProteinPowderConfiguration());
 
             builder.ApplyConfiguration<ProteinFlavor>(new ProteinFlavorConfiguration());
+
+            builder.ApplyConfiguration<Review>(new ReviewConfiguration());
 
             base.OnModelCreating(builder);
         }
