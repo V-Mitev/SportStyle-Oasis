@@ -10,6 +10,7 @@
         {
             Reviews = new HashSet<Review>();
             ClotheInventories = new HashSet<ClotheInventory>();
+            ShoppingCarts = new HashSet<ShoppingCart>();
         }
 
         [Key]
@@ -40,6 +41,8 @@
         public TypeOfClothes TypeOfClothes { get; set; }
 
         public ICollection<Review> Reviews { get; set; }
+
+        public ICollection<ShoppingCart> ShoppingCarts { get; set; }
 
         public ICollection<ClotheInventory> ClotheInventories { get; set; }
     }
