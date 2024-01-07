@@ -26,7 +26,7 @@
         }
 
         [HttpPost]
-        [ValidateRecaptcha]
+        [ValidateRecaptcha(Action = "submit")]
         public async Task<IActionResult> Register(RegisterFormModel model)
         {
             if (!ModelState.IsValid)
