@@ -50,6 +50,8 @@ namespace SportStyleOasis
 
             builder.Services.AddApplicationServices(typeof(IClothesService));
 
+            builder.Services.AddRecaptchaService();
+
             builder.Services.ConfigureApplicationCookie(cfg =>
             {
                 cfg.LoginPath = "/User/Login";
