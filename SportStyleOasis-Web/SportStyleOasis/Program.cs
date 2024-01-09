@@ -1,10 +1,12 @@
 namespace SportStyleOasis
 {
     using Microsoft.AspNetCore.Identity;
+    using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
     using SportStyleOasis.Data;
     using SportStyleOasis.Data.Models;
     using SportStyleOasis.Services.Interfces;
+    using SportStyleOasis.Web.Infrastructure.ModelBinders;
     using static SportStyleOasis.Web.Infrastructure.Extensions.WebApplicationBuilderExtensions;
 
     public class Program
@@ -46,7 +48,12 @@ namespace SportStyleOasis
                .AddRoles<IdentityRole<Guid>>()
                .AddEntityFrameworkStores<SportStyleOasisDbContext>();
 
-            builder.Services.AddControllersWithViews();
+            builder.Services
+                .AddControllersWithViews()
+                .AddMvcOptions(options =>
+                {
+                    options.ModelBinderProviders.Insert(0, new DecimalModelBinderProvider());
+                });
 
             builder.Services.AddApplicationServices(typeof(IClothesService));
 
