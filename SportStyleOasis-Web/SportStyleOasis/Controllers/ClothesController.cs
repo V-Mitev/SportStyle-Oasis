@@ -35,14 +35,43 @@
         {
             if (!ModelState.IsValid)
             {
-                return View(model);
+                TempData["Clothe"] = new AddClotheViewModel()
+                {
+                    Name = model.Name,
+                    Price = model.Price,
+                    Color = model.Color,
+                    Image = model.Image,
+                    ClotheSize = model.ClotheSize,
+                    Description = model.Description,
+                    ClothesBrands = model.ClothesBrands,
+                    TypeOfClothes = model.TypeOfClothes,
+                    ClothesForGender = model.ClothesForGender,
+                    AvailableQuantity = model.AvailableQuantity
+                };
+
+                return View(TempData["Clothe"]);
             }
 
-            await clothesService.AddClotheAsync(model);
+            try
+            {
+                await clothesService.AddClotheAsync(model);
 
-            TempData[SuccessMessage] = "Successfully added clothe.";
+                TempData[SuccessMessage] = "Successfully added clothe.";
 
-            return RedirectToAction("All", "Clothes");
+                return RedirectToAction("All", "Clothes");
+            }
+            catch (Exception)
+            {
+                return GeneralError();
+            }
+        }
+
+        private IActionResult GeneralError()
+        {
+            TempData[ErrorMessage] =
+                "Unexpected error occurred! Please try again later or contact administrator";
+
+            return RedirectToAction("Index", "Home");
         }
     }
 }

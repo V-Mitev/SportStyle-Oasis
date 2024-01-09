@@ -1,4 +1,5 @@
 ﻿@model AddClotheViewModel
+@using static SportStyleOasis.Common.EntityValidationConstants.Clothes;
 
 @{
     TempData["Title"] = "Add new clothe";
@@ -9,12 +10,12 @@
 <form asp-controller="Clothes" asp-action="Add" method="post">
     <div class="form-group">
         <label asp-for="Name" class="form-label-add-edit">Name</label>
-        <input asp-for="Name" class="form-control" required />
+        <input asp-for="Name" class="form-control" required minlength="@ClothesNameMinLength" maxlength="@ClothesNameMaxLength" />
         <span asp-validation-for="Name" class="text-danger"></span>
     </div>
     <div class="form-group">
         <label asp-for="Color" class="form-label-add-edit">Color</label>
-        <input asp-for="Color" class="form-control" required />
+        <input asp-for="Color" class="form-control" required minlength="@MinColorLength" maxlength="@MaxColorLength"/>
         <span asp-validation-for="Color" class="text-danger"></span>
     </div>
     <div class="form-group">
@@ -24,55 +25,106 @@
     </div>
     <div class="form-group">
         <label asp-for="Price" class="form-label-add-edit">Price</label>
-        <input asp-for="Price" class="form-control" required />
+        <input asp-for="Price" class="form-control" required step="1" min="@MinClothePrice" max="@MaxClothePrice"/>
         <span asp-validation-for="Price" class="text-danger"></span>
     </div>
     <div class="form-group">
         <label asp-for="Description" class="form-label-add-edit">Description</label>
-        <input asp-for="Description" class="form-control" required />
+        <input asp-for="Description" class="form-control" required minlength="@DescriptionMinLength" maxlength="@DescriptionMaxLength" />
         <span asp-validation-for="Description" class="text-danger"></span>
     </div>
     <div class="form-group">
         <label asp-for="AvailableQuantity" class="form-label-add-edit">Availabe Quantity</label>
-        <input asp-for="AvailableQuantity" class="form-control" required />
+        <input asp-for="AvailableQuantity" class="form-control" required  step="1" min="@ClotheMinAvailableQuantity" max="@ClotheMaxAvailableQuantity"/>
         <span asp-validation-for="AvailableQuantity" class="text-danger"></span>
     </div>
     <div class="form-group mb-2">
-        <label for="clothesBrands">Clothe Brand</label>
+        <label for="clothesBrands">Please select clothe brand for this garment:</label>
         <select class="form-control" id="clothesBrands" name="ClothesBrands" required>
-            <option value="">Select a clothe brands</option>
+            @if (Model.ClothesBrands.ToString() != null)
+            {
+                <option value="@Model.ClothesBrands">@Model.ClothesBrands</option>
+            }
+            else
+            {
+                <option value="">Select a clothe brands</option>
+            }
+
             @foreach (var clothebrand in Enum.GetValues(typeof(ClothesBrands)))
             {
+                @if (clothebrand.ToString() == Model.ClothesForGender.ToString())
+                {
+                    continue;
+                }
+
                 <option value="@clothebrand">@clothebrand</option>
             }
         </select>
     </div>
     <div class="form-group mb-2">
-        <label for="Gender">Clothe Gender</label>
+        <label for="Gender">Please select the gender for this garment:</label>
         <select class="form-control" id="gender" name="Gender" required>
-            <option value="">Select a gender</option>
+            @if (Model.ClothesForGender.ToString() != null)
+            {
+                <option value="@Model.ClothesForGender">@Model.ClothesForGender</option>
+            }
+            else
+            {
+                <option value="">Select a gender</option>
+            }
+
             @foreach (var gender in Enum.GetValues(typeof(Gender)))
             {
+                @if (gender.ToString() == Model.ClothesForGender.ToString())
+                {
+                    continue;
+                }
+
                 <option value="@gender">@gender</option>
             }
         </select>
     </div>
     <div class="form-group mb-2">
-        <label for="typeOfClothes">Type of clothes</label>
+        <label for="typeOfClothes">Please slecet type for this garment:</label>
         <select class="form-control" id="typeOfClothes" name="TypeOfClothes" required>
-            <option value="">Select a type of clothes</option>
+            @if (Model.TypeOfClothes.ToString() != null)
+            {
+                <option value="@Model.TypeOfClothes">@Model.TypeOfClothes</option>
+            }
+            else
+            {
+                <option value="">Select a type of clothes</option>
+            }
+
             @foreach (var typeOfClothes in Enum.GetValues(typeof(TypeOfClothes)))
             {
+                @if (typeOfClothes.ToString() == Model.TypeOfClothes.ToString())
+                {
+                    continue;
+                }
                 <option value="@typeOfClothes">@typeOfClothes</option>
             }
         </select>
     </div>
     <div class="form-group mb-2">
-        <label for="clothesSize">Clothes Size</label>
+        <label for="clothesSize">Please slecet size for this garment:</label>
         <select class="form-control" id="clothesSize" name="ClothesSize" required>
-            <option value="">Select a clothe size</option>
+            @if (Model.ClotheSize.ToString() != null)
+            {
+                <option value="@Model.ClotheSize">@Model.ClotheSize</option>
+            }
+            else
+            {
+                <option value="">Select a clothe size</option>
+            }
+
             @foreach (var clothesSize in Enum.GetValues(typeof(ClothesSize)))
             {
+                @if (clothesSize.ToString() == Model.ClotheSize.ToString())
+                {
+                    continue;
+                }
+
                 <option value="@clothesSize">@clothesSize</option>
             }
         </select>

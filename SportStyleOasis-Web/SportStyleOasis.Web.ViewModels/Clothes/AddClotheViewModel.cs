@@ -7,11 +7,11 @@
     public class AddClotheViewModel
     {
         [Required]
-        [MaxLength(ClothesNameMaxLength)]
+        [StringLength(ClothesNameMaxLength, MinimumLength = ClothesNameMinLength)]
         public string Name { get; set; } = null!;
 
         [Required]
-        [MaxLength(ClothesNameMaxLength)]
+        [StringLength(ClothesNameMaxLength, MinimumLength = MinColorLength)]
         public string Color { get; set; } = null!;
 
         [Required]
@@ -21,7 +21,7 @@
         public decimal Price { get; set; }
 
         [Required]
-        [MaxLength(DescriptionMaxLength)]
+        [StringLength(DescriptionMaxLength, MinimumLength = DescriptionMinLength)]
         public string Description { get; set; } = null!;
 
         [Range(ClotheMinAvailableQuantity, ClotheMaxAvailableQuantity)]
