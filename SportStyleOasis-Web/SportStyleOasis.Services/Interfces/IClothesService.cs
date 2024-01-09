@@ -7,5 +7,7 @@
         public Task<IEnumerable<AllClothesModel>> AllAsync();
 
         public Task AddClotheAsync(AddClotheViewModel model);
+
+        public Task DeleteGarmentAsync(int id);
     }
 }

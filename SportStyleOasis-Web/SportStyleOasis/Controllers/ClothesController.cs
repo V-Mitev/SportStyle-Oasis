@@ -52,6 +52,23 @@
             }
         }
 
+        [HttpPost]
+        public async Task<IActionResult> Delete(int id)
+        {
+            try
+            {
+                await clothesService.DeleteGarmentAsync(id);
+
+                TempData[SuccessMessage] = "You have successfully delete this garmnet.";
+
+                return RedirectToAction("All", "Clothes");
+            }
+            catch (Exception)
+            {
+                return GeneralError();
+            }
+        }
+
         private IActionResult GeneralError()
         {
             TempData[ErrorMessage] =

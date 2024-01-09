@@ -63,5 +63,18 @@
                 })
                 .ToListAsync();
         }
+
+        public async Task DeleteGarmentAsync(int id)
+        {
+            var garment = await dbContext.Clothes.FirstOrDefaultAsync(g => g.Id == id);
+
+            if (garment == null)
+            {
+                throw new ArgumentNullException(nameof(garment));   
+            }
+
+            dbContext.Clothes.Remove(garment);
+            await dbContext.SaveChangesAsync();
+        }
     }
 }
