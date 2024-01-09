@@ -28,9 +28,9 @@
         [MaxLength(DescriptionMaxLength)]
         public string Description { get; set; } = null!;
 
-        public ClothesBrands ClothesBrands { get; set; }
+        public ClothesBrands? ClothesBrands { get; set; }
 
-        public Gender ClothesForGender { get; set; }
+        public Gender? ClothesForGender { get; set; }
 
         [Required]
         public string Image { get; set; } = null!;
@@ -38,7 +38,7 @@
         [Range(typeof(decimal), MinClothePrice, MaxClothePrice)]
         public decimal Price { get; set; }
 
-        public TypeOfClothes TypeOfClothes { get; set; }
+        public TypeOfClothes? TypeOfClothes { get; set; }
 
         public ICollection<Review> Reviews { get; set; }
 

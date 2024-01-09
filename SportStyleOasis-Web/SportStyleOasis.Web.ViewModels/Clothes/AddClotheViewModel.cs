@@ -27,12 +27,12 @@
         [Range(ClotheMinAvailableQuantity, ClotheMaxAvailableQuantity)]
         public int AvailableQuantity { get; set; }
 
-        public ClothesBrands ClothesBrands { get; set; }
+        public ClothesBrands? ClothesBrands { get; set; }
 
-        public Gender ClothesForGender { get; set; }
+        public Gender? ClothesForGender { get; set; }
 
-        public TypeOfClothes TypeOfClothes { get; set; }
+        public TypeOfClothes? TypeOfClothes { get; set; }
 
-        public ClothesSize ClotheSize { get; set; }
+        public ClothesSize? ClotheSize { get; set; }
     }
 }

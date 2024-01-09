@@ -10,7 +10,7 @@
         [Key]
         public int Id { get; set; }
 
-        public ClothesSize ClothesSize { get; set; }
+        public ClothesSize? ClothesSize { get; set; }
 
         [Range(ClotheMinAvailableQuantity, ClotheMaxAvailableQuantity)]
         public int AvailableQuantity { get; set; }

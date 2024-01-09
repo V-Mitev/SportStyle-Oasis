@@ -26,7 +26,7 @@
         public IActionResult Add()
         {
             AddClotheViewModel model = new AddClotheViewModel();
-
+            
             return View(model);
         }
 
@@ -35,21 +35,7 @@
         {
             if (!ModelState.IsValid)
             {
-                TempData["Clothe"] = new AddClotheViewModel()
-                {
-                    Name = model.Name,
-                    Price = model.Price,
-                    Color = model.Color,
-                    Image = model.Image,
-                    ClotheSize = model.ClotheSize,
-                    Description = model.Description,
-                    ClothesBrands = model.ClothesBrands,
-                    TypeOfClothes = model.TypeOfClothes,
-                    ClothesForGender = model.ClothesForGender,
-                    AvailableQuantity = model.AvailableQuantity
-                };
-
-                return View(TempData["Clothe"]);
+                return View(model);
             }
 
             try
