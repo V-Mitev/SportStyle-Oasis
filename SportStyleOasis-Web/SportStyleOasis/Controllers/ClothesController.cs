@@ -1,6 +1,7 @@
 ﻿namespace SportStyleOasis.Controllers
 {
     using Microsoft.AspNetCore.Mvc;
+    using SportStyleOasis.Data.Models.Enums;
     using SportStyleOasis.Services.Interfces;
     using SportStyleOasis.Web.ViewModels.Clothes;
     using static SportStyleOasis.Common.NotificationMessagesConstant;
@@ -26,7 +27,12 @@
         public IActionResult Add()
         {
             AddClotheViewModel model = new AddClotheViewModel();
-            
+
+            foreach (var clotheSize in Enum.GetValues(typeof(ClothesSize)).Cast<ClothesSize>())
+            {
+                model.SizesAndQuantities[clotheSize] = 0;
+            }
+
             return View(model);
         }
 

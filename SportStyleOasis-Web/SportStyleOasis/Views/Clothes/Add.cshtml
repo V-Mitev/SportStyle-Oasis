@@ -6,6 +6,12 @@
     var a = Model;
 }
 
+<style>
+    .smaller-input {
+        width: 100px;
+    }
+</style>
+
 <h1 class="text-center">@TempData["Title"]</h1>
 
 <form asp-controller="Clothes" asp-action="Add" method="post">
@@ -34,15 +40,11 @@
         <input asp-for="Description" class="form-control" required minlength="@DescriptionMinLength" maxlength="@DescriptionMaxLength" />
         <span asp-validation-for="Description" class="text-danger"></span>
     </div>
-    <div class="form-group">
-        <label asp-for="AvailableQuantity" class="form-label-add-edit">Availabe Quantity</label>
-        <input asp-for="AvailableQuantity" class="form-control" required step="1" min="@ClotheMinAvailableQuantity" max="@ClotheMaxAvailableQuantity" />
-        <span asp-validation-for="AvailableQuantity" class="text-danger"></span>
-    </div>
+
     <div class="form-group mb-2">
         <label asp-for="ClothesBrands">Please select clothe brand for this garment:</label>
         <select class="form-control" id="clothesBrands" name="ClothesBrands" required>
-            @if (!String.IsNullOrEmpty(Model.ClothesBrands.ToString()))
+            @if (Model.ClothesBrands.HasValue)
             {
                 <option value="@Model.ClothesBrands">@Model.ClothesBrands</option>
             }
@@ -66,7 +68,7 @@
     <div class="form-group mb-2">
         <label asp-for="ClothesForGender">Please select the gender for this garment:</label>
         <select class="form-control" id="gender" name="ClothesForGender" required>
-            @if (!String.IsNullOrEmpty(Model.ClothesForGender.ToString()))
+            @if (Model.ClothesForGender.HasValue)
             {
                 <option value="@Model.ClothesForGender">@Model.ClothesForGender</option>
             }
@@ -88,7 +90,7 @@
     <div class="form-group mb-2">
         <label asp-for="TypeOfClothes">Please slecet type for this garment:</label>
         <select class="form-control" id="typeOfClothes" name="TypeOfClothes" required>
-            @if (!String.IsNullOrEmpty(Model.TypeOfClothes.ToString()))
+            @if (Model.TypeOfClothes.HasValue)
             {
                 <option value="@Model.TypeOfClothes">@Model.TypeOfClothes</option>
             }
@@ -107,28 +109,15 @@
             }
         </select>
     </div>
-    <div class="form-group mb-2">
-        <label asp-for="ClotheSize">Please slecet size for this garment:</label>
-        <select class="form-control" id="clothesSize" name="ClotheSize" required>
-            @if (!String.IsNullOrEmpty(Model.ClotheSize.ToString()))
-            {
-                <option value="@Model.ClotheSize">@Model.ClotheSize</option>
-            }
-            else
-            {
-                <option value="">Select a size of clothes</option>
-            }
 
-            @foreach (var clotheSize in Enum.GetValues(typeof(ClothesSize)))
-            {
-                @if (clotheSize.ToString() == Model.ClotheSize.ToString())
-                {
-                    continue;
-                }
-                <option value="@clotheSize">@clotheSize</option>
-            }
-        </select>
-    </div>
+    @foreach (var clotheSize in Model.SizesAndQuantities)
+    {
+        <div class="form-group">
+            <label asp-for="SizesAndQuantities">@clotheSize.Key</label>
+            <input name="SizesAndQuantities[@clotheSize.Key]" type="number" value="@clotheSize.Value" class="form-control" required step="1" min="@ClotheMinAvailableQuantity" max="@ClotheMaxAvailableQuantity" />
+            <span asp-validation-for="SizesAndQuantities" class="text-danger"></span>
+        </div>
+    }
 
     <button type="submit" class="btn btn-primary">Add Clothe</button>
 </form>

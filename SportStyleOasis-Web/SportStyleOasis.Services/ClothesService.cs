@@ -33,15 +33,18 @@
                 ClothesForGender = model.ClothesForGender
             };
 
-            ClotheInventory clotheInventory = new ClotheInventory()
+            foreach (var kvp in model.SizesAndQuantities)
             {
-                AvailableQuantity = model.AvailableQuantity,
-                ClothId = clothe.Id,
-                Clothes = clothe,
-                ClothesSize = model.ClotheSize
-            };
+                ClotheInventory clotheInventory = new ClotheInventory()
+                {
+                    AvailableQuantity = kvp.Value,
+                    ClothId = clothe.Id,
+                    Clothes = clothe,
+                    ClothesSize = kvp.Key
+                };
 
-            clothe.ClotheInventories.Add(clotheInventory);
+                clothe.ClotheInventories.Add(clotheInventory);
+            }
 
             await dbContext.Clothes.AddAsync(clothe);
             await dbContext.SaveChangesAsync();

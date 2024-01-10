@@ -6,6 +6,11 @@
 
     public class AddClotheViewModel
     {
+        public AddClotheViewModel()
+        {
+            SizesAndQuantities = new Dictionary<ClothesSize, int>(); 
+        }
+
         [Required]
         [StringLength(ClothesNameMaxLength, MinimumLength = ClothesNameMinLength)]
         public string Name { get; set; } = null!;
@@ -33,6 +38,6 @@
 
         public TypeOfClothes? TypeOfClothes { get; set; }
 
-        public ClothesSize? ClotheSize { get; set; }
+        public Dictionary<ClothesSize, int> SizesAndQuantities { get; set; }
     }
 }
