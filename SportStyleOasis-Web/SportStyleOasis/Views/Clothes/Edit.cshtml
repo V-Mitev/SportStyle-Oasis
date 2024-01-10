@@ -1,0 +1,83 @@
+﻿@model UpdateGarmentViewModel
+@using static SportStyleOasis.Common.EntityValidationConstants.Clothes;
+
+<form asp-controller="Clothes" asp-action="Edit" method="post">
+    <div class="form-group">
+        <label asp-for="Name" class="form-label-add-edit">Name</label>
+        <input asp-for="Name" class="form-control" value="@Model.Name" required minlength="@ClothesNameMinLength" maxlength="@ClothesNameMaxLength" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Color" class="form-label-add-edit">Color</label>
+        <input asp-for="Color" class="form-control" value="@Model.Color" required minlength="@MinColorLength" maxlength="@MaxColorLength" />
+        <span asp-validation-for="Color" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Image">Image:</label>
+        <input type="file" class="form-control" asp-for="Image" value="@Model.Image" accept="image/*" required>
+        <span asp-validation-for="Image" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Price" class="form-label-add-edit">Price</label>
+        <input asp-for="Price" class="form-control" value="@Model.Price" required step="1" min="@MinClothePrice" max="@MaxClothePrice" />
+        <span asp-validation-for="Price" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Description" class="form-label-add-edit">Description</label>
+        <input asp-for="Description" class="form-control" value="@Model.Description" required minlength="@DescriptionMinLength" maxlength="@DescriptionMaxLength" />
+        <span asp-validation-for="Description" class="text-danger"></span>
+    </div>
+
+    <div class="form-group mb-2">
+        <label asp-for="GarmentBrand">Please select brand for this garment:</label>
+        <select class="form-control" id="garmentBrand" name="GarmentBrand" required>
+            @foreach (var garmentBrand in Enum.GetValues(typeof(ClothesBrands)))
+            {
+                @if (garmentBrand.ToString() == Model.GarmentBrand.ToString())
+                {
+                    <option value="@Model.GarmentBrand">@Model.GarmentBrand</option>
+                    continue;
+                }
+
+                <option value="@garmentBrand">@garmentBrand</option>
+            }
+        </select>
+    </div>
+
+    <div class="form-group mb-2">
+        <label asp-for="GarmentForGender">Please select gender for this garment:</label>
+        <select class="form-control" id="garmentGender" name="GarmentForGender" required>
+            @foreach (var gender in Enum.GetValues(typeof(Gender)))
+            {
+                @if (gender.ToString() == Model.GarmentForGender.ToString())
+                {
+                    <option value="@Model.GarmentForGender">@Model.GarmentForGender</option>
+                    continue;
+                }
+
+                <option value="@gender">@gender</option>
+            }
+        </select>
+    </div>
+
+    <div class="form-group mb-2">
+        <label asp-for="GarmentType">Please slecet type for this garment:</label>
+        <select class="form-control" id="garmentType" name="GarmentType" required>
+            @foreach (var garmentType in Enum.GetValues(typeof(TypeOfClothes)))
+            {
+                @if (garmentType.ToString() == Model.GarmentType.ToString())
+                {
+                    <option value="@Model.GarmentType">@Model.GarmentType</option>
+                    continue;
+                }
+                <option value="@garmentType">@garmentType</option>
+            }
+        </select>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Save Changes</button>
+</form>

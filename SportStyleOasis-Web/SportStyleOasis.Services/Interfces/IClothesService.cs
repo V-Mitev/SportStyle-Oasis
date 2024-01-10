@@ -9,5 +9,9 @@
         public Task AddClotheAsync(AddClotheViewModel model);
 
         public Task DeleteGarmentAsync(int id);
+
+        public Task UpdateGarment(int id, UpdateGarmentViewModel model);
+
+        public Task<UpdateGarmentViewModel> FindGarmentToUpdate(int id);
     }
 }

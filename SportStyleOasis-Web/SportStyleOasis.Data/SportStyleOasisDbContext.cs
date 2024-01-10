@@ -22,6 +22,10 @@
 
         public DbSet<ShoppingCart> ShoppingCarts { get; set; } = null!;
 
+        public DbSet<ClotheInventory> ClotheInventories { get; set; } = null!;
+
+        public DbSet<ProteinFlavor> ProteinFlavor { get; set; } = null!;
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.ApplyConfiguration<Clothes>(new ClothesConfiguration());

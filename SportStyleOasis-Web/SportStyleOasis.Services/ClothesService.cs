@@ -3,6 +3,7 @@
     using Microsoft.EntityFrameworkCore;
     using SportStyleOasis.Data;
     using SportStyleOasis.Data.Models;
+    using SportStyleOasis.Data.Models.Enums;
     using SportStyleOasis.Services.Interfces;
     using SportStyleOasis.Web.ViewModels.Clothes;
     using System.Collections.Generic;
@@ -70,10 +71,58 @@
 
             if (garment == null)
             {
-                throw new ArgumentNullException(nameof(garment));   
+                throw new InvalidOperationException($"Garment with ID {id} not found.");
             }
 
             dbContext.Clothes.Remove(garment);
+            await dbContext.SaveChangesAsync();
+        }
+
+        public async Task<UpdateGarmentViewModel> FindGarmentToUpdate(int id)
+        {
+            var garment =
+                await dbContext.Clothes.FirstOrDefaultAsync(g => g.Id == id);
+
+            if (garment == null)
+            {
+                throw new InvalidOperationException($"Garment with ID {id} not found.");
+            }
+
+            var oldGarment = new UpdateGarmentViewModel()
+            {
+                Id = garment.Id,
+                Name = garment.Name,
+                Color = garment.Color,
+                Price = garment.Price,
+                Image = garment.Image,
+                Description = garment.Description,
+                GarmentType = (TypeOfClothes)garment.TypeOfClothes!,
+                GarmentBrand = (ClothesBrands)garment.ClothesBrands!,
+                GarmentForGender = (Gender)garment.ClothesForGender!
+            };
+
+            return oldGarment;
+        }
+
+        public async Task UpdateGarment(int id, UpdateGarmentViewModel model)
+        {
+            var oldGarment =
+                await dbContext.Clothes.FirstOrDefaultAsync(g => g.Id == id);
+
+            if (oldGarment == null)
+            {
+                throw new InvalidOperationException($"Garment with ID {id} not found.");
+            }
+
+            oldGarment.Name = model.Name;
+            oldGarment.Color = model.Color;
+            oldGarment.Price = model.Price;
+            oldGarment.Image = model.Image;
+            oldGarment.Description = model.Description;
+            oldGarment.TypeOfClothes = model.GarmentType;
+            oldGarment.ClothesBrands = model.GarmentBrand;
+            oldGarment.ClothesForGender = model.GarmentForGender;
+
             await dbContext.SaveChangesAsync();
         }
     }
