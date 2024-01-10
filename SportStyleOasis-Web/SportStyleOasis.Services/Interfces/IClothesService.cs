@@ -4,7 +4,7 @@
 
     public interface IClothesService
     {
-        public Task<IEnumerable<AllClothesModel>> AllAsync();
+        public Task<IEnumerable<AllClothesViewModel>> AllAsync();
 
         public Task AddClotheAsync(AddClotheViewModel model);
 
@@ -13,5 +13,7 @@
         public Task UpdateGarment(int id, UpdateGarmentViewModel model);
 
         public Task<UpdateGarmentViewModel> FindGarmentToUpdate(int id);
+
+        public Task<ClothViewModel> ViewCloth(int id);
     }
 }

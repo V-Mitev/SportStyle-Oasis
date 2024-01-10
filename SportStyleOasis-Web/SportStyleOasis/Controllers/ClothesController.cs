@@ -99,6 +99,21 @@
             }
         }
 
+        [HttpGet]
+        public async Task<IActionResult> ViewCloth(int id)
+        {
+            try
+            {
+                var model = await clothesService.ViewCloth(id);
+
+                return View(model);
+            }
+            catch (Exception)
+            {
+                return GeneralError();
+            }
+        }
+
         private IActionResult GeneralError()
         {
             TempData[ErrorMessage] =
