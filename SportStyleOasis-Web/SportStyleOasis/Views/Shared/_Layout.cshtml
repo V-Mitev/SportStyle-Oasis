@@ -26,13 +26,43 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Clothes" asp-action="All">T-Shirt</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Clothes" asp-action="All">All Clothes</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Clothes" asp-action="Add">Add clothes</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="ProteinPowder" asp-action="All">Protein Powder</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="ProteinPowder" asp-action="All">All Protein Powders</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-dark" href="#" id="menDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Male
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="menDropdown">
+                                <a class="dropdown-item text-dark hover-menu" data-gender="Male" data-clothing="TShirt">T-Shirt</a>
+                                <a class="dropdown-item text-dark hover-menu" data-gender="Male" data-clothing="Bottom">Bottom</a>
+                                <a class="dropdown-item text-dark hover-menu" data-gender="Male" data-clothing="Sweatshirt">Sweatshirt</a>
+                                <a class="dropdown-item text-dark hover-menu" data-gender="Male" data-clothing="Tracksuit">Tracksuit</a>
+                                <a class="dropdown-item text-dark hover-menu" data-gender="Male" data-clothing="Tanktop">Tank Top</a>
+                                <a class="dropdown-item text-dark hover-menu" data-gender="Male" data-clothing="Shorts">Shorts</a>
+                                <a class="dropdown-item text-dark hover-menu" data-gender="Male" data-clothing="Top">Top</a>
+                                <a class="dropdown-item text-dark hover-menu" data-gender="Male" data-clothing="Socks">Socks</a>
+                            </div>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-dark" href="#" id="menDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Female
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="menDropdown">
+                                <a class="dropdown-item text-dark hover-menu" data-gender="Female" data-clothing="TShirt">T-Shirt</a>
+                                <a class="dropdown-item text-dark hover-menu" data-gender="Female" data-clothing="Bottom">Bottom</a>
+                                <a class="dropdown-item text-dark hover-menu" data-gender="Female" data-clothing="Sweatshirt">Sweatshirt</a>
+                                <a class="dropdown-item text-dark hover-menu" data-gender="Female" data-clothing="Tracksuit">Tracksuit</a>
+                                <a class="dropdown-item text-dark hover-menu" data-gender="Female" data-clothing="Tanktop">Tank Top</a>
+                                <a class="dropdown-item text-dark hover-menu" data-gender="Female" data-clothing="Shorts">Shorts</a>
+                                <a class="dropdown-item text-dark hover-menu" data-gender="Female" data-clothing="Top">Top</a>
+                                <a class="dropdown-item text-dark hover-menu" data-gender="Female" data-clothing="Socks">Socks</a>
+                            </div>
                         </li>
                     </ul>
                     <partial name="_LoginPartial" />
@@ -55,5 +85,19 @@
     <script src="~/js/site.js" asp-append-version="true"></script>
     <partial name="_NotificationsPartial">
         @await RenderSectionAsync("Scripts", required: false)
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 </body>
 </html>
+
+<script>
+    $(document).ready(function () {
+        $('.dropdown-item').click(function (e) {
+            e.preventDefault();
+
+            var gender = $(this).data('gender');
+            var typeForClothes = $(this).data('clothing');
+
+            window.location.href = '/Clothes/ViewTypeOfCloth?gender=' + gender + '&clothing=' + typeForClothes;
+        });
+    });
+</script>

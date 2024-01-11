@@ -102,6 +102,25 @@
             return oldGarment;
         }
 
+        public async Task<IEnumerable<AllClothesViewModel>> ReturnTypeOfClothes(string gender, string typeOfClothes)
+        {
+            var genderEnum = (Gender)Enum.Parse(typeof(Gender), gender);
+            var typeOfClothesEnum = (TypeOfClothes)Enum.Parse(typeof(TypeOfClothes), typeOfClothes);
+
+            return await dbContext.Clothes
+                .Where(c => c.ClothesForGender == genderEnum ||
+                        c.ClothesForGender == Gender.Unisex &&
+                        c.TypeOfClothes == typeOfClothesEnum)
+                .Select(c => new AllClothesViewModel()
+                {
+                    Id = c.Id,
+                    Name = c.Name,
+                    Image = c.Image,
+                    Price = c.Price
+                })
+                .ToListAsync();
+        }
+
         public async Task UpdateGarment(int id, UpdateGarmentViewModel model)
         {
             var oldGarment =

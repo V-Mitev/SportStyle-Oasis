@@ -120,6 +120,21 @@
             }
         }
 
+        [HttpGet]
+        public async Task<IActionResult> ViewTypeOfCloth(string gender, string clothing)
+        {
+            try
+            {
+                var model = await clothesService.ReturnTypeOfClothes(gender, clothing);
+
+                return View(model);
+            }
+            catch (Exception)
+            {
+                return GeneralError();
+            }
+        }
+
         private IActionResult GeneralError()
         {
             TempData[ErrorMessage] =

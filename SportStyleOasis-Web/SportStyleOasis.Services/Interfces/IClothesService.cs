@@ -15,5 +15,7 @@
         public Task<UpdateGarmentViewModel> FindGarmentToUpdate(int id);
 
         public Task<ClothViewModel> ViewCloth(int id);
+
+        public Task<IEnumerable<AllClothesViewModel>> ReturnTypeOfClothes(string gender, string clothes);
     }
 }
