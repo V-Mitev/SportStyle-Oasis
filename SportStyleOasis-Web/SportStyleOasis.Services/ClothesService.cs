@@ -156,6 +156,7 @@
 
             var viewCloth = new ClothViewModel()
             {
+                Id = currentGarment.Id,
                 Name = currentGarment.Name,
                 Color = currentGarment.Color,
                 Price = currentGarment.Price,
