@@ -22,7 +22,7 @@
     <select class="form-control mb-2" id="garmentBrand" name="GarmentBrand" required>
         @foreach (var clothInventory in Model.ClothInventory)
         {
-            @if (clothInventory.AvailableQuantity > 1)
+            @if (clothInventory.AvailableQuantity > 0)
             {
                 <option value="@clothInventory.ClothesSize">@clothInventory.ClothesSize</option>
             }
