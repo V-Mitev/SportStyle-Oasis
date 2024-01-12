@@ -23,6 +23,7 @@
                     Price = 33.99M,
                     Image = "impact_whey_protein.jpg",
                     Weight = 1000,
+                    Description = "Test description about protein powder",
                     TypeOfProtein = TypeOfProtein.WheyProtein,
                     ProteinPowderBrands = ProteinPowderBrands.MyProtein,
                 },
@@ -33,6 +34,7 @@
                     Price = 54.99M,
                     Image = "bulk_isolate_protein.jpg",
                     Weight = 1000,
+                    Description = "Test description about protein powder",
                     TypeOfProtein = TypeOfProtein.IsolateProtein,
                     ProteinPowderBrands = ProteinPowderBrands.Bulk,
                 },
@@ -43,6 +45,7 @@
                     Price = 11.99M,
                     Image = "proteinWorks_vegan_protein.jpg",
                     Weight = 1000,
+                    Description = "Test description about protein powder",
                     TypeOfProtein = TypeOfProtein.VeganProtein,
                     ProteinPowderBrands = ProteinPowderBrands.ProteinWorks,
                 }

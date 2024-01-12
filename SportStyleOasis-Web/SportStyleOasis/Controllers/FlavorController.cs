@@ -3,47 +3,47 @@
     using Microsoft.AspNetCore.Mvc;
     using SportStyleOasis.Services.Interfces;
     using SportStyleOasis.Web.Infrastructure.Extensions;
+    using SportStyleOasis.Web.ViewModels.ProteinFlavor;
     using SportStyleOasis.Web.ViewModels.ProteinPowder;
     using static SportStyleOasis.Common.NotificationMessagesConstant;
 
-    public class ProteinPowderController : Controller
+    public class FlavorController : Controller
     {
-        private readonly IProteinPowderService proteinPowderService;
+        private readonly IFlavorService flavorService;
 
-        public ProteinPowderController(IProteinPowderService proteinPowderService)
+        public FlavorController(IFlavorService flavorService)
         {
-            this.proteinPowderService = proteinPowderService;
-        }
-
-        [HttpGet]
-        public async Task<IActionResult> All()
-        {
-            var proteinPowders = await proteinPowderService.AllAsync();
-
-            return View(proteinPowders);
+            this.flavorService = flavorService;
         }
 
         [HttpGet]
         public IActionResult Add()
         {
-            var model = new AddProteinPowderViewModel();
-            
+            var model = new ProteinFlavorViewModel();
+
             return View(model);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Add(AddProteinPowderViewModel model)
+        public async Task<IActionResult> Add(ProteinFlavorViewModel model)
         {
             if (!ModelState.IsValid)
             {
                 return View(model);
             }
 
-            HttpContext.Session.SetObject<AddProteinPowderViewModel>("ProteinPowder", model);
+            try
+            {
+                var proteinPowderModel = HttpContext.Session.GetObject<AddProteinPowderViewModel>("ProteinPowder")!;
 
-            await proteinPowderService.AddAsync(model);
+                await flavorService.AddFlavorAsync(model, proteinPowderModel.Name);
 
-            return RedirectToAction("Add", "Flavor");
+                return RedirectToAction("All", "ProteinPowder");
+            }
+            catch (Exception)
+            {
+                return GeneralError();
+            }
         }
 
         private IActionResult GeneralError()

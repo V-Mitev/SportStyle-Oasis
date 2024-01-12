@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SportStyleOasis.Data;
 
@@ -11,9 +12,10 @@ using SportStyleOasis.Data;
 namespace SportStyleOasis.Data.Migrations
 {
     [DbContext(typeof(SportStyleOasisDbContext))]
-    partial class SportStyleOasisDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240112122547_AddDescriptionToProteinPowder")]
+    partial class AddDescriptionToProteinPowder
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -494,10 +496,10 @@ namespace SportStyleOasis.Data.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int?>("ProteinPowderBrands")
+                    b.Property<int>("ProteinPowderBrands")
                         .HasColumnType("int");
 
-                    b.Property<int?>("TypeOfProtein")
+                    b.Property<int>("TypeOfProtein")
                         .HasColumnType("int");
 
                     b.Property<int>("Weight")

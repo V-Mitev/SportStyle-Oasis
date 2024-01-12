@@ -48,6 +48,9 @@
 
             public const int ProteinPowderTasteMinWeight = 25;
             public const int ProteinPowderTasteMaxWeight = 3000;
+
+            public const int ProteinPowderDescriptionMinLength = 10;
+            public const int ProteinPowderDescriptionMaxLength = 100;
         }
 
         public static class ProteinFlavor

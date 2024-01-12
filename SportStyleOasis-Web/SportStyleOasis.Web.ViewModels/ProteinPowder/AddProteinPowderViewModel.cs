@@ -1,22 +1,18 @@
-﻿namespace SportStyleOasis.Data.Models
+﻿namespace SportStyleOasis.Web.ViewModels.ProteinPowder
 {
     using SportStyleOasis.Data.Models.Enums;
+    using SportStyleOasis.Web.ViewModels.ProteinFlavor;
     using System.ComponentModel.DataAnnotations;
-    using static Common.EntityValidationConstants.ProteinPowder;
+    using static SportStyleOasis.Common.EntityValidationConstants.ProteinPowder;
 
-    public class ProteinPowder
+    public class AddProteinPowderViewModel
     {
-        public ProteinPowder()
+        public AddProteinPowderViewModel()
         {
-            Reviews = new HashSet<Review>();
-            ProteinFlavors = new HashSet<ProteinFlavor>();
-            ShoppingCarts = new HashSet<ShoppingCart>();
+            ProteinFlavors = new HashSet<ProteinFlavorViewModel>();    
         }
 
-        [Key]
-        public int Id { get; set; }
-
-        [MaxLength(ProteinPowderNameMaxLength)]
+        [StringLength(ProteinPowderNameMaxLength, MinimumLength = ProteinPowderNameMinLength)]
         public string Name { get; set; } = null!;
 
         [Range(typeof(decimal), MinProteinPowderPrice, MaxProteinPowderPrice)]
@@ -29,17 +25,13 @@
         public int Weight { get; set; }
 
         [Required]
-        [MaxLength(ProteinPowderDescriptionMaxLength)]
+        [StringLength(ProteinPowderDescriptionMaxLength, MinimumLength = ProteinPowderDescriptionMinLength)]
         public string Description { get; set; } = null!;
-
-        public ICollection<Review> Reviews { get; set; }
 
         public TypeOfProtein? TypeOfProtein { get; set; }
 
         public ProteinPowderBrands? ProteinPowderBrands { get; set; }
 
-        public ICollection<ProteinFlavor> ProteinFlavors { get; set; }
-
-        public ICollection<ShoppingCart> ShoppingCarts { get; set; }
+        public ICollection<ProteinFlavorViewModel> ProteinFlavors { get; set; }
     }
 }
