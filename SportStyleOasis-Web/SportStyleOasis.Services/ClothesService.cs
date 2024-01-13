@@ -108,9 +108,8 @@
             var typeOfClothesEnum = (TypeOfClothes)Enum.Parse(typeof(TypeOfClothes), typeOfClothes);
 
             return await dbContext.Clothes
-                .Where(c => c.ClothesForGender == genderEnum ||
-                        c.ClothesForGender == Gender.Unisex &&
-                        c.TypeOfClothes == typeOfClothesEnum)
+                .Where(c => (c.ClothesForGender == genderEnum || c.ClothesForGender == Gender.Unisex) &&
+                            c.TypeOfClothes == typeOfClothesEnum)
                 .Select(c => new AllClothesViewModel()
                 {
                     Id = c.Id,
