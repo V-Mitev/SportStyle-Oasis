@@ -8,8 +8,12 @@
 
         public Task AddAsync(AddProteinPowderViewModel model);
 
-        public Task<ProteinPowderViewModel> ViewProteinPowder(int id);
-
         public Task DeleteProteinPowder(int id);
+
+        public Task EditProteinPowder(int id, AddProteinPowderViewModel model);
+
+        public Task<ProteinPowderViewModel> FindProteinPowder(int id);
+
+        public Task<AddProteinPowderViewModel> FindProteinPowderForEdit(int id);
     }
 }

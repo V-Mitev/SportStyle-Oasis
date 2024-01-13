@@ -58,7 +58,7 @@
         {
             try
             {
-                var model = await proteinPowderService.ViewProteinPowder(id);
+                var model = await proteinPowderService.FindProteinPowder(id);
 
                 return View(model);
             }
@@ -76,6 +76,36 @@
                 await proteinPowderService.DeleteProteinPowder(id);
 
                 TempData[SuccessMessage] = $"Successfully delete protein powder with id: {id}!";
+
+                return RedirectToAction("All");
+            }
+            catch (Exception)
+            {
+                return GeneralError();
+            }
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Edit(int id)
+        {
+            var model = await proteinPowderService.FindProteinPowderForEdit(id);
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(int id, AddProteinPowderViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
+
+            try
+            {
+                await proteinPowderService.EditProteinPowder(id, model);
+
+                TempData[SuccessMessage] = $"Successfully edit protein powder {model.Name}!";
 
                 return RedirectToAction("All");
             }

@@ -61,7 +61,29 @@
             await dbContext.SaveChangesAsync();
         }
 
-        public async Task<ProteinPowderViewModel> ViewProteinPowder(int id)
+        public async Task EditProteinPowder(int id, AddProteinPowderViewModel model)
+        {
+            var proteinPowder = await dbContext.ProteinPowder
+                .Include(pp => pp.ProteinFlavors)
+                .FirstOrDefaultAsync(pp => pp.Id == id);
+
+            if (proteinPowder == null)
+            {
+                throw new InvalidOperationException($"This protein powder with {id} was not found!");
+            }
+
+            proteinPowder.Name = model.Name;
+            proteinPowder.Image = model.Image;
+            proteinPowder.Price = model.Price;
+            proteinPowder.Weight = model.Weight;
+            proteinPowder.Description = model.Description;
+            proteinPowder.TypeOfProtein = model.TypeOfProtein;
+            proteinPowder.ProteinPowderBrands = model.ProteinPowderBrands;
+
+            await dbContext.SaveChangesAsync();
+        }
+
+        public async Task<ProteinPowderViewModel> FindProteinPowder(int id)
         {
             var proteinPowder = await dbContext.ProteinPowder
                 .Include(pp => pp.ProteinFlavors)
@@ -74,10 +96,10 @@
 
             var proteinPowderModel = new ProteinPowderViewModel()
             {
-                Id = proteinPowder.Id,
+                Id = proteinPowder!.Id,
                 Name = proteinPowder.Name,
-                Price = proteinPowder.Price,
                 Image = proteinPowder.Image,
+                Price = proteinPowder.Price,
                 Weight = proteinPowder.Weight,
                 Description = proteinPowder.Description,
                 TypeOfProtein = proteinPowder.TypeOfProtein,
@@ -97,6 +119,30 @@
                     proteinPowderModel.ProteinFlavors.Add(flavor);
                 }
             }
+
+            return proteinPowderModel;
+        }
+
+        public async Task<AddProteinPowderViewModel> FindProteinPowderForEdit(int id)
+        {
+            var proteinPowder = await dbContext.ProteinPowder
+                .FirstOrDefaultAsync(pp => pp.Id == id);
+
+            if (proteinPowder == null)
+            {
+                throw new InvalidOperationException($"This protein powder with {id} was not found!");
+            }
+
+            var proteinPowderModel = new AddProteinPowderViewModel()
+            {
+                Name = proteinPowder.Name,
+                Image = proteinPowder.Image,
+                Price = proteinPowder.Price,
+                Weight = proteinPowder.Weight,
+                Description = proteinPowder.Description,
+                TypeOfProtein = proteinPowder.TypeOfProtein,
+                ProteinPowderBrands = proteinPowder.ProteinPowderBrands
+            };
 
             return proteinPowderModel;
         }
