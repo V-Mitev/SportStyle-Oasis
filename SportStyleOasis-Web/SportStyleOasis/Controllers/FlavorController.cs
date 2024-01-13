@@ -32,10 +32,17 @@
                 return View(model);
             }
 
+            var proteinPowderModel = HttpContext.Session.GetObject<AddProteinPowderViewModel>("ProteinPowder");
+
+            if (proteinPowderModel == null)
+            {
+                TempData[ErrorMessage] = "Please first add protein powder then and flavor!";
+
+                return RedirectToAction("Add", "ProteinPowder");
+            }
+
             try
             {
-                var proteinPowderModel = HttpContext.Session.GetObject<AddProteinPowderViewModel>("ProteinPowder")!;
-
                 await flavorService.AddFlavorAsync(model, proteinPowderModel.Name);
 
                 return RedirectToAction("All", "ProteinPowder");

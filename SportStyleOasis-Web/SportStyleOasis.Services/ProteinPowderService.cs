@@ -4,6 +4,7 @@
     using SportStyleOasis.Data;
     using SportStyleOasis.Data.Models;
     using SportStyleOasis.Services.Interfces;
+    using SportStyleOasis.Web.ViewModels.ProteinFlavor;
     using SportStyleOasis.Web.ViewModels.ProteinPowder;
 
     public class ProteinPowderService : IProteinPowderService
@@ -37,18 +38,52 @@
             return await dbContext.ProteinPowder
                 .Select(pp => new AllProteinPowderViewModel()
                 {
+                    Id = pp.Id,
                     Name = pp.Name,
-                    ProteinFlavor = pp.ProteinFlavors
-                        .Where(pf => pf.ProteinId == pp.Id)
-                        .Select(pf => pf.FlavorName)
-                        .ToList(),
                     Price = pp.Price,
                     Image = pp.Image,
-                    Weight = pp.Weight,
-                    Brand = pp.ProteinPowderBrands.ToString()!,
-                    ProteinType = pp.TypeOfProtein.ToString()!,
+                    ProteinPowderBrand = pp.ProteinPowderBrands,
                 })
                 .ToListAsync();
+        }
+
+        public async Task<ProteinPowderViewModel> ViewProteinPowder(int id)
+        {
+            var proteinPowder = await dbContext.ProteinPowder
+                .Include(pp => pp.ProteinFlavors)
+                .FirstOrDefaultAsync(pp => pp.Id == id);
+
+            if (proteinPowder == null)
+            {
+                throw new InvalidOperationException($"This protein powder with {id} was not found!");
+            }
+
+            var proteinPowderModel = new ProteinPowderViewModel()
+            {
+                Name = proteinPowder.Name,
+                Price = proteinPowder.Price,
+                Image = proteinPowder.Image,
+                Weight = proteinPowder.Weight,
+                Description = proteinPowder.Description,
+                TypeOfProtein = proteinPowder.TypeOfProtein,
+                ProteinPowderBrand = proteinPowder.ProteinPowderBrands
+            };
+
+            foreach (var proteinFlavors in proteinPowder.ProteinFlavors.OrderBy(pf => pf.FlavorName))
+            {
+                if (proteinFlavors.Quantity > 0)
+                {
+                    var flavor = new ProteinFlavorViewModel()
+                    {
+                        Quantity = proteinFlavors.Quantity,
+                        FlavorName = proteinFlavors.FlavorName
+                    };
+
+                    proteinPowderModel.ProteinFlavors.Add(flavor);
+                }
+            }
+
+            return proteinPowderModel;
         }
     }
 }

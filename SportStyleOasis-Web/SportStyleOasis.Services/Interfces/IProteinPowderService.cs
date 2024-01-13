@@ -7,5 +7,7 @@
         public Task<IEnumerable<AllProteinPowderViewModel>> AllAsync();
 
         public Task AddAsync(AddProteinPowderViewModel model);
+
+        public Task<ProteinPowderViewModel> ViewProteinPowder(int id);
     }
 }

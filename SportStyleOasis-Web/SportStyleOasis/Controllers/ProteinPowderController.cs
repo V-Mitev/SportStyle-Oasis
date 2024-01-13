@@ -39,11 +39,33 @@
                 return View(model);
             }
 
-            HttpContext.Session.SetObject<AddProteinPowderViewModel>("ProteinPowder", model);
+            try
+            {
+                HttpContext.Session.SetObject<AddProteinPowderViewModel>("ProteinPowder", model);
 
-            await proteinPowderService.AddAsync(model);
+                await proteinPowderService.AddAsync(model);
 
-            return RedirectToAction("Add", "Flavor");
+                return RedirectToAction("Add", "Flavor");
+            }
+            catch (Exception)
+            {
+                return GeneralError();
+            }
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> ViewProteinPowder(int id)
+        {
+            try
+            {
+                var model = await proteinPowderService.ViewProteinPowder(id);
+
+                return View(model);
+            }
+            catch (Exception)
+            {
+                return GeneralError();
+            }
         }
 
         private IActionResult GeneralError()
