@@ -68,6 +68,23 @@
             }
         }
 
+        [HttpPost]
+        public async Task<IActionResult> Delete(int id)
+        {
+            try
+            {
+                await proteinPowderService.DeleteProteinPowder(id);
+
+                TempData[SuccessMessage] = $"Successfully delete protein powder with id: {id}!";
+
+                return RedirectToAction("All");
+            }
+            catch (Exception)
+            {
+                return GeneralError();
+            }
+        }
+
         private IActionResult GeneralError()
         {
             TempData[ErrorMessage] =

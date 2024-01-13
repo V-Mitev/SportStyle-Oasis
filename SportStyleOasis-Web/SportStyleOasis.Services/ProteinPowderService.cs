@@ -47,6 +47,20 @@
                 .ToListAsync();
         }
 
+        public async Task DeleteProteinPowder(int id)
+        {
+            var proteinPowder = await dbContext.ProteinPowder
+                .FirstOrDefaultAsync(pp => pp.Id == id);
+
+            if (proteinPowder == null)
+            {
+                throw new InvalidOperationException($"This protein powder with {id} was not found!");
+            }
+
+            dbContext.ProteinPowder.Remove(proteinPowder);
+            await dbContext.SaveChangesAsync();
+        }
+
         public async Task<ProteinPowderViewModel> ViewProteinPowder(int id)
         {
             var proteinPowder = await dbContext.ProteinPowder
@@ -60,6 +74,7 @@
 
             var proteinPowderModel = new ProteinPowderViewModel()
             {
+                Id = proteinPowder.Id,
                 Name = proteinPowder.Name,
                 Price = proteinPowder.Price,
                 Image = proteinPowder.Image,
