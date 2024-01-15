@@ -52,7 +52,7 @@
             }
 
             return
-               proteinPowder.ProteinFlavors.Any(pf => pf.FlavorName == flavorName);
+               proteinPowder.ProteinFlavors.Any(pf => pf.FlavorName.ToLower() == flavorName.ToLower());
         }
     }
 }

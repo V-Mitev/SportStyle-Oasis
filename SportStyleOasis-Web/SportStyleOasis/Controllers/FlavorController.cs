@@ -41,6 +41,8 @@
             {
                 await flavorService.AddFlavorAsync(model, id);
 
+                TempData[SuccessMessage] = $"Successfully added flavor {model.FlavorName} to protein powder.";
+
                 return RedirectToAction("ViewProteinPowder", "ProteinPowder", new { id = id });
             }
             catch (Exception)

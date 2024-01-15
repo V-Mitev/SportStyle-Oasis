@@ -26,7 +26,7 @@
         public IActionResult Add()
         {
             var model = new AddProteinPowderViewModel();
-            
+
             return View(model);
         }
 
@@ -41,6 +41,9 @@
             try
             {
                 await proteinPowderService.AddAsync(model);
+
+                TempData[SuccessMessage] = "Successfully created a protein powder.";
+                TempData[WarningMessage] = "If you don't add flavor within two minutes, the protein entry will be deleted upon refreshing the page!";
 
                 return RedirectToAction("All");
             }
