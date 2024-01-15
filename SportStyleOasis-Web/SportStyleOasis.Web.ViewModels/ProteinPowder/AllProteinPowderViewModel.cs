@@ -12,6 +12,8 @@
 
         public string Image { get; set; } = null!;
 
+        public DateTime TimeForAddFlavor { get; set; }
+
         public ProteinPowderBrands? ProteinPowderBrand { get; set; }
     }
 }

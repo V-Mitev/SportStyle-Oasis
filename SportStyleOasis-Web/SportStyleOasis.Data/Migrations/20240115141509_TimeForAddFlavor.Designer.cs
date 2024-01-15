@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SportStyleOasis.Data;
 
@@ -11,9 +12,10 @@ using SportStyleOasis.Data;
 namespace SportStyleOasis.Data.Migrations
 {
     [DbContext(typeof(SportStyleOasisDbContext))]
-    partial class SportStyleOasisDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240115141509_TimeForAddFlavor")]
+    partial class TimeForAddFlavor
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -519,7 +521,7 @@ namespace SportStyleOasis.Data.Migrations
                             Name = "Impact Whey Protein",
                             Price = 33.99m,
                             ProteinPowderBrands = 3,
-                            TimeForAddFlavor = new DateTime(2024, 1, 15, 14, 53, 15, 377, DateTimeKind.Utc).AddTicks(4669),
+                            TimeForAddFlavor = new DateTime(2024, 1, 15, 14, 15, 8, 778, DateTimeKind.Utc).AddTicks(7512),
                             TypeOfProtein = 0,
                             Weight = 1000
                         },
@@ -531,7 +533,7 @@ namespace SportStyleOasis.Data.Migrations
                             Name = "Pure Whey Protein Isolate",
                             Price = 54.99m,
                             ProteinPowderBrands = 0,
-                            TimeForAddFlavor = new DateTime(2024, 1, 15, 14, 53, 15, 377, DateTimeKind.Utc).AddTicks(4681),
+                            TimeForAddFlavor = new DateTime(2024, 1, 15, 14, 15, 8, 778, DateTimeKind.Utc).AddTicks(7533),
                             TypeOfProtein = 2,
                             Weight = 1000
                         },
@@ -543,7 +545,7 @@ namespace SportStyleOasis.Data.Migrations
                             Name = "Vegan Protein",
                             Price = 11.99m,
                             ProteinPowderBrands = 5,
-                            TimeForAddFlavor = new DateTime(2024, 1, 15, 14, 53, 15, 377, DateTimeKind.Utc).AddTicks(4685),
+                            TimeForAddFlavor = new DateTime(2024, 1, 15, 14, 15, 8, 778, DateTimeKind.Utc).AddTicks(7539),
                             TypeOfProtein = 1,
                             Weight = 1000
                         });

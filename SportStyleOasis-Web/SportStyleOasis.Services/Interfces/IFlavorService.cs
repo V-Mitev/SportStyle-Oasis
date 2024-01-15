@@ -4,6 +4,8 @@
 
     public interface IFlavorService
     {
-        public Task AddFlavorAsync(ProteinFlavorViewModel flavor, string proteinPowderName);
+        public Task AddFlavorAsync(ProteinFlavorViewModel flavor, int id);
+
+        public Task<bool> IsFlavorAlreadyAdded(int roteinPowderId, string flavorName);
     }
 }

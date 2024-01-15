@@ -5,6 +5,7 @@
     using SportStyleOasis.Data.Models;
     using SportStyleOasis.Services.Interfces;
     using SportStyleOasis.Web.ViewModels.ProteinFlavor;
+    using System.Linq;
     using System.Threading.Tasks;
 
     public class FlavorService : IFlavorService
@@ -16,14 +17,14 @@
             this.dbContext = dbContext;
         }
 
-        public async Task AddFlavorAsync(ProteinFlavorViewModel model, string proteinPowderName)
+        public async Task AddFlavorAsync(ProteinFlavorViewModel model, int id)
         {
             var proteinPowder = await dbContext.ProteinPowder
-                .FirstOrDefaultAsync(pp => pp.Name == proteinPowderName);
+                .FirstOrDefaultAsync(pp => pp.Id == id);
 
             if (proteinPowder == null)
             {
-                throw new InvalidOperationException($"Protein Powder {proteinPowderName} was not found!");
+                throw new InvalidOperationException($"Protein Powder with this id: {id} was not found!");
             }
 
             var flavor = new ProteinFlavor()
@@ -38,6 +39,20 @@
 
             await dbContext.ProteinFlavor.AddAsync(flavor);
             await dbContext.SaveChangesAsync();
+        }
+
+        public async Task<bool> IsFlavorAlreadyAdded(int proteinPowderId, string flavorName)
+        {
+            var proteinPowder = await dbContext.ProteinPowder
+                .FirstOrDefaultAsync(pp => pp.Id == proteinPowderId);
+
+            if (proteinPowder == null)
+            {
+                throw new InvalidOperationException($"Protein Powder with this id: {proteinPowderId} was not found!");
+            }
+
+            return
+               proteinPowder.ProteinFlavors.Any(pf => pf.FlavorName == flavorName);
         }
     }
 }

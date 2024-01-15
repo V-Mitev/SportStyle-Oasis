@@ -25,6 +25,7 @@
                 Price = model.Price,
                 Weight = model.Weight,
                 Description = model.Description,
+                TimeForAddFlavor = DateTime.UtcNow,
                 TypeOfProtein = model.TypeOfProtein,
                 ProteinPowderBrands = model.ProteinPowderBrands
             };
@@ -103,6 +104,7 @@
                 Weight = proteinPowder.Weight,
                 Description = proteinPowder.Description,
                 TypeOfProtein = proteinPowder.TypeOfProtein,
+                TimeForAddFlavor = proteinPowder.TimeForAddFlavor,
                 ProteinPowderBrand = proteinPowder.ProteinPowderBrands
             };
 

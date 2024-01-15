@@ -1,4 +1,5 @@
 ﻿@model IEnumerable<AllProteinPowderViewModel>
+@inject IProteinPowderService ProteinPowderService;
 
 @{
     TempData["Title"] = "Here you can see all our protein powders";
@@ -9,6 +10,23 @@
         cursor: pointer;
     }
 </style>
+
+@* This check is in place to prevent someone from attempting to add a large quantity of unflavored proteins, which would be deleted upon page refresh. *@
+@foreach (var model in Model)
+{
+    var proteinPowder = await ProteinPowderService.FindProteinPowder(model.Id);
+
+    var timeforAddFlavorExpired = proteinPowder.TimeForAddFlavor.AddMinutes(2);
+    var currentHour = DateTime.UtcNow;
+
+    if (timeforAddFlavorExpired <= currentHour)
+    {
+        if (proteinPowder.ProteinFlavors.Count == 0)
+        {
+            await ProteinPowderService.DeleteProteinPowder(model.Id);
+        }
+    }
+}
 
 <h1 class="text-center">@TempData["Title"]</h1>
 

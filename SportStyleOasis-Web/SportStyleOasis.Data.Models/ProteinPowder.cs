@@ -32,6 +32,9 @@
         [MaxLength(ProteinPowderDescriptionMaxLength)]
         public string Description { get; set; } = null!;
 
+        [Required]
+        public DateTime TimeForAddFlavor { get; set; }
+
         public ICollection<Review> Reviews { get; set; }
 
         public TypeOfProtein? TypeOfProtein { get; set; }

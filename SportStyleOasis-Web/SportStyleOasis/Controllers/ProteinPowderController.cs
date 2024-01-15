@@ -2,7 +2,6 @@
 {
     using Microsoft.AspNetCore.Mvc;
     using SportStyleOasis.Services.Interfces;
-    using SportStyleOasis.Web.Infrastructure.Extensions;
     using SportStyleOasis.Web.ViewModels.ProteinPowder;
     using static SportStyleOasis.Common.NotificationMessagesConstant;
 
@@ -41,11 +40,9 @@
 
             try
             {
-                HttpContext.Session.SetObject<AddProteinPowderViewModel>("ProteinPowder", model);
-
                 await proteinPowderService.AddAsync(model);
 
-                return RedirectToAction("Add", "Flavor");
+                return RedirectToAction("All");
             }
             catch (Exception)
             {

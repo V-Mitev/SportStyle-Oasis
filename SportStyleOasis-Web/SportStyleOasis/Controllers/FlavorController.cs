@@ -2,9 +2,7 @@
 {
     using Microsoft.AspNetCore.Mvc;
     using SportStyleOasis.Services.Interfces;
-    using SportStyleOasis.Web.Infrastructure.Extensions;
     using SportStyleOasis.Web.ViewModels.ProteinFlavor;
-    using SportStyleOasis.Web.ViewModels.ProteinPowder;
     using static SportStyleOasis.Common.NotificationMessagesConstant;
 
     public class FlavorController : Controller
@@ -25,27 +23,25 @@
         }
 
         [HttpPost]
-        public async Task<IActionResult> Add(ProteinFlavorViewModel model)
+        public async Task<IActionResult> Add(ProteinFlavorViewModel model, int id)
         {
             if (!ModelState.IsValid)
             {
                 return View(model);
             }
 
-            var proteinPowderModel = HttpContext.Session.GetObject<AddProteinPowderViewModel>("ProteinPowder");
+            var isAlreadyAddedFlavor = await flavorService.IsFlavorAlreadyAdded(id, model.FlavorName);
 
-            if (proteinPowderModel == null)
+            if (isAlreadyAddedFlavor)
             {
-                TempData[ErrorMessage] = "Please first add protein powder then and flavor!";
-
-                return RedirectToAction("Add", "ProteinPowder");
+                TempData[ErrorMessage] = $"This flavor: {model.FlavorName} is already added! Please try again with new flavor.";
             }
 
             try
             {
-                await flavorService.AddFlavorAsync(model, proteinPowderModel.Name);
+                await flavorService.AddFlavorAsync(model, id);
 
-                return RedirectToAction("All", "ProteinPowder");
+                return RedirectToAction("ViewProteinPowder", "ProteinPowder", new { id = id });
             }
             catch (Exception)
             {
