@@ -12,7 +12,7 @@
         [Required]
         public string UserName { get; set; } = null!;
 
-        public DateTime CreateAt { get; set; }
+        public DateTime CreatedAt { get; set; }
 
         public string? Comment { get; set; }
 

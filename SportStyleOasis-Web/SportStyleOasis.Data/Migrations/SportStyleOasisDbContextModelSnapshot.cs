@@ -519,7 +519,7 @@ namespace SportStyleOasis.Data.Migrations
                             Name = "Impact Whey Protein",
                             Price = 33.99m,
                             ProteinPowderBrands = 3,
-                            TimeForAddFlavor = new DateTime(2024, 1, 17, 10, 26, 21, 490, DateTimeKind.Utc).AddTicks(9636),
+                            TimeForAddFlavor = new DateTime(2024, 1, 17, 10, 56, 20, 930, DateTimeKind.Utc).AddTicks(1441),
                             TypeOfProtein = 0,
                             Weight = 1000
                         },
@@ -531,7 +531,7 @@ namespace SportStyleOasis.Data.Migrations
                             Name = "Pure Whey Protein Isolate",
                             Price = 54.99m,
                             ProteinPowderBrands = 0,
-                            TimeForAddFlavor = new DateTime(2024, 1, 17, 10, 26, 21, 490, DateTimeKind.Utc).AddTicks(9646),
+                            TimeForAddFlavor = new DateTime(2024, 1, 17, 10, 56, 20, 930, DateTimeKind.Utc).AddTicks(1452),
                             TypeOfProtein = 2,
                             Weight = 1000
                         },
@@ -543,7 +543,7 @@ namespace SportStyleOasis.Data.Migrations
                             Name = "Vegan Protein",
                             Price = 11.99m,
                             ProteinPowderBrands = 5,
-                            TimeForAddFlavor = new DateTime(2024, 1, 17, 10, 26, 21, 490, DateTimeKind.Utc).AddTicks(9651),
+                            TimeForAddFlavor = new DateTime(2024, 1, 17, 10, 56, 20, 930, DateTimeKind.Utc).AddTicks(1456),
                             TypeOfProtein = 1,
                             Weight = 1000
                         });
@@ -563,7 +563,7 @@ namespace SportStyleOasis.Data.Migrations
                     b.Property<string>("Comment")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("CreateAt")
+                    b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<int?>("ProteinPowderId")
@@ -583,6 +583,62 @@ namespace SportStyleOasis.Data.Migrations
                     b.HasIndex("ProteinPowderId");
 
                     b.ToTable("Review");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            ClothesId = 1,
+                            Comment = "I really like the design and comfort of this gray T-shirt. Perfect for casual wear.",
+                            CreatedAt = new DateTime(2024, 1, 17, 10, 56, 20, 930, DateTimeKind.Utc).AddTicks(5577),
+                            Rating = 4.5,
+                            UserName = "TestUserName"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            ClothesId = 2,
+                            Comment = "The black T-shirt fits well and has a nice price. Great for everyday use.",
+                            CreatedAt = new DateTime(2024, 1, 17, 10, 56, 20, 930, DateTimeKind.Utc).AddTicks(5584),
+                            Rating = 4.0,
+                            UserName = "TestUserName"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            ClothesId = 3,
+                            Comment = "Absolutely love the style and feel of this white T-shirt. It's a must-have for any wardrobe!",
+                            CreatedAt = new DateTime(2024, 1, 17, 10, 56, 20, 930, DateTimeKind.Utc).AddTicks(5586),
+                            Rating = 5.0,
+                            UserName = "TestUserName"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Comment = "Great taste and mixes well. Impact Whey is my go-to protein for post-workout recovery.",
+                            CreatedAt = new DateTime(2024, 1, 17, 10, 56, 20, 930, DateTimeKind.Utc).AddTicks(5588),
+                            ProteinPowderId = 1,
+                            Rating = 5.0,
+                            UserName = "TestUserName"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Comment = "Bulk Isolate Protein delivers excellent results. It's a bit pricey, but the quality is worth it.",
+                            CreatedAt = new DateTime(2024, 1, 17, 10, 56, 20, 930, DateTimeKind.Utc).AddTicks(5594),
+                            ProteinPowderId = 2,
+                            Rating = 4.7999999999999998,
+                            UserName = "TestUserName"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Comment = "As a vegan, I love ProteinWorks' Vegan Protein. Tastes great and meets my nutritional needs perfectly.",
+                            CreatedAt = new DateTime(2024, 1, 17, 10, 56, 20, 930, DateTimeKind.Utc).AddTicks(5596),
+                            ProteinPowderId = 3,
+                            Rating = 4.9000000000000004,
+                            UserName = "TestUserName"
+                        });
                 });
 
             modelBuilder.Entity("SportStyleOasis.Data.Models.ShoppingCart", b =>
