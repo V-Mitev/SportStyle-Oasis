@@ -78,7 +78,7 @@
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
-            var model = await clothesService.FindGarmentToUpdate(id);
+            var model = await clothesService.FindGarmentToUpdateAsync(id);
 
             return View(model);
         }
@@ -93,7 +93,7 @@
 
             try
             {
-                await clothesService.UpdateGarment(id, model);
+                await clothesService.UpdateGarmentAsync(id, model);
 
                 TempData[SuccessMessage] = $"The garment '{model.Name}' was successfully edited!";
 
@@ -110,7 +110,7 @@
         {
             try
             {
-                var model = await clothesService.ViewCloth(id);
+                var model = await clothesService.ViewClothAsync(id);
 
                 return View(model);
             }
@@ -125,7 +125,7 @@
         {
             try
             {
-                var model = await clothesService.ReturnTypeOfClothes(gender, clothing);
+                var model = await clothesService.ReturnTypeOfClothesAsync(gender, clothing);
 
                 return View(model);
             }

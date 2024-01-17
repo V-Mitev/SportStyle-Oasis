@@ -7,6 +7,7 @@
     using SportStyleOasis.Services.Interfces;
     using SportStyleOasis.Web.ViewModels.Clothes;
     using SportStyleOasis.Web.ViewModels.ClothInventory;
+    using SportStyleOasis.Web.ViewModels.Review;
     using System.Collections.Generic;
     using System.Threading.Tasks;
 
@@ -76,7 +77,7 @@
             await dbContext.SaveChangesAsync();
         }
 
-        public async Task<UpdateGarmentViewModel> FindGarmentToUpdate(int id)
+        public async Task<UpdateGarmentViewModel> FindGarmentToUpdateAsync(int id)
         {
             var garment =
                 await dbContext.Clothes.FirstOrDefaultAsync(g => g.Id == id);
@@ -102,7 +103,7 @@
             return oldGarment;
         }
 
-        public async Task<IEnumerable<AllClothesViewModel>> ReturnTypeOfClothes(string gender, string typeOfClothes)
+        public async Task<IEnumerable<AllClothesViewModel>> ReturnTypeOfClothesAsync(string gender, string typeOfClothes)
         {
             var genderEnum = (Gender)Enum.Parse(typeof(Gender), gender);
             var typeOfClothesEnum = (TypeOfClothes)Enum.Parse(typeof(TypeOfClothes), typeOfClothes);
@@ -120,7 +121,7 @@
                 .ToListAsync();
         }
 
-        public async Task UpdateGarment(int id, UpdateGarmentViewModel model)
+        public async Task UpdateGarmentAsync(int id, UpdateGarmentViewModel model)
         {
             var oldGarment =
                 await dbContext.Clothes.FirstOrDefaultAsync(g => g.Id == id);
@@ -142,10 +143,11 @@
             await dbContext.SaveChangesAsync();
         }
 
-        public async Task<ClothViewModel> ViewCloth(int id)
+        public async Task<ClothViewModel> ViewClothAsync(int id)
         {
             var currentGarment = await dbContext.Clothes
                 .Include(c => c.ClotheInventories)
+                .Include(c => c.Reviews)
                 .FirstOrDefaultAsync(g => g.Id == id);
 
             if (currentGarment == null)
@@ -161,19 +163,25 @@
                 Price = currentGarment.Price,
                 Image = currentGarment.Image,
                 Description = currentGarment.Description,
-                GarmentType = (TypeOfClothes)currentGarment.TypeOfClothes!
+                GarmentType = (TypeOfClothes)currentGarment.TypeOfClothes!,
+                Reviews = currentGarment.Reviews
+                    .OrderByDescending(r => r.CreatedAt)
+                    .Select(r => new ReviewViewModel()
+                    {
+                        UserName = r.UserName,
+                        Comment = r.Comment,
+                        Rating = r.Rating,
+                        CreatedAt = r.CreatedAt,
+                    })
+                    .ToList(),
+                ClothInventory = currentGarment.ClotheInventories
+                    .OrderBy(ci => ci.ClothesSize)
+                    .Select(ci => new ClothInventoryViewModel()
+                    {
+                        AvailableQuantity = ci.AvailableQuantity,
+                        ClothesSize = ci.ClothesSize
+                    }).ToList()
             };
-
-            foreach (var clotheInventory in currentGarment.ClotheInventories.OrderBy(ci => ci.ClothesSize))
-            {
-                var clothInventoryViewModel = new ClothInventoryViewModel()
-                {
-                    AvailableQuantity = clotheInventory.AvailableQuantity,
-                    ClothesSize = clotheInventory.ClothesSize
-                };
-
-                viewCloth.ClothInventory.Add(clothInventoryViewModel);
-            }
 
             return viewCloth;
         }

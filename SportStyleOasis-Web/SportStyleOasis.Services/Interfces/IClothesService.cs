@@ -10,12 +10,12 @@
 
         public Task DeleteGarmentAsync(int id);
 
-        public Task UpdateGarment(int id, UpdateGarmentViewModel model);
+        public Task UpdateGarmentAsync(int id, UpdateGarmentViewModel model);
 
-        public Task<UpdateGarmentViewModel> FindGarmentToUpdate(int id);
+        public Task<UpdateGarmentViewModel> FindGarmentToUpdateAsync(int id);
 
-        public Task<ClothViewModel> ViewCloth(int id);
+        public Task<ClothViewModel> ViewClothAsync(int id);
 
-        public Task<IEnumerable<AllClothesViewModel>> ReturnTypeOfClothes(string gender, string clothes);
+        public Task<IEnumerable<AllClothesViewModel>> ReturnTypeOfClothesAsync(string gender, string clothes);
     }
 }
