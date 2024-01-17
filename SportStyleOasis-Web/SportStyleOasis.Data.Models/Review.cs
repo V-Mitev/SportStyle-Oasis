@@ -2,15 +2,22 @@
 {
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
+    using static SportStyleOasis.Common.EntityValidationConstants.Review;
 
     public class Review
     {
         [Key]
         public int Id { get; set; }
 
-        public string? Comments { get; set; }
+        [Required]
+        public string UserName { get; set; } = null!;
 
-        public int Rating { get; set; }
+        public DateTime CreateAt { get; set; }
+
+        public string? Comment { get; set; }
+
+        [Range(typeof(double), RatingMinValue, RatingMaxValue)]
+        public double Rating { get; set; }
 
         [ForeignKey(nameof(Clothes))]
         public int? ClothesId { get; set; }

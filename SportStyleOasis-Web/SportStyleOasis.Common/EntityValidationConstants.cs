@@ -61,5 +61,11 @@
             public const int ProteinFlavorMinQuantity = 0;
             public const int ProteinFlavorMaxQuantity = 250;
         }
+
+        public static class Review
+        {
+            public const string RatingMinValue = "0";
+            public const string RatingMaxValue = "6";
+        }
     }
 }
