@@ -37,12 +37,19 @@
         public async Task<IEnumerable<AllProteinPowderViewModel>> AllAsync()
         {
             return await dbContext.ProteinPowder
+                .Include(pp => pp.ProteinFlavors)
                 .Select(pp => new AllProteinPowderViewModel()
                 {
                     Id = pp.Id,
                     Name = pp.Name,
                     Price = pp.Price,
                     Image = pp.Image,
+                    ProteinFlavors = pp.ProteinFlavors
+                        .Select(pf => new ProteinFlavorViewModel()
+                        {
+                            FlavorName = pf.FlavorName,
+                            Quantity = pf.Quantity
+                        }).ToList(),
                     ProteinPowderBrand = pp.ProteinPowderBrands,
                 })
                 .ToListAsync();

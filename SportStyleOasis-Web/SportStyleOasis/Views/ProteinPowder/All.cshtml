@@ -16,7 +16,7 @@
 {
     var proteinPowder = await ProteinPowderService.FindProteinPowder(model.Id);
 
-    var timeforAddFlavorExpired = proteinPowder.TimeForAddFlavor.AddMinutes(2);
+    var timeforAddFlavorExpired = proteinPowder.TimeForAddFlavor.AddMinutes(5);
     var currentHour = DateTime.UtcNow;
 
     if (timeforAddFlavorExpired <= currentHour)
@@ -42,6 +42,11 @@
     <tbody>
         @foreach (var proteinPowder in Model)
         {
+            if (proteinPowder.ProteinFlavors.Count == 0)
+            {
+                continue;
+            }
+
             <tr>
                 <td>@proteinPowder.Name</td>
                 <td>@proteinPowder.ProteinPowderBrand</td>
