@@ -6,6 +6,7 @@
     using SportStyleOasis.Services.Interfces;
     using SportStyleOasis.Web.ViewModels.ProteinFlavor;
     using SportStyleOasis.Web.ViewModels.ProteinPowder;
+    using SportStyleOasis.Web.ViewModels.Review;
 
     public class ProteinPowderService : IProteinPowderService
     {
@@ -100,6 +101,7 @@
         public async Task<ProteinPowderViewModel> FindProteinPowder(int id)
         {
             var proteinPowder = await dbContext.ProteinPowder
+                .Include(pp => pp.Reviews)
                 .Include(pp => pp.ProteinFlavors)
                 .FirstOrDefaultAsync(pp => pp.Id == id);
 
@@ -118,7 +120,17 @@
                 Description = proteinPowder.Description,
                 TypeOfProtein = proteinPowder.TypeOfProtein,
                 TimeForAddFlavor = proteinPowder.TimeForAddFlavor,
-                ProteinPowderBrand = proteinPowder.ProteinPowderBrands
+                ProteinPowderBrand = proteinPowder.ProteinPowderBrands,
+                Reviews = proteinPowder.Reviews
+                    .OrderByDescending(r => r.CreatedAt)
+                    .Select(r => new ReviewViewModel()
+                    {
+                        UserName = r.UserName,
+                        Comment = r.Comment,
+                        Rating = r.Rating,
+                        CreatedAt = r.CreatedAt,
+                    })
+                    .ToList()
             };
 
             foreach (var proteinFlavors in proteinPowder.ProteinFlavors.OrderBy(pf => pf.FlavorName))
