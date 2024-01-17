@@ -9,6 +9,12 @@
     {
         public void Configure(EntityTypeBuilder<ClotheInventory> builder)
         {
+            builder
+                .HasOne(ci => ci.Clothes)
+                .WithMany(ci => ci.ClotheInventories)
+                .HasForeignKey(ci => ci.ClothId)
+                .OnDelete(DeleteBehavior.Cascade);
+
             builder.HasData(GenerateClotheInventory());
         }
 

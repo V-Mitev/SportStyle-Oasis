@@ -8,6 +8,12 @@
     {
         public void Configure(EntityTypeBuilder<ProteinFlavor> builder)
         {
+            builder
+                .HasOne(pf => pf.Protein)
+                .WithMany(pp => pp.ProteinFlavors)
+                .HasForeignKey(pf => pf.ProteinId)
+                .OnDelete(DeleteBehavior.Cascade);
+
             builder.HasData(GenerateProteinFlavor());
         }
 
