@@ -38,14 +38,28 @@
                 return View(model);
             }
 
+            var isProteinExistsAlready = await proteinPowderService.DoesТheProteinAlreadyExist(model.Name);
+
+            if (isProteinExistsAlready)
+            {
+                TempData[ErrorMessage] =
+                    $"Error: The protein powder with the name '{model.Name}' already exists. Please choose a different name or refrain from adding it.";
+
+                return View(model);
+            }
+
             try
             {
                 await proteinPowderService.AddAsync(model);
 
-                TempData[SuccessMessage] = "Successfully created a protein powder.";
-                TempData[WarningMessage] = "If you don't add flavor within two minutes, the protein entry will be deleted upon refreshing the page!";
+                TempData[SuccessMessage] = $"Successfully created a protein powder {model.Name}.";
 
-                return RedirectToAction("All");
+                TempData[WarningMessage] = 
+                    "If you don't add flavor within two minutes, the protein entry will be deleted upon refreshing the page!";
+
+                var proteinPowderId = await proteinPowderService.FindProteinPowderToReturnId(model.Name);
+
+                return RedirectToAction("ViewProteinPowder", "ProteinPowder", new { id = proteinPowderId });
             }
             catch (Exception)
             {

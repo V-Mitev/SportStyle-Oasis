@@ -62,6 +62,12 @@
             await dbContext.SaveChangesAsync();
         }
 
+        public async Task<bool> DoesТheProteinAlreadyExist(string proteinPowderName)
+        {
+            return await dbContext.ProteinPowder
+                .AnyAsync(pp => pp.Name.ToLower() == proteinPowderName.ToLower());
+        }
+
         public async Task EditProteinPowder(int id, AddProteinPowderViewModel model)
         {
             var proteinPowder = await dbContext.ProteinPowder
@@ -147,6 +153,14 @@
             };
 
             return proteinPowderModel;
+        }
+
+        public async Task<int?> FindProteinPowderToReturnId(string proteinPowderName)
+        {
+            return await dbContext.ProteinPowder
+                .Where(pp => pp.Name.ToLower() == proteinPowderName.ToLower())
+                .Select(pp => pp.Id)
+                .FirstOrDefaultAsync();
         }
     }
 }

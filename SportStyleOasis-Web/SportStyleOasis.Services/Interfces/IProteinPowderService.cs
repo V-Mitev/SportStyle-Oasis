@@ -15,5 +15,9 @@
         public Task<ProteinPowderViewModel> FindProteinPowder(int id);
 
         public Task<AddProteinPowderViewModel> FindProteinPowderForEdit(int id);
+
+        public Task<bool> DoesТheProteinAlreadyExist(string porteinPowderName);
+
+        public Task<int?> FindProteinPowderToReturnId(string porteinPowderName);
     }
 }
