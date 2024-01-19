@@ -2,6 +2,6 @@
 {
     public interface IUserService
     {
-        public Task<string> GetUserFullName(string? email);
+        public Task<string> GetUserFullNameByIdAsync(string userId);
     }
 }

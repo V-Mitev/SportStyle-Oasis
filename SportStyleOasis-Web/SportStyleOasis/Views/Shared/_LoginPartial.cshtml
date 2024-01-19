@@ -1,9 +1,10 @@
 ﻿@inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
 @inject IUserService UserService
+@using SportStyleOasis.Web.Infrastructure.Extensions;
 
 @{
-    var userFullName = await UserService.GetUserFullName(User.Identity?.Name);
+    var userFullName = await UserService.GetUserFullNameByIdAsync(User.GetId());
 }
 
 <ul class="navbar-nav">

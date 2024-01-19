@@ -14,10 +14,10 @@
             this.dbContext = dbContext;
         }
 
-        public async Task<string> GetUserFullName(string? email)
+        public async Task<string> GetUserFullNameByIdAsync(string userId)
         {
             var user = await dbContext.ApplicationUsers
-                .FirstOrDefaultAsync(u => u.Email == email);
+                .FirstOrDefaultAsync(u => u.Id.ToString() == userId);
 
             if (user == null)
             {

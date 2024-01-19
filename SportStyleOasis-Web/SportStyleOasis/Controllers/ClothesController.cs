@@ -4,6 +4,8 @@
     using SportStyleOasis.Data.Models.Enums;
     using SportStyleOasis.Services.Interfces;
     using SportStyleOasis.Web.ViewModels.Clothes;
+    using SportStyleOasis.Web.ViewModels.ClothReview;
+    using SportStyleOasis.Web.ViewModels.Review;
     using static SportStyleOasis.Common.NotificationMessagesConstant;
 
     public class ClothesController : Controller
@@ -110,9 +112,16 @@
         {
             try
             {
-                var model = await clothesService.ViewClothAsync(id);
+                var clothModel = await clothesService.ViewClothAsync(id);
+                var reviewModel = new ReviewViewModel();
 
-                return View(model);
+                var viewModel = new ClothReviewViewModel
+                {
+                    Cloth = clothModel,
+                    Review = reviewModel
+                };
+
+                return View(viewModel);
             }
             catch (Exception)
             {
