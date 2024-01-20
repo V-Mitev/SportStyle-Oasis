@@ -1,8 +1,12 @@
 ﻿namespace SportStyleOasis.Controllers
 {
     using Microsoft.AspNetCore.Mvc;
+    using SportStyleOasis.Services;
     using SportStyleOasis.Services.Interfces;
+    using SportStyleOasis.Web.ViewModels.ClothReview;
     using SportStyleOasis.Web.ViewModels.ProteinPowder;
+    using SportStyleOasis.Web.ViewModels.ProteinReview;
+    using SportStyleOasis.Web.ViewModels.Review;
     using static SportStyleOasis.Common.NotificationMessagesConstant;
 
     public class ProteinPowderController : Controller
@@ -74,7 +78,15 @@
             {
                 var model = await proteinPowderService.FindProteinPowder(id);
 
-                return View(model);
+                var reviewModel = new ReviewViewModel();
+
+                var viewModel = new ProteinPowderReviewViewModel()
+                {
+                    ProteinPowder = model,
+                    Review = reviewModel
+                };
+
+                return View(viewModel);
             }
             catch (Exception)
             {

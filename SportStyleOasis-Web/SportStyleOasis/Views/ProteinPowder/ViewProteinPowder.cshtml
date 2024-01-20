@@ -1,4 +1,4 @@
-﻿@model ProteinPowderViewModel
+﻿@model ProteinPowderReviewViewModel
 
 <style>
     .space {
@@ -6,31 +6,31 @@
     }
 </style>
 
-<h1 class="text-center">@Model.Name</h1>
+<h1 class="text-center">@Model.ProteinPowder.Name</h1>
 
 <div>
-    <img src="~/images/@Model.Image" alt="@Model.Name Image">
+    <img src="~/images/@Model.ProteinPowder.Image" alt="@Model.ProteinPowder.Name Image">
 </div>
 
 <div>
-    <p><strong>Price:</strong> $@Model.Price</p>
-    <p><strong>Description:</strong> @Model.Description</p>
-    <p><strong>Protein Powder Brand:</strong> @Model.ProteinPowderBrand</p>
-    <p><strong>Weight in grams:</strong> @Model.Weight</p>
-    <p><strong>Protein Type:</strong> @Model.TypeOfProtein</p>
+    <p><strong>Price:</strong> $@Model.ProteinPowder.Price</p>
+    <p><strong>Description:</strong> @Model.ProteinPowder.Description</p>
+    <p><strong>Protein Powder Brand:</strong> @Model.ProteinPowder.ProteinPowderBrand</p>
+    <p><strong>Weight in grams:</strong> @Model.ProteinPowder.Weight</p>
+    <p><strong>Protein Type:</strong> @Model.ProteinPowder.TypeOfProtein</p>
     <p><strong>Availabe Protein Powder Flavors:</strong></p>
     <select class="form-control mb-2" id="proteinFlavors" name="ProteinFlavors" required>
-        @foreach (var proteinPowderFlavor in Model.ProteinFlavors)
+        @foreach (var proteinPowderFlavor in Model.ProteinPowder.ProteinFlavors)
         {
             <option value="@proteinPowderFlavor.FlavorName">@proteinPowderFlavor.FlavorName</option>
         }
     </select>
 
     <p><strong>Ratings:</strong></p>
-    @if (Model.Reviews != null && Model.Reviews.Any())
+    @if (Model.ProteinPowder.Reviews != null && Model.ProteinPowder.Reviews.Any())
     {
         <ul>
-            @foreach (var review in Model.Reviews)
+            @foreach (var review in Model.ProteinPowder.Reviews)
             {
                 <li>Rating: @review.Rating, Comment: @review.Comment, CreatedAt: @review.CreatedAt, UserName: @review.UserName</li>
             }
@@ -41,28 +41,27 @@
         <p>No ratings yet.</p>
     }
 
-    <form asp-controller="ProteinPowder" asp-action="AddRating" method="post">
-        <input type="hidden" name="ProteinPowderId" value="@Model.Id" />
-        <label for="rating">Rating:</label>
-        <select name="rating" id="rating" required>
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
+    <form asp-controller="Review" asp-action="AddProteinPowderReview" method="post">
+        <input type="hidden" name="proteinPowderId" value="@Model.ProteinPowder.Id" />
+
+        <label asp-for="Review.Rating">Rating:</label>
+        <select asp-for="Review.Rating" asp-items="new SelectList(new List<int> { 1, 2, 3, 4, 5 })" class="form-control" required>
+            <option value="">Select Rating</option>
         </select>
-        <br />
-        <label for="comment">Comment:</label>
-        <textarea name="comment" id="comment" class="mb-2"></textarea>
-        <br />
+        <span asp-validation-for="Review.Rating" class="text-danger"></span>
+
+        <label asp-for="Review.Comment">Comment:</label>
+        <textarea asp-for="Review.Comment" class="form-control mb-2" required></textarea>
+        <span asp-validation-for="Review.Comment" class="text-danger"></span>
+
         <input type="submit" value="Submit Rating" class="btn btn-primary mb-2" />
     </form>
 </div>
 
 <div class="d-flex align-items-center">
-    <a asp-controller="ProteinPowder" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">Edit</a>
-    <form asp-controller="ProteinPowder" asp-action="Delete" asp-route-id="@Model.Id">
-        <input type="submit" value="Delete" class="btn btn-danger space" onclick="return confirm('Are you sure you want to delete this Protein Powder: @Model.Name')" />
+    <a asp-controller="ProteinPowder" asp-action="Edit" asp-route-id="@Model.ProteinPowder.Id" class="btn btn-warning">Edit</a>
+    <form asp-controller="ProteinPowder" asp-action="Delete" asp-route-id="@Model.ProteinPowder.Id">
+        <input type="submit" value="Delete" class="btn btn-danger space" onclick="return confirm('Are you sure you want to delete this Protein Powder: @Model.ProteinPowder.Name')" />
     </form>
-    <a asp-controller="Flavor" asp-action="Add" asp-route-id="@Model.Id" class="btn btn-primary space">Add flavor</a>
+    <a asp-controller="Flavor" asp-action="Add" asp-route-id="@Model.ProteinPowder.Id" class="btn btn-primary space">Add flavor</a>
 </div>

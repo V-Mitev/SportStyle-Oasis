@@ -1,5 +1,4 @@
-﻿@using SportStyleOasis.Web.ViewModels.ClothReview;
-@model ClothReviewViewModel
+﻿@model ClothReviewViewModel
 
 <style>
     .space {
@@ -45,7 +44,7 @@
         <p>No ratings yet.</p>
     }
 
-    <form asp-controller="Review" asp-action="Add" method="post">
+    <form asp-controller="Review" asp-action="AddClotheReview" method="post">
         <input type="hidden" name="clothId" value="@Model.Cloth.Id" />
 
         <label asp-for="Review.Rating">Rating:</label>
