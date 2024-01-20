@@ -1,5 +1,6 @@
 ﻿namespace SportStyleOasis.Controllers
 {
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using SportStyleOasis.Services.Interfces;
     using SportStyleOasis.Web.Infrastructure.Extensions;
@@ -7,6 +8,7 @@
     using SportStyleOasis.Web.ViewModels.ProteinReview;
     using static SportStyleOasis.Common.NotificationMessagesConstant;
 
+    [Authorize]
     public class ReviewController : Controller
     {
         public readonly IReviewService reviewService;

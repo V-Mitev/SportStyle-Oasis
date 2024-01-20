@@ -1,10 +1,12 @@
 ﻿namespace SportStyleOasis.Controllers
 {
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using SportStyleOasis.Services.Interfces;
     using SportStyleOasis.Web.ViewModels.ProteinFlavor;
     using static SportStyleOasis.Common.NotificationMessagesConstant;
 
+    [Authorize]
     public class FlavorController : Controller
     {
         private readonly IFlavorService flavorService;

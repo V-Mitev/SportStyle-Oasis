@@ -1,14 +1,14 @@
 ﻿namespace SportStyleOasis.Controllers
 {
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
-    using SportStyleOasis.Services;
     using SportStyleOasis.Services.Interfces;
-    using SportStyleOasis.Web.ViewModels.ClothReview;
     using SportStyleOasis.Web.ViewModels.ProteinPowder;
     using SportStyleOasis.Web.ViewModels.ProteinReview;
     using SportStyleOasis.Web.ViewModels.Review;
     using static SportStyleOasis.Common.NotificationMessagesConstant;
 
+    [Authorize]
     public class ProteinPowderController : Controller
     {
         private readonly IProteinPowderService proteinPowderService;
@@ -19,6 +19,7 @@
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public async Task<IActionResult> All()
         {
             var proteinPowders = await proteinPowderService.AllAsync();
@@ -72,6 +73,7 @@
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public async Task<IActionResult> ViewProteinPowder(int id)
         {
             try
