@@ -37,7 +37,7 @@
 
             try
             {
-                await reviewService.AddReview(model.Review, clothId, userFullName);
+                await reviewService.AddReview(model.Review, clothId, 0,userFullName);
 
                 return RedirectToAction("ViewCloth", "Clothes", new { id = clothId });
             }
@@ -66,7 +66,7 @@
 
             try
             {
-                await reviewService.AddReview(model.Review, proteinPowderId, userFullName);
+                await reviewService.AddReview(model.Review, 0, proteinPowderId, userFullName);
 
                 return RedirectToAction("ViewProteinPowder", "ProteinPowder", new { id = proteinPowderId });
             }

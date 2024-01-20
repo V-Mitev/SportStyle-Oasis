@@ -4,6 +4,8 @@
 
     public interface IReviewService
     {
-        public Task AddReview(ReviewViewModel model, int clothId, string userFullName);
+        public Task AddReview(ReviewViewModel model, int clothId, int proteinPowderId, string userFullName);
+
+        public Task AddProteinPowderReview(ReviewViewModel model, int proteinPowderId, string userFullName);
     }
 }
