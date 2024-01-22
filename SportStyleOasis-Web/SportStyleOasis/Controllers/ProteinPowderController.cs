@@ -7,8 +7,9 @@
     using SportStyleOasis.Web.ViewModels.ProteinReview;
     using SportStyleOasis.Web.ViewModels.Review;
     using static SportStyleOasis.Common.NotificationMessagesConstant;
+    using static SportStyleOasis.Common.GeneralApplicationConstants;
 
-    [Authorize]
+    [AllowAnonymous]
     public class ProteinPowderController : Controller
     {
         private readonly IProteinPowderService proteinPowderService;
@@ -19,7 +20,6 @@
         }
 
         [HttpGet]
-        [AllowAnonymous]
         public async Task<IActionResult> All()
         {
             var proteinPowders = await proteinPowderService.AllAsync();
@@ -28,6 +28,7 @@
         }
 
         [HttpGet]
+        [Authorize(Roles = AdminRoleName)]
         public IActionResult Add()
         {
             var model = new AddProteinPowderViewModel();
@@ -36,6 +37,7 @@
         }
 
         [HttpPost]
+        [Authorize(Roles = AdminRoleName)]
         public async Task<IActionResult> Add(AddProteinPowderViewModel model)
         {
             if (!ModelState.IsValid)
@@ -73,7 +75,6 @@
         }
 
         [HttpGet]
-        [AllowAnonymous]
         public async Task<IActionResult> ViewProteinPowder(int id)
         {
             try
@@ -97,6 +98,7 @@
         }
 
         [HttpPost]
+        [Authorize(Roles = AdminRoleName)]
         public async Task<IActionResult> Delete(int id)
         {
             try
@@ -114,6 +116,7 @@
         }
 
         [HttpGet]
+        [Authorize(Roles = AdminRoleName)]
         public async Task<IActionResult> Edit(int id)
         {
             var model = await proteinPowderService.FindProteinPowderForEdit(id);
@@ -122,6 +125,7 @@
         }
 
         [HttpPost]
+        [Authorize(Roles = AdminRoleName)]
         public async Task<IActionResult> Edit(int id, AddProteinPowderViewModel model)
         {
             if (!ModelState.IsValid)

@@ -8,8 +8,9 @@
     using SportStyleOasis.Web.ViewModels.ClothReview;
     using SportStyleOasis.Web.ViewModels.Review;
     using static SportStyleOasis.Common.NotificationMessagesConstant;
+    using static SportStyleOasis.Common.GeneralApplicationConstants;
 
-    [Authorize]
+    [AllowAnonymous]
     public class ClothesController : Controller
     {
         private readonly IClothesService clothesService;
@@ -20,7 +21,6 @@
         }
 
         [HttpGet]
-        [AllowAnonymous]
         public async Task<IActionResult> All()
         {
             var clothes = await clothesService.AllAsync();
@@ -29,6 +29,7 @@
         }
 
         [HttpGet]
+        [Authorize(Roles = AdminRoleName)]
         public IActionResult Add()
         {
             AddClotheViewModel model = new AddClotheViewModel();
@@ -42,6 +43,7 @@
         }
 
         [HttpPost]
+        [Authorize(Roles = AdminRoleName)]
         public async Task<IActionResult> Add(AddClotheViewModel model)
         {
             if (!ModelState.IsValid)
@@ -64,6 +66,7 @@
         }
 
         [HttpPost]
+        [Authorize(Roles = AdminRoleName)]
         public async Task<IActionResult> Delete(int id)
         {
             try
@@ -81,6 +84,7 @@
         }
 
         [HttpGet]
+        [Authorize(Roles = AdminRoleName)]
         public async Task<IActionResult> Edit(int id)
         {
             var model = await clothesService.FindGarmentToUpdateAsync(id);
@@ -89,6 +93,7 @@
         }
 
         [HttpPost]
+        [Authorize(Roles = AdminRoleName)]
         public async Task<IActionResult> Edit(int id, UpdateGarmentViewModel model)
         {
             if (!ModelState.IsValid)
@@ -111,7 +116,6 @@
         }
 
         [HttpGet]
-        [AllowAnonymous]
         public async Task<IActionResult> ViewCloth(int id)
         {
             try
@@ -134,7 +138,6 @@
         }
 
         [HttpGet]
-        [AllowAnonymous]
         public async Task<IActionResult> ViewTypeOfCloth(string gender, string clothing)
         {
             try

@@ -5,8 +5,8 @@
     using SportStyleOasis.Services.Interfces;
     using SportStyleOasis.Web.ViewModels.ProteinFlavor;
     using static SportStyleOasis.Common.NotificationMessagesConstant;
+    using static SportStyleOasis.Common.GeneralApplicationConstants;
 
-    [Authorize]
     public class FlavorController : Controller
     {
         private readonly IFlavorService flavorService;
@@ -17,6 +17,7 @@
         }
 
         [HttpGet]
+        [Authorize(Roles = AdminRoleName)]
         public IActionResult Add()
         {
             var model = new ProteinFlavorViewModel();
@@ -25,6 +26,7 @@
         }
 
         [HttpPost]
+        [Authorize(Roles = AdminRoleName)]
         public async Task<IActionResult> Add(ProteinFlavorViewModel model, int id)
         {
             if (!ModelState.IsValid)
