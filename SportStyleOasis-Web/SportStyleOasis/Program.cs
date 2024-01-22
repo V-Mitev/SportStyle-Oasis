@@ -7,6 +7,7 @@ namespace SportStyleOasis
     using SportStyleOasis.Services.Interfces;
     using SportStyleOasis.Web.Infrastructure.ModelBinders;
     using static SportStyleOasis.Web.Infrastructure.Extensions.WebApplicationBuilderExtensions;
+    using static Common.GeneralApplicationConstants;
 
     public class Program
     {
@@ -89,6 +90,8 @@ namespace SportStyleOasis
 
             app.UseAuthentication();
             app.UseAuthorization();
+
+            app.SeedAdministrator(AdminEmail);
 
             app.UseSession();
 
