@@ -34,6 +34,15 @@
                 return View(model);
             }
 
+            var isEmailAlreadyExists = await userManager.FindByEmailAsync(model.Email);
+
+            if (isEmailAlreadyExists != null)
+            {
+                TempData[ErrorMessage] = "This email already exists, please try again with another email";
+
+                return View(model);
+            }
+
             ApplicationUser user = new ApplicationUser()
             {
                 FirstName = model.FirstName,
