@@ -8,8 +8,7 @@
 
         public string UserName { get; set; } = null!;
 
-        [Required]
-        public string Comment { get; set; } = null!;
+        public string? Comment { get; set; }
 
         public double Rating { get; set; }
 
