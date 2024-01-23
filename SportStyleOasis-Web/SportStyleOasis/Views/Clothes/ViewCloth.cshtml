@@ -1,7 +1,6 @@
 ﻿@model ClothReviewViewModel
 @inject IUserService UserService
 @using static SportStyleOasis.Web.Infrastructure.Extensions.ClaimsPrincipalExtensions
-@using static SportStyleOasis.Common.EntityValidationConstants.Review
 
 <style>
     .space {
@@ -40,7 +39,14 @@
             {
                 <li>
                     <div class="comment-content" data-review-id="@review.Id" data-initial-comment="@review.Comment" data-initial-rating="@review.Rating">
-                        Rating: <span class="rating">@review.Rating</span>, Comment: <span class="comment">@review.Comment, CreateAt: @review.CreatedAt, UserName: @review.UserName </span>
+                        <span>
+                            Rating: <span class="rating">@review.Rating</span>,
+                            @if (review.Comment != null)
+                            {
+                                <span>Comment: <span class="comment">@review.Comment,</span></span>
+                            }
+                            CreateAt: @review.CreatedAt, UserName: @review.UserName
+                        </span>
                         @if (await UserService.IsThisUserPostThisReview(User.GetId(), review.Id))
                         {
                             <button class="edit-btn btn btn-primary mb-2">Edit</button>
@@ -135,7 +141,14 @@
                         success: function (response) {
                             var formattedCreatedAt = new Date(response.createdAt).toLocaleDateString('en-US');
                             var editButton = `<button class="edit-btn btn btn-primary">Edit</button>`;
-                            var updatedContent = `Rating: ${response.rating}, Comment: ${response.comment}, CreatedAt: ${formattedCreatedAt}, User: ${response.userName} ${editButton}`;
+
+                            var updatedContent = `Rating: ${response.rating}, `;
+
+                            if (response.comment === null) {
+                                updatedContent += `CreatedAt: ${formattedCreatedAt}, User: ${response.userName} ${editButton}`;
+                            } else {
+                                updatedContent += `Comment: ${response.comment}, CreatedAt: ${formattedCreatedAt}, User: ${response.userName} ${editButton}`;
+                            }
 
                             reviewContainer.find('.edit-form').remove();
                             reviewContainer.append(updatedContent);
