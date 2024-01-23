@@ -1,5 +1,7 @@
 ﻿@model ClothReviewViewModel
+@inject IUserService UserService;
 @using static SportStyleOasis.Web.Infrastructure.Extensions.ClaimsPrincipalExtensions;
+@using static SportStyleOasis.Common.EntityValidationConstants.Review;
 
 <style>
     .space {
@@ -19,7 +21,7 @@
     <p><strong>Clothe Brand:</strong> @Model.Cloth.GarmentBrand</p>
     <p><strong>Gender:</strong> @Model.Cloth.GarmentForGender</p>
     <p><strong>Type of Clothes:</strong> @Model.Cloth.GarmentType</p>
-    <p><strong>Availabe Clothe Size:</strong></p>
+    <p><strong>Available Clothe Size:</strong></p>
     <select class="form-control mb-2" id="garmentBrand" name="GarmentBrand" required>
         @foreach (var clothInventory in Model.Cloth.ClothInventory)
         {
@@ -36,7 +38,15 @@
         <ul>
             @foreach (var review in Model.Cloth.Reviews)
             {
-                <li>Rating: @review.Rating, Comment: @review.Comment, CreatedAt: @review.CreatedAt, UserName: @review.UserName</li>
+                <li>
+                    <div class="comment-content" data-review-id="@review.Id" data-initial-comment="@review.Comment" data-initial-rating="@review.Rating">
+                        Rating: <span class="rating">@review.Rating</span>, Comment: <span class="comment">@review.Comment, CreateAt: @review.CreatedAt, UserName: @review.UserName </span>
+                        @if (await UserService.IsThisUserPostThisReview(User.GetId(), review.Id))
+                        {
+                            <button class="edit-btn btn btn-primary mb-2">Edit</button>
+                        }
+                    </div>
+                </li>
             }
         </ul>
     }
@@ -44,7 +54,7 @@
     {
         <p>No ratings yet.</p>
     }
-
+    
     <form asp-controller="Review" asp-action="AddClotheReview" method="post">
         <input type="hidden" name="clothId" value="@Model.Cloth.Id" />
 
@@ -71,3 +81,74 @@
         </form>
     </div>
 }
+
+@section scripts {
+    <script>
+        $(document).ready(function () {
+            function setupEditForm(reviewContainer) {
+                var reviewId = reviewContainer.data("review-id");
+                var initialComment = reviewContainer.data("initial-comment");
+                var initialRating = reviewContainer.data("initial-rating");
+
+                var editForm = `
+                                    <form class="edit-form" data-review-id="${reviewId}">
+                                        <label>Edit Comment:</label>
+                                        <input type="text" class="form-control mb-2" value="${initialComment}" name="editedComment"/>
+
+                                        <label>Edit Rating:</label>
+                                        <select class="form-control mb-2" name="editedRating" required>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                        </select>
+
+                                        <button type="button" class="btn btn-primary save-btn">Save</button>
+                                    </form>`;
+
+                var editFormContainer = $('<div>').html(editForm);
+                reviewContainer.html('').append(editFormContainer);
+                editFormContainer.find("[name='editedComment']").val(initialComment);
+                editFormContainer.find("[name='editedRating']").val(initialRating);
+            }
+
+            function attachEventListeners() {
+                $(document).off("click", ".edit-btn").on("click", ".edit-btn", function () {
+                    var reviewContainer = $(this).closest(".comment-content");
+                    setupEditForm(reviewContainer);
+                });
+
+                $(document).off("click", ".save-btn").on("click", ".save-btn", function () {
+                    var reviewContainer = $(this).closest(".comment-content");
+                    var reviewId = reviewContainer.data("review-id");
+                    var editedComment = reviewContainer.find("[name='editedComment']").val();
+                    var editedRating = reviewContainer.find("[name='editedRating']").val();
+
+                    reviewContainer.data("initial-comment", editedComment);
+                    reviewContainer.data("initial-rating", editedRating);
+
+                    $.ajax({
+                        type: 'POST',
+                        url: '/Review/EditReview',
+                        data: { reviewId, editedComment, editedRating },
+                        success: function (response) {
+                            var formattedCreatedAt = new Date(response.createdAt).toLocaleDateString('en-US');
+                            var editButton = `<button class="edit-btn btn btn-primary">Edit</button>`;
+                            var updatedContent = `Rating: ${response.rating}, Comment: ${response.comment}, CreatedAt: ${formattedCreatedAt}, User: ${response.userName} ${editButton}`;
+
+                            reviewContainer.find('.edit-form').remove();
+                            reviewContainer.append(updatedContent);
+                            attachEventListeners();
+                        },
+                        error: function (error) {
+                            console.error('Error updating comment:', error);
+                        }
+                    });
+                });
+            }
+
+            attachEventListeners();
+        });
+    </script>
+    }

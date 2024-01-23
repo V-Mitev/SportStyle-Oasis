@@ -6,6 +6,7 @@
     using SportStyleOasis.Web.Infrastructure.Extensions;
     using SportStyleOasis.Web.ViewModels.ClothReview;
     using SportStyleOasis.Web.ViewModels.ProteinReview;
+    using SportStyleOasis.Web.ViewModels.Review;
     using static SportStyleOasis.Common.NotificationMessagesConstant;
 
     [Authorize]
@@ -39,7 +40,7 @@
 
             try
             {
-                await reviewService.AddReview(model.Review, clothId, 0,userFullName);
+                await reviewService.AddReview(model.Review, clothId, 0, userFullName);
 
                 return RedirectToAction("ViewCloth", "Clothes", new { id = clothId });
             }
@@ -71,6 +72,21 @@
                 await reviewService.AddReview(model.Review, 0, proteinPowderId, userFullName);
 
                 return RedirectToAction("ViewProteinPowder", "ProteinPowder", new { id = proteinPowderId });
+            }
+            catch (Exception)
+            {
+                return GeneralError();
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditReview(int reviewId, string editedComment, int editedRating)
+        {
+            try
+            {
+                var model = await reviewService.EditReview(reviewId, editedComment, editedRating);
+
+                return Ok(model);
             }
             catch (Exception)
             {

@@ -64,8 +64,11 @@
 
         public static class Review
         {
-            public const string RatingMinValue = "0";
-            public const string RatingMaxValue = "6";
+            public const string RatingMinValue = "1";
+            public const string RatingMaxValue = "5";
+
+            public const int CommentMinLength = 5;
+            public const int CommentMaxLength = 50;
         }
     }
 }

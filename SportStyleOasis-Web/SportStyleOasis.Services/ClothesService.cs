@@ -168,6 +168,7 @@
                     .OrderByDescending(r => r.CreatedAt)
                     .Select(r => new ReviewViewModel()
                     {
+                        Id = r.Id,
                         UserName = r.UserName,
                         Comment = r.Comment,
                         Rating = r.Rating,

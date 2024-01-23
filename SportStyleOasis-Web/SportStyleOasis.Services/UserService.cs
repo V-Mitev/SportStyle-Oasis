@@ -26,5 +26,23 @@
 
             return $"{user.FirstName} {user.LastName}";
         }
+
+        public async Task<bool> IsThisUserPostThisReview(string userId, int? reviewId)
+        {
+            var user = await dbContext.ApplicationUsers
+                .FirstOrDefaultAsync(u => u.Id.ToString() == userId);
+
+            var userName = $"{user?.FirstName} {user?.LastName}";
+
+            var review = await dbContext.Review
+                .FirstOrDefaultAsync(r => r.Id == reviewId);
+
+            if (review?.UserName != userName)
+            {
+                return false;
+            }
+
+            return true;
+        }
     }
 }
