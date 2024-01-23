@@ -36,7 +36,14 @@
             {
                 <li>
                     <div class="comment-content" data-review-id="@review.Id" data-initial-comment="@review.Comment" data-initial-rating="@review.Rating">
-                        Rating: <span class="rating">@review.Rating</span>, Comment: <span class="comment">@review.Comment, CreateAt: @review.CreatedAt, UserName: @review.UserName </span>
+                        <span>
+                            Rating: <span class="rating">@review.Rating</span>,
+                            @if (review.Comment != null)
+                            {
+                                <span>Comment: <span class="comment">@review.Comment,</span></span>
+                            }
+                            CreateAt: @review.CreatedAt, UserName: @review.UserName
+                        </span>
                         @if (await UserService.IsThisUserPostThisReview(User.GetId(), review.Id))
                         {
                             <button class="edit-btn btn btn-primary mb-2">Edit</button>
@@ -88,21 +95,21 @@
                 var initialRating = reviewContainer.data("initial-rating");
 
                 var editForm = `
-                                            <form class="edit-form" data-review-id="${reviewId}">
-                                                <label>Edit Comment:</label>
-                                                <input type="text" class="form-control mb-2" value="${initialComment}" name="editedComment"/>
+                                                            <form class="edit-form" data-review-id="${reviewId}">
+                                                                <label>Edit Comment:</label>
+                                                                <input type="text" class="form-control mb-2" value="${initialComment}" name="editedComment"/>
 
-                                                <label>Edit Rating:</label>
-                                                <select class="form-control mb-2" name="editedRating" required>
-                                                    <option value="1">1</option>
-                                                    <option value="2">2</option>
-                                                    <option value="3">3</option>
-                                                    <option value="4">4</option>
-                                                    <option value="5">5</option>
-                                                </select>
+                                                                <label>Edit Rating:</label>
+                                                                <select class="form-control mb-2" name="editedRating" required>
+                                                                    <option value="1">1</option>
+                                                                    <option value="2">2</option>
+                                                                    <option value="3">3</option>
+                                                                    <option value="4">4</option>
+                                                                    <option value="5">5</option>
+                                                                </select>
 
-                                                <button type="button" class="btn btn-primary save-btn">Save</button>
-                                            </form>`;
+                                                                <button type="button" class="btn btn-primary save-btn">Save</button>
+                                                            </form>`;
 
                 var editFormContainer = $('<div>').html(editForm);
                 reviewContainer.html('').append(editFormContainer);
@@ -132,8 +139,15 @@
                         success: function (response) {
                             var formattedCreatedAt = new Date(response.createdAt).toLocaleDateString('en-US');
                             var editButton = `<button class="edit-btn btn btn-primary">Edit</button>`;
-                            var updatedContent = `Rating: ${response.rating}, Comment: ${response.comment}, CreatedAt: ${formattedCreatedAt}, User: ${response.userName} ${editButton}`;
 
+                            var updatedContent = `Rating: ${response.rating}, `;
+
+                            if (response.comment === null) {
+                                updatedContent += `CreatedAt: ${formattedCreatedAt}, User: ${response.userName} ${editButton}`;
+                            } else {
+                                updatedContent +=`Comment: ${response.comment}, CreatedAt: ${formattedCreatedAt}, User: ${response.userName} ${editButton}`;
+                            }
+                            
                             reviewContainer.find('.edit-form').remove();
                             reviewContainer.append(updatedContent);
                             attachEventListeners();
