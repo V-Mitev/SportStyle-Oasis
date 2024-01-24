@@ -28,9 +28,9 @@
                 return GeneralError();
             }
 
-            if (model.Review.Comment == null || model.Review.Rating == 0)
+            if (model.Review.Rating == 0)
             {
-                TempData[ErrorMessage] = "Please fill in all fields before submitting your review.";
+                TempData[ErrorMessage] = "Please select rating before submitting your review.";
 
                 return RedirectToAction("ViewCloth", "Clothes", new { id = clothId });
             }
@@ -57,9 +57,9 @@
                 return GeneralError();
             }
 
-            if (model.Review.Comment == null || model.Review.Rating == 0)
+            if (model.Review.Rating == 0)
             {
-                TempData[ErrorMessage] = "Please fill in all fields before submitting your review.";
+                TempData[ErrorMessage] = "Please select rating before submitting your review.";
 
                 return RedirectToAction("ViewProteinPowder", "ProteinPowder", new { id = proteinPowderId });
             }
