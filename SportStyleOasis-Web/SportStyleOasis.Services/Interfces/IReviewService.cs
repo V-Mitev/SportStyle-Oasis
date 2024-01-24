@@ -9,5 +9,7 @@
         public Task<ReviewViewModel> EditReview(int reviewId, string editedComment, int editedRating);
 
         public Task<bool> IsUserAddReviewToClothe(string userId, int clothId);
+
+        public Task<bool> IsUserAddReviewToProteinPowder(string userId, int proteinPowderId);
     }
 }

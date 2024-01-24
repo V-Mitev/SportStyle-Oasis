@@ -6,7 +6,6 @@
     using SportStyleOasis.Web.Infrastructure.Extensions;
     using SportStyleOasis.Web.ViewModels.ClothReview;
     using SportStyleOasis.Web.ViewModels.ProteinReview;
-    using SportStyleOasis.Web.ViewModels.Review;
     using static SportStyleOasis.Common.NotificationMessagesConstant;
 
     [Authorize]

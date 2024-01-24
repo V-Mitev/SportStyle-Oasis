@@ -77,5 +77,21 @@
 
             return true;
         }
+
+        public async Task<bool> IsUserAddReviewToProteinPowder(string userId, int proteinPowderId)
+        {
+            var userName = await userService.GetUserFullNameByIdAsync(userId);
+
+            var review = await dbContext.Review
+                .Where(r => r.ProteinPowderId == proteinPowderId && r.UserName == userName)
+                .FirstOrDefaultAsync();
+
+            if (review == null)
+            {
+                return false;
+            }
+
+            return true;
+        }
     }
 }

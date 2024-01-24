@@ -1,6 +1,11 @@
 ﻿@model ProteinPowderReviewViewModel
 @inject IUserService UserService
+@inject IReviewService ReviewService
 @using static SportStyleOasis.Web.Infrastructure.Extensions.ClaimsPrincipalExtensions;
+
+@{
+    var userId = User.GetId();
+}
 
 <style>
     .space {
@@ -44,7 +49,7 @@
                             }
                             CreateAt: @review.CreatedAt, UserName: @review.UserName
                         </span>
-                        @if (await UserService.IsThisUserPostThisReview(User.GetId(), review.Id))
+                        @if (await UserService.IsThisUserPostThisReview(userId, review.Id))
                         {
                             <button class="edit-btn btn btn-primary mb-2">Edit</button>
                         }
@@ -58,21 +63,24 @@
         <p>No ratings yet.</p>
     }
 
-    <form asp-controller="Review" asp-action="AddProteinPowderReview" method="post">
-        <input type="hidden" name="proteinPowderId" value="@Model.ProteinPowder.Id" />
+    @if (!await ReviewService.IsUserAddReviewToProteinPowder(userId, Model.ProteinPowder.Id))
+    {
+        <form asp-controller="Review" asp-action="AddProteinPowderReview" method="post">
+            <input type="hidden" name="proteinPowderId" value="@Model.ProteinPowder.Id" />
 
-        <label asp-for="Review.Rating">Rating:</label>
-        <select asp-for="Review.Rating" asp-items="new SelectList(new List<int> { 1, 2, 3, 4, 5 })" class="form-control" required>
-            <option value="">Select Rating</option>
-        </select>
-        <span asp-validation-for="Review.Rating" class="text-danger"></span>
+            <label asp-for="Review.Rating">Rating:</label>
+            <select asp-for="Review.Rating" asp-items="new SelectList(new List<int> { 1, 2, 3, 4, 5 })" class="form-control" required>
+                <option value="">Select Rating</option>
+            </select>
+            <span asp-validation-for="Review.Rating" class="text-danger"></span>
 
-        <label asp-for="Review.Comment">Comment:</label>
-        <textarea asp-for="Review.Comment" class="form-control mb-2" required></textarea>
-        <span asp-validation-for="Review.Comment" class="text-danger"></span>
+            <label asp-for="Review.Comment">Comment:</label>
+            <textarea asp-for="Review.Comment" class="form-control mb-2"></textarea>
+            <span asp-validation-for="Review.Comment" class="text-danger"></span>
 
-        <input type="submit" value="Submit Rating" class="btn btn-primary mb-2" />
-    </form>
+            <input type="submit" value="Submit Rating" class="btn btn-primary mb-2" />
+        </form>
+    }
 </div>
 
 @if (User.IsAdmin())
@@ -95,21 +103,21 @@
                 var initialRating = reviewContainer.data("initial-rating");
 
                 var editForm = `
-                                                            <form class="edit-form" data-review-id="${reviewId}">
-                                                                <label>Edit Comment:</label>
-                                                                <input type="text" class="form-control mb-2" value="${initialComment}" name="editedComment"/>
+                                                                    <form class="edit-form" data-review-id="${reviewId}">
+                                                                        <label>Edit Comment:</label>
+                                                                        <input type="text" class="form-control mb-2" value="${initialComment}" name="editedComment"/>
 
-                                                                <label>Edit Rating:</label>
-                                                                <select class="form-control mb-2" name="editedRating" required>
-                                                                    <option value="1">1</option>
-                                                                    <option value="2">2</option>
-                                                                    <option value="3">3</option>
-                                                                    <option value="4">4</option>
-                                                                    <option value="5">5</option>
-                                                                </select>
+                                                                        <label>Edit Rating:</label>
+                                                                        <select class="form-control mb-2" name="editedRating" required>
+                                                                            <option value="1">1</option>
+                                                                            <option value="2">2</option>
+                                                                            <option value="3">3</option>
+                                                                            <option value="4">4</option>
+                                                                            <option value="5">5</option>
+                                                                        </select>
 
-                                                                <button type="button" class="btn btn-primary save-btn">Save</button>
-                                                            </form>`;
+                                                                        <button type="button" class="btn btn-primary save-btn">Save</button>
+                                                                    </form>`;
 
                 var editFormContainer = $('<div>').html(editForm);
                 reviewContainer.html('').append(editFormContainer);
@@ -145,9 +153,9 @@
                             if (response.comment === null) {
                                 updatedContent += `CreatedAt: ${formattedCreatedAt}, User: ${response.userName} ${editButton}`;
                             } else {
-                                updatedContent +=`Comment: ${response.comment}, CreatedAt: ${formattedCreatedAt}, User: ${response.userName} ${editButton}`;
+                                updatedContent += `Comment: ${response.comment}, CreatedAt: ${formattedCreatedAt}, User: ${response.userName} ${editButton}`;
                             }
-                            
+
                             reviewContainer.find('.edit-form').remove();
                             reviewContainer.append(updatedContent);
                             attachEventListeners();
