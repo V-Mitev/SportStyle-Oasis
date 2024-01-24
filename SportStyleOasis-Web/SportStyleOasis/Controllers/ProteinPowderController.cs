@@ -9,7 +9,7 @@
     using static SportStyleOasis.Common.NotificationMessagesConstant;
     using static SportStyleOasis.Common.GeneralApplicationConstants;
 
-    [AllowAnonymous]
+    [Authorize]
     public class ProteinPowderController : Controller
     {
         private readonly IProteinPowderService proteinPowderService;
@@ -20,6 +20,7 @@
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public async Task<IActionResult> All()
         {
             var proteinPowders = await proteinPowderService.AllAsync();
@@ -75,6 +76,7 @@
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public async Task<IActionResult> ViewProteinPowder(int id)
         {
             try

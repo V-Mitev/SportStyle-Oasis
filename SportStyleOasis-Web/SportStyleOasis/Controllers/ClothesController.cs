@@ -10,7 +10,7 @@
     using static SportStyleOasis.Common.NotificationMessagesConstant;
     using static SportStyleOasis.Common.GeneralApplicationConstants;
 
-    [AllowAnonymous]
+    [Authorize]
     public class ClothesController : Controller
     {
         private readonly IClothesService clothesService;
@@ -21,6 +21,7 @@
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public async Task<IActionResult> All()
         {
             var clothes = await clothesService.AllAsync();
@@ -116,6 +117,7 @@
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public async Task<IActionResult> ViewCloth(int id)
         {
             try
@@ -138,6 +140,7 @@
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public async Task<IActionResult> ViewTypeOfCloth(string gender, string clothing)
         {
             try
