@@ -4,12 +4,14 @@
 
     public interface IReviewService
     {
-        public Task AddReview(ReviewViewModel model, int clothId, int proteinPowderId, string userFullName);
+        public Task AddReviewAsync(ReviewViewModel model, int clothId, int proteinPowderId, string userFullName);
 
-        public Task<ReviewViewModel> EditReview(int reviewId, string editedComment, int editedRating);
+        public Task<ReviewViewModel> EditReviewAsync(int reviewId, string editedComment, int editedRating);
 
-        public Task<bool> IsUserAddReviewToClothe(string userId, int clothId);
+        public Task<bool> IsUserAddReviewToClotheAsync(string userId, int clothId);
 
-        public Task<bool> IsUserAddReviewToProteinPowder(string userId, int proteinPowderId);
+        public Task<bool> IsUserAddReviewToProteinPowderAsync(string userId, int proteinPowderId);
+
+        public Task DeleteReviewByIdAsync(int reviewId);
     }
 }

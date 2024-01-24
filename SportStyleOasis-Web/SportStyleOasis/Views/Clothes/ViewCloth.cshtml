@@ -52,9 +52,10 @@
                             }
                             CreateAt: @review.CreatedAt, UserName: @review.UserName
                         </span>
-                        @if (await UserService.IsThisUserPostThisReview(userId, review.Id))
+                        @if (await UserService.IsThisUserPostThisReview(userId, review.Id) || User.IsAdmin())
                         {
                             <button class="edit-btn btn btn-primary mb-2">Edit</button>
+                            <button class="btn btn-danger space delete-btn" data-review-id="@review.Id">Delete</button>
                         }
                     </div>
                 </li>
@@ -65,24 +66,24 @@
     {
         <p>No ratings yet.</p>
     }
-    
-    @if (!await ReviewService.IsUserAddReviewToClothe(userId, Model.Cloth.Id))
+
+    @if (!await ReviewService.IsUserAddReviewToClotheAsync(userId, Model.Cloth.Id))
     {
         <form asp-controller="Review" asp-action="AddClotheReview" method="post">
             <input type="hidden" name="clothId" value="@Model.Cloth.Id" />
 
-        <label asp-for="Review.Rating">Rating:</label>
-        <select asp-for="Review.Rating" asp-items="new SelectList(new List<int> { 1, 2, 3, 4, 5 })" class="form-control" required>
-            <option value="">Select Rating</option>
-        </select>
-        <span asp-validation-for="Review.Rating" class="text-danger"></span>
+            <label asp-for="Review.Rating">Rating:</label>
+            <select asp-for="Review.Rating" asp-items="new SelectList(new List<int> { 1, 2, 3, 4, 5 })" class="form-control" required>
+                <option value="">Select Rating</option>
+            </select>
+            <span asp-validation-for="Review.Rating" class="text-danger"></span>
 
-        <label asp-for="Review.Comment">Comment:</label>
-        <textarea asp-for="Review.Comment" class="form-control mb-2"></textarea>
-        <span asp-validation-for="Review.Comment" class="text-danger"></span>
+            <label asp-for="Review.Comment">Comment:</label>
+            <textarea asp-for="Review.Comment" class="form-control mb-2"></textarea>
+            <span asp-validation-for="Review.Comment" class="text-danger"></span>
 
-        <input type="submit" value="Submit Rating" class="btn btn-primary mb-2" />
-    </form>
+            <input type="submit" value="Submit Rating" class="btn btn-primary mb-2" />
+        </form>
     }
 </div>
 
@@ -90,7 +91,7 @@
 {
     <div class="d-flex align-items-center">
         <a asp-controller="Clothes" asp-action="Edit" asp-route-id="@Model.Cloth.Id" class="btn btn-warning">Edit</a>
-        <form asp-controller="Clothes" asp-action="Delete" asp-route-id="@Model.Cloth.Id">
+        <form asp-controller="Clothes" asp-action="Delete" method="post" asp-route-id="@Model.Cloth.Id">
             <input type="submit" value="Delete" class="btn btn-danger space" onclick="return confirm('Are you sure you want to delete this garment: @Model.Cloth.Name')" />
         </form>
     </div>
@@ -105,21 +106,21 @@
                 var initialRating = reviewContainer.data("initial-rating");
 
                 var editForm = `
-                                    <form class="edit-form" data-review-id="${reviewId}">
-                                        <label>Edit Comment:</label>
-                                        <input type="text" class="form-control mb-2" value="${initialComment}" name="editedComment"/>
+                                            <form class="edit-form" data-review-id="${reviewId}">
+                                                <label>Edit Comment:</label>
+                                                <input type="text" class="form-control mb-2" value="${initialComment}" name="editedComment"/>
 
-                                        <label>Edit Rating:</label>
-                                        <select class="form-control mb-2" name="editedRating" required>
-                                            <option value="1">1</option>
-                                            <option value="2">2</option>
-                                            <option value="3">3</option>
-                                            <option value="4">4</option>
-                                            <option value="5">5</option>
-                                        </select>
+                                                <label>Edit Rating:</label>
+                                                <select class="form-control mb-2" name="editedRating" required>
+                                                    <option value="1">1</option>
+                                                    <option value="2">2</option>
+                                                    <option value="3">3</option>
+                                                    <option value="4">4</option>
+                                                    <option value="5">5</option>
+                                                </select>
 
-                                        <button type="button" class="btn btn-primary save-btn">Save</button>
-                                    </form>`;
+                                                <button type="button" class="btn btn-primary save-btn">Save</button>
+                                            </form>`;
 
                 var editFormContainer = $('<div>').html(editForm);
                 reviewContainer.html('').append(editFormContainer);
@@ -167,6 +168,29 @@
                         }
                     });
                 });
+            }
+
+            $(document).off("click", ".delete-btn").on("click", ".delete-btn", function () {
+                var reviewId = $(this).data("review-id");
+                confirmDelete(reviewId);
+            });
+
+            function confirmDelete(reviewId) {
+                const url = '/Review/DeleteReview';
+
+                if (confirm('Are you sure you want to delete this review')) {
+                    $.ajax({
+                        url: url,
+                        type: 'POST',
+                        data: { reviewId },
+                        success: function (result) {
+                            location.reload();
+                        },
+                        error: function (error) {
+                            console.log(error);
+                        }
+                    });
+                }
             }
 
             attachEventListeners();

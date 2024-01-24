@@ -18,7 +18,7 @@
             this.userService = userService;
         }
 
-        public async Task AddReview(ReviewViewModel model, int clothId, int proteinPowderId, string userFullName)
+        public async Task AddReviewAsync(ReviewViewModel model, int clothId, int proteinPowderId, string userFullName)
         {
             var review = new Review()
             {
@@ -41,7 +41,16 @@
             await dbContext.SaveChangesAsync();
         }
 
-        public async Task<ReviewViewModel> EditReview(int reviewId, string editedComment, int editedRating)
+        public async Task DeleteReviewByIdAsync(int reviewId)
+        {
+            var review = await dbContext.Review
+                .FirstAsync(r => r.Id == reviewId);
+
+            dbContext.Review.Remove(review);
+            await dbContext.SaveChangesAsync();
+        }
+
+        public async Task<ReviewViewModel> EditReviewAsync(int reviewId, string editedComment, int editedRating)
         {
             var review = await dbContext.Review.FirstAsync(r => r.Id == reviewId);
 
@@ -62,7 +71,7 @@
             return reiewViewModel;
         }
 
-        public async Task<bool> IsUserAddReviewToClothe(string userId, int clothId)
+        public async Task<bool> IsUserAddReviewToClotheAsync(string userId, int clothId)
         {
             var userName = await userService.GetUserFullNameByIdAsync(userId);
 
@@ -78,7 +87,7 @@
             return true;
         }
 
-        public async Task<bool> IsUserAddReviewToProteinPowder(string userId, int proteinPowderId)
+        public async Task<bool> IsUserAddReviewToProteinPowderAsync(string userId, int proteinPowderId)
         {
             var userName = await userService.GetUserFullNameByIdAsync(userId);
 

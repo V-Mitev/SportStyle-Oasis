@@ -39,7 +39,7 @@
 
             try
             {
-                await reviewService.AddReview(model.Review, clothId, 0, userFullName);
+                await reviewService.AddReviewAsync(model.Review, clothId, 0, userFullName);
 
                 return RedirectToAction("ViewCloth", "Clothes", new { id = clothId });
             }
@@ -68,7 +68,7 @@
 
             try
             {
-                await reviewService.AddReview(model.Review, 0, proteinPowderId, userFullName);
+                await reviewService.AddReviewAsync(model.Review, 0, proteinPowderId, userFullName);
 
                 return RedirectToAction("ViewProteinPowder", "ProteinPowder", new { id = proteinPowderId });
             }
@@ -83,9 +83,29 @@
         {
             try
             {
-                var model = await reviewService.EditReview(reviewId, editedComment, editedRating);
+                var model = await reviewService.EditReviewAsync(reviewId, editedComment, editedRating);
 
                 return Ok(model);
+            }
+            catch (Exception)
+            {
+                return GeneralError();
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteReview(int reviewId)
+        {
+            if (reviewId == 0)
+            {
+                return GeneralError();
+            }
+
+            try
+            {
+                await reviewService.DeleteReviewByIdAsync(reviewId);
+
+                return Ok();
             }
             catch (Exception)
             {
