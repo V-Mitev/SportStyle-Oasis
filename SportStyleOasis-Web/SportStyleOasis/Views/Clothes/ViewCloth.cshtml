@@ -1,6 +1,11 @@
 ﻿@model ClothReviewViewModel
 @inject IUserService UserService
+@inject IReviewService ReviewService
 @using static SportStyleOasis.Web.Infrastructure.Extensions.ClaimsPrincipalExtensions
+
+@{
+    var userId = User.GetId();
+}
 
 <style>
     .space {
@@ -47,7 +52,7 @@
                             }
                             CreateAt: @review.CreatedAt, UserName: @review.UserName
                         </span>
-                        @if (await UserService.IsThisUserPostThisReview(User.GetId(), review.Id))
+                        @if (await UserService.IsThisUserPostThisReview(userId, review.Id))
                         {
                             <button class="edit-btn btn btn-primary mb-2">Edit</button>
                         }
@@ -61,8 +66,10 @@
         <p>No ratings yet.</p>
     }
     
-    <form asp-controller="Review" asp-action="AddClotheReview" method="post">
-        <input type="hidden" name="clothId" value="@Model.Cloth.Id" />
+    @if (!await ReviewService.IsUserAddReviewToClothe(userId, Model.Cloth.Id))
+    {
+        <form asp-controller="Review" asp-action="AddClotheReview" method="post">
+            <input type="hidden" name="clothId" value="@Model.Cloth.Id" />
 
         <label asp-for="Review.Rating">Rating:</label>
         <select asp-for="Review.Rating" asp-items="new SelectList(new List<int> { 1, 2, 3, 4, 5 })" class="form-control" required>
@@ -76,6 +83,7 @@
 
         <input type="submit" value="Submit Rating" class="btn btn-primary mb-2" />
     </form>
+    }
 </div>
 
 @if (User.IsAdmin())

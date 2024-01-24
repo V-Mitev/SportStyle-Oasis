@@ -7,5 +7,7 @@
         public Task AddReview(ReviewViewModel model, int clothId, int proteinPowderId, string userFullName);
 
         public Task<ReviewViewModel> EditReview(int reviewId, string editedComment, int editedRating);
+
+        public Task<bool> IsUserAddReviewToClothe(string userId, int clothId);
     }
 }

@@ -10,10 +10,12 @@
     public class ReviewService : IReviewService
     {
         private readonly SportStyleOasisDbContext dbContext;
+        private readonly IUserService userService;
 
-        public ReviewService(SportStyleOasisDbContext dbContext)
+        public ReviewService(SportStyleOasisDbContext dbContext, IUserService userService)
         {
             this.dbContext = dbContext;
+            this.userService = userService;
         }
 
         public async Task AddReview(ReviewViewModel model, int clothId, int proteinPowderId, string userFullName)
@@ -58,6 +60,22 @@
             };
 
             return reiewViewModel;
+        }
+
+        public async Task<bool> IsUserAddReviewToClothe(string userId, int clothId)
+        {
+            var userName = await userService.GetUserFullNameByIdAsync(userId);
+
+            var review = await dbContext.Review
+                .Where(r => r.ClothesId == clothId && r.UserName == userName)
+                .FirstOrDefaultAsync();
+
+            if (review == null)
+            {
+                return false;
+            }
+
+            return true;
         }
     }
 }
