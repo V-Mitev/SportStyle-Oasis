@@ -6,9 +6,17 @@
 }
 
 <style>
-    img {
+    .card-img-container {
+        width: 200px;
+        height: 200px;
         cursor: pointer;
     }
+
+        .card-img-container img {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+        }
 </style>
 
 @* This check is in place to prevent someone from attempting to add a large quantity of unflavored proteins, which would be deleted upon page refresh. *@
@@ -17,9 +25,9 @@
     var proteinPowder = await ProteinPowderService.FindProteinPowder(model.Id);
 
     var timeforAddFlavorExpired = proteinPowder.TimeForAddFlavor.AddMinutes(5);
-    var currentHour = DateTime.UtcNow;
+    var currentTime = DateTime.UtcNow;
 
-    if (timeforAddFlavorExpired <= currentHour)
+    if (timeforAddFlavorExpired <= currentTime)
     {
         if (proteinPowder.ProteinFlavors.Count == 0)
         {
@@ -30,32 +38,20 @@
 
 <h1 class="text-center">@TempData["Title"]</h1>
 
-<table>
-    <thead>
-        <tr>
-            <th>Name</th>
-            <th>Brand</th>
-            <th>Price</th>
-            <th>Image</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var proteinPowder in Model)
-        {
-            if (proteinPowder.ProteinFlavors.Count == 0)
-            {
-                continue;
-            }
-
-            <tr>
-                <td>@proteinPowder.Name</td>
-                <td>@proteinPowder.ProteinPowderBrand</td>
-                <td>@proteinPowder.Price</td>
-                <td><img src="~/images/@proteinPowder.Image" alt="Product Image" width="100" height="100" onclick="openProtein(@proteinPowder.Id)" /></td>
-            </tr>
-        }
-    </tbody>
-</table>
+<div class="row">
+    @foreach (var proteinPowder in Model)
+    {
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <img src="~/images/@proteinPowder.Image" class="card-img-container" alt="@proteinPowder.Name Image" onclick="openCloth(@proteinPowder.Id)">
+                <div class="card-body">
+                    <h5 class="card-title">@proteinPowder.Name</h5>
+                    <p><strong>Price:</strong> $@proteinPowder.Price</p>
+                </div>
+            </div>
+        </div>
+    }
+</div>
 
 @section scripts {
     <script>
