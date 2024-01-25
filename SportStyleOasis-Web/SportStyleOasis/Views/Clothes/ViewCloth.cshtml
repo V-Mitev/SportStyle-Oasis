@@ -5,11 +5,17 @@
 
 @{
     var userId = User.GetId();
+    var isUserAdmin = User.IsAdmin();
+    var isAuthenticated = User?.Identity?.IsAuthenticated ?? false;
 }
 
 <style>
     .space {
         margin-left: 15px;
+    }
+
+    .btn {
+        vertical-align: baseline;
     }
 </style>
 
@@ -52,7 +58,7 @@
                             }
                             CreateAt: @review.CreatedAt, UserName: @review.UserName
                         </span>
-                        @if (await UserService.IsThisUserPostThisReview(userId, review.Id) || User.IsAdmin())
+                        @if (await UserService.IsThisUserPostThisReview(userId, review.Id, isUserAdmin))
                         {
                             <button class="edit-btn btn btn-primary mb-2">Edit</button>
                             <button class="btn btn-danger space delete-btn" data-review-id="@review.Id">Delete</button>
@@ -67,7 +73,7 @@
         <p>No ratings yet.</p>
     }
 
-    @if (!await ReviewService.IsUserAddReviewToClotheAsync(userId, Model.Cloth.Id))
+    @if (!await ReviewService.IsUserAddReviewToClotheAsync(userId, Model.Cloth.Id) && isAuthenticated)
     {
         <form asp-controller="Review" asp-action="AddClotheReview" method="post">
             <input type="hidden" name="clothId" value="@Model.Cloth.Id" />
@@ -87,7 +93,7 @@
     }
 </div>
 
-@if (User.IsAdmin())
+@if (isUserAdmin)
 {
     <div class="d-flex align-items-center">
         <a asp-controller="Clothes" asp-action="Edit" asp-route-id="@Model.Cloth.Id" class="btn btn-warning">Edit</a>

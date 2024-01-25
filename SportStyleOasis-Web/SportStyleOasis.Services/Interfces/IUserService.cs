@@ -4,6 +4,6 @@
     {
         public Task<string> GetUserFullNameByIdAsync(string userId);
 
-        public Task<bool> IsThisUserPostThisReview(string userId, int? reviewId);
+        public Task<bool> IsThisUserPostThisReview(string userId, int? reviewId, bool isUserAdmin);
     }
 }

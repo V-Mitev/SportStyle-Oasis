@@ -27,8 +27,13 @@
             return $"{user.FirstName} {user.LastName}";
         }
 
-        public async Task<bool> IsThisUserPostThisReview(string userId, int? reviewId)
+        public async Task<bool> IsThisUserPostThisReview(string userId, int? reviewId, bool isUserAdmin)
         {
+            if (isUserAdmin)
+            {
+                return true;
+            }
+
             var user = await dbContext.ApplicationUsers
                 .FirstOrDefaultAsync(u => u.Id.ToString() == userId);
 

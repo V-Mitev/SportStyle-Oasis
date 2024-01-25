@@ -5,12 +5,19 @@
 
 @{
     var userId = User.GetId();
+    var isUserAdmin = User.IsAdmin();
+    var isAuthenticated = User?.Identity?.IsAuthenticated ?? false;
 }
 
 <style>
     .space {
         margin-left: 15px;
     }
+
+    .btn {
+        vertical-align: baseline;
+    }
+
 </style>
 
 <h1 class="text-center">@Model.ProteinPowder.Name</h1>
@@ -49,7 +56,7 @@
                             }
                             CreateAt: @review.CreatedAt, UserName: @review.UserName
                         </span>
-                        @if (await UserService.IsThisUserPostThisReview(userId, review.Id))
+                        @if (await UserService.IsThisUserPostThisReview(userId, review.Id, isUserAdmin))
                         {
                             <button class="edit-btn btn btn-primary mb-2">Edit</button> 
                             <button class="btn btn-danger space delete-btn" data-review-id="@review.Id">Delete</button>
@@ -64,7 +71,7 @@
         <p>No ratings yet.</p>
     }
 
-    @if (!await ReviewService.IsUserAddReviewToProteinPowderAsync(userId, Model.ProteinPowder.Id))
+    @if (!await ReviewService.IsUserAddReviewToProteinPowderAsync(userId, Model.ProteinPowder.Id) && isAuthenticated)
     {
         <form asp-controller="Review" asp-action="AddProteinPowderReview" method="post">
             <input type="hidden" name="proteinPowderId" value="@Model.ProteinPowder.Id" />
@@ -84,7 +91,7 @@
     }
 </div>
 
-@if (User.IsAdmin())
+@if (isUserAdmin)
 {
     <div class="d-flex align-items-center">
         <a asp-controller="ProteinPowder" asp-action="Edit" asp-route-id="@Model.ProteinPowder.Id" class="btn btn-warning">Edit</a>
