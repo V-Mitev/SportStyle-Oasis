@@ -67,6 +67,7 @@ namespace SportStyleOasis
             builder.Services.ConfigureApplicationCookie(cfg =>
             {
                 cfg.LoginPath = "/User/Login";
+                cfg.AccessDeniedPath = "Home/Error/401";
             });
 
             var app = builder.Build();
@@ -94,6 +95,14 @@ namespace SportStyleOasis
             app.SeedAdministrator(AdminEmail);
 
             app.UseSession();
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllerRoute(
+                  name: "areas",
+                  pattern: "/{area:exists}/{controller=Home}/{action=Index}/{id?}"
+                );
+            });
 
             app.MapControllerRoute(
                 name: "default",
