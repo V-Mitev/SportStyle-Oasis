@@ -9,5 +9,7 @@
         public Task<bool> IsThisUserPostThisReview(string userId, int? reviewId, bool isUserAdmin);
 
         public Task<IEnumerable<UserViewModel>> GetAllUsersAsync();
+
+        public Task DeleteUserByIdAsync(string userId);
     }
 }

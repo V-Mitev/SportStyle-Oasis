@@ -16,6 +16,15 @@
             this.dbContext = dbContext;
         }
 
+        public async Task DeleteUserByIdAsync(string userId)
+        {
+            var user = await dbContext.ApplicationUsers
+                .FirstAsync(u => u.Id.ToString() == userId);
+
+            dbContext.ApplicationUsers.Remove(user);
+            await dbContext.SaveChangesAsync();
+        }
+
         public async Task<IEnumerable<UserViewModel>> GetAllUsersAsync()
         {
             return await dbContext.ApplicationUsers

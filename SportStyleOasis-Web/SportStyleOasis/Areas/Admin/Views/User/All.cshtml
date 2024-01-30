@@ -1,5 +1,5 @@
 ﻿@model IEnumerable<UserViewModel>
-
+@using static SportStyleOasis.Common.NotificationMessagesConstant;
 @{
     ViewBag.Title = "All Users";
 }
@@ -23,11 +23,9 @@
                 <td><label>@user.FullName</label></td>
                 <td><label>@user.PhoneNumber</label></td>
                 <td>
-                    <label>
-                            <form asp-area="Admin" asp-controller="User" asp-action="Delete" asp-route-id="@user.Id">
-                                <input type="submit" value="Delete" class="btn-sl btn-danger" onclick="return confirm('Are you sure you want to delete user: @user.FullName')" />
-                            </form>
-                    </label> 
+                    <form asp-area="Admin" asp-controller="User" asp-action="Delete" asp-route-id="@user.Id">
+                        <input type="button" value="Delete" class="btn-sl btn-danger" onclick="confirmDelete(`@user.Id`, `@user.FullName`)" />
+                    </form>
                 </td>
             </tr>
         }
@@ -35,3 +33,29 @@
 </table>
 
 <a asp-area="Admin" asp-action="Index" asp-controller="Home" class="btn btn-outline-primary">Back to Home page</a>
+
+@section scripts{
+    <script>
+        function confirmDelete(userId, fullName) {
+            const url = '/Admin/User/Delete';
+
+            const userConfirmed = window.confirm(`Are you sure you want to delete ${fullName}?`);
+
+            if (userConfirmed) {
+                $.ajax({
+                    url: url,
+                    type: 'POST',
+                    data: { userId: userId },
+                    success: function (result) {
+                        location.reload();
+                    },
+                    error: function (error) {
+                        console.log(error);
+                    }
+                });
+            } else {
+                location.reload();
+            }
+        }
+    </script>
+}

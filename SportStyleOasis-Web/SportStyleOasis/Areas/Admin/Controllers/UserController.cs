@@ -2,6 +2,7 @@
 {
     using Microsoft.AspNetCore.Mvc;
     using SportStyleOasis.Services.Interfces;
+    using static Common.NotificationMessagesConstant;
 
     public class UserController : BaseAdminController
     {
@@ -18,6 +19,29 @@
             var model = await userService.GetAllUsersAsync();
 
             return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Delete(string userId)
+        {
+            try
+            {
+                await userService.DeleteUserByIdAsync(userId);
+
+                return Ok();
+            }
+            catch (Exception)
+            {
+                return GeneralError();
+            }
+        }
+
+        private IActionResult GeneralError()
+        {
+            TempData[ErrorMessage] =
+                "Unexpected error occurred! Please try again later or contact administrator";
+
+            return RedirectToAction("Index", "Home");
         }
     }
 }
