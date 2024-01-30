@@ -1,10 +1,13 @@
 ﻿@model IEnumerable<UserViewModel>
-@using static SportStyleOasis.Common.NotificationMessagesConstant;
+@using SportStyleOasis.Web.Infrastructure.Extensions;
+
 @{
-    ViewBag.Title = "All Users";
+    ViewData["Title"] = "All Users";
+
+    var userId = User.GetId();
 }
 
-<h2 class="text-center">@ViewBag.Title</h2>
+<h2 class="text-center">@ViewData["Title"]</h2>
 <hr />
 <table class="table table-striped">
     <thead>
@@ -22,9 +25,13 @@
                 <td><label>@user.Email</label></td>
                 <td><label>@user.FullName</label></td>
                 <td><label>@user.PhoneNumber</label></td>
-                <td>
-                    <button class="btn-sl btn-danger" onclick="confirmDelete(`@user.Id`, `@user.FullName`)">Delete</button>
-                </td>
+                @* This check prevents the admin from deleting themselves.*@
+                @if (userId != user.Id.ToLower())
+                {
+                    <td>
+                        <button class="btn-sl btn-danger" onclick="confirmDelete(`@user.Id`, `@user.FullName`)">Delete</button>
+                    </td>
+                }
             </tr>
         }
     </tbody>
