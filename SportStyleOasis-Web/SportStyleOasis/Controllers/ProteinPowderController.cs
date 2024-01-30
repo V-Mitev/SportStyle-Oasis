@@ -101,15 +101,15 @@
 
         [HttpPost]
         [Authorize(Roles = AdminRoleName)]
-        public async Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> Delete(int proteinPowderId, string proteinPowderName)
         {
             try
             {
-                await proteinPowderService.DeleteProteinPowder(id);
+                await proteinPowderService.DeleteProteinPowder(proteinPowderId);
 
-                TempData[SuccessMessage] = $"Successfully delete protein powder with id: {id}!";
+                TempData[SuccessMessage] = $"Successfully delete protein powder: {proteinPowderName}!";
 
-                return RedirectToAction("All");
+                return Ok();
             }
             catch (Exception)
             {

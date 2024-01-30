@@ -22,11 +22,13 @@
         }
 
         [HttpPost]
-        public async Task<IActionResult> Delete(string userId)
+        public async Task<IActionResult> Delete(string userId, string userFullName)
         {
             try
             {
                 await userService.DeleteUserByIdAsync(userId);
+
+                TempData[SuccessMessage] = $"Successfully deleted user: {userFullName}";
 
                 return Ok();
             }
