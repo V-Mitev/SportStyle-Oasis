@@ -50,9 +50,27 @@
                 {
                     Id = f.Id,
                     FlavorName = f.FlavorName,
-                    Quantity = f.Quantity
+                    Quantity = f.Quantity,
+                    ProteinPowderId = proteinPowderId
                 })
                 .ToListAsync();
+        }
+
+        public async Task EditFlavor(ICollection<ProteinFlavorViewModel> model, int proteinPowderId)
+        {
+            var flavors = await dbContext.ProteinFlavor
+                .Where(f => f.ProteinId == proteinPowderId)
+                .ToListAsync();
+
+            foreach (var flavor in model)
+            {
+                var flavorToEdit = flavors.First(f => f.Id == flavor.Id);
+
+                flavorToEdit.FlavorName = flavor.FlavorName;
+                flavorToEdit.Quantity = flavor.Quantity;
+            }
+
+            await dbContext.SaveChangesAsync();
         }
 
         public async Task<bool> IsFlavorAlreadyAdded(int proteinPowderId, string flavorName)

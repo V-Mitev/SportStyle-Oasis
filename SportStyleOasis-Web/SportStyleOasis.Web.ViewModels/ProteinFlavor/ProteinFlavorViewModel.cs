@@ -13,5 +13,7 @@
 
         [Range(ProteinFlavorMinQuantity, ProteinFlavorMaxQuantity)]
         public int Quantity { get; set; }
+
+        public int ProteinPowderId { get; set; }
     }
 }

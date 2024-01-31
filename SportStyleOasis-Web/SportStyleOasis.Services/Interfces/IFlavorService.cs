@@ -9,5 +9,7 @@
         public Task<bool> IsFlavorAlreadyAdded(int roteinPowderId, string flavorName);
 
         public Task<ICollection<ProteinFlavorViewModel>> AllProteinFlavorsAsync(int proteinPowderId);
+
+        public Task EditFlavor(ICollection<ProteinFlavorViewModel> model, int proteinPowderId);
     }
 }

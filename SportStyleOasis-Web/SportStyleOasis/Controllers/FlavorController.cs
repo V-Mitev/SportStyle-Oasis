@@ -63,11 +63,20 @@
         }
 
         [HttpPost]
-        public async Task<IActionResult> EditProteinFlavors(ICollection<ProteinFlavorViewModel> model)
+        public async Task<IActionResult> EditProteinFlavors(ICollection<ProteinFlavorViewModel> model, int proteinPowderId)
         {
-            var a = model;
+            try
+            {
+                await flavorService.EditFlavor(model, proteinPowderId);
 
-            return Ok();
+                TempData[SuccessMessage] = $"Successfully edit flavors for protein powder.";
+
+                return RedirectToAction("ViewProteinPowder", "ProteinPowder", new { id = proteinPowderId });
+            }
+            catch (Exception)
+            {
+                return GeneralError();
+            }
         }
 
         private IActionResult GeneralError()
