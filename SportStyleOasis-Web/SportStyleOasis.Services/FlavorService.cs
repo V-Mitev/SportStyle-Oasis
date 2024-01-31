@@ -5,6 +5,7 @@
     using SportStyleOasis.Data.Models;
     using SportStyleOasis.Services.Interfces;
     using SportStyleOasis.Web.ViewModels.ProteinFlavor;
+    using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
 
@@ -39,6 +40,19 @@
 
             await dbContext.ProteinFlavor.AddAsync(flavor);
             await dbContext.SaveChangesAsync();
+        }
+
+        public async Task<ICollection<ProteinFlavorViewModel>> AllProteinFlavorsAsync(int proteinPowderId)
+        {
+            return await dbContext.ProteinFlavor
+                .Where(f => f.ProteinId == proteinPowderId)
+                .Select(f => new ProteinFlavorViewModel()
+                {
+                    Id = f.Id,
+                    FlavorName = f.FlavorName,
+                    Quantity = f.Quantity
+                })
+                .ToListAsync();
         }
 
         public async Task<bool> IsFlavorAlreadyAdded(int proteinPowderId, string flavorName)

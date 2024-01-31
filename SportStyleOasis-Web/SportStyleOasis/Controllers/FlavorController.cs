@@ -7,6 +7,7 @@
     using static SportStyleOasis.Common.NotificationMessagesConstant;
     using static SportStyleOasis.Common.GeneralApplicationConstants;
 
+    [Authorize(Roles = AdminRoleName)]
     public class FlavorController : Controller
     {
         private readonly IFlavorService flavorService;
@@ -17,7 +18,6 @@
         }
 
         [HttpGet]
-        [Authorize(Roles = AdminRoleName)]
         public IActionResult Add()
         {
             var model = new ProteinFlavorViewModel();
@@ -26,7 +26,6 @@
         }
 
         [HttpPost]
-        [Authorize(Roles = AdminRoleName)]
         public async Task<IActionResult> Add(ProteinFlavorViewModel model, int id)
         {
             if (!ModelState.IsValid)
@@ -53,6 +52,22 @@
             {
                 return GeneralError();
             }
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> EditProteinFlavors(int proteinPowderId)
+        {
+            var model = await flavorService.AllProteinFlavorsAsync(proteinPowderId);
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditProteinFlavors(ICollection<ProteinFlavorViewModel> model)
+        {
+            var a = model;
+
+            return Ok();
         }
 
         private IActionResult GeneralError()

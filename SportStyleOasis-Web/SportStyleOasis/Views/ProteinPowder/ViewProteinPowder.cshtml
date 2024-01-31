@@ -99,6 +99,8 @@
         <button class="btn btn-danger space" onclick="deleteProteinPowder(`@Model.ProteinPowder.Id`, `@Model.ProteinPowder.Name`)">Delete</button>
 
         <a asp-controller="Flavor" asp-action="Add" asp-route-id="@Model.ProteinPowder.Id" class="btn btn-primary space">Add flavor</a>
+
+        <a asp-controller="Flavor" asp-action="EditProteinFlavors" asp-route-proteinPowderId="@Model.ProteinPowder.Id" class="btn btn-primary space">Edit Flavors</a>
     </div>
 }
 
@@ -111,21 +113,21 @@
                 var initialRating = reviewContainer.data("initial-rating");
 
                 var editForm = `
-                                                                                    <form class="edit-form" data-review-id="${reviewId}">
-                                                                                        <label>Edit Comment:</label>
-                                                                                        <input type="text" class="form-control mb-2" value="${initialComment}" name="editedComment"/>
+                                                                                            <form class="edit-form" data-review-id="${reviewId}">
+                                                                                                <label>Edit Comment:</label>
+                                                                                                <input type="text" class="form-control mb-2" value="${initialComment}" name="editedComment"/>
 
-                                                                                        <label>Edit Rating:</label>
-                                                                                        <select class="form-control mb-2" name="editedRating" required>
-                                                                                            <option value="1">1</option>
-                                                                                            <option value="2">2</option>
-                                                                                            <option value="3">3</option>
-                                                                                            <option value="4">4</option>
-                                                                                            <option value="5">5</option>
-                                                                                        </select>
+                                                                                                <label>Edit Rating:</label>
+                                                                                                <select class="form-control mb-2" name="editedRating" required>
+                                                                                                    <option value="1">1</option>
+                                                                                                    <option value="2">2</option>
+                                                                                                    <option value="3">3</option>
+                                                                                                    <option value="4">4</option>
+                                                                                                    <option value="5">5</option>
+                                                                                                </select>
 
-                                                                                        <button type="button" class="btn btn-primary save-btn">Save</button>
-                                                                                    </form>`;
+                                                                                                <button type="button" class="btn btn-primary save-btn">Save</button>
+                                                                                            </form>`;
 
                 var editFormContainer = $('<div>').html(editForm);
                 reviewContainer.html('').append(editFormContainer);
