@@ -61,7 +61,7 @@
                         @if (await UserService.IsThisUserPostThisReview(userId, review.Id, isUserAdmin))
                         {
                             <button class="edit-btn btn btn-primary mb-2">Edit</button>
-                            <button id="kiro" class="btn btn-danger space delete-btn" data-review-id="@review.Id">Delete</button>
+                            <button class="btn btn-danger space delete-btn" data-review-id="@review.Id">Delete</button>
                         }
                     </div>
                 </li>

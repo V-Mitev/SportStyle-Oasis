@@ -3,29 +3,67 @@
 @inject IUserService UserService
 @using SportStyleOasis.Web.Infrastructure.Extensions;
 
+<style>
+    .navbar-nav {
+        align-items: center;
+    }
+
+    .fa-cart-shopping {
+        padding-right: 30px;
+    }
+
+    .cart-icon {
+        position: relative;
+    }
+
+    .cart-badge {
+        position: absolute;
+        top: -10px;
+        right: 10px;
+        background-color: red;
+        color: white;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 12px;
+    }
+</style>
+
 @{
     var userFullName = await UserService.GetUserFullNameByIdAsync(User.GetId());
 }
 
 <ul class="navbar-nav">
-@if (SignInManager.IsSignedIn(User))
-{
-    <li class="nav-item">
-        <a  class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @userFullName</a>
-    </li>
-    <li class="nav-item">
-        <form  class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-            <button  type="submit" class="nav-link btn btn-link text-dark">Logout</button>
-        </form>
-    </li>
-}
-else
-{
-    <li class="nav-item">
-        <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Register">Register</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Login">Login</a>
-    </li>
-}
+    @if (SignInManager.IsSignedIn(User))
+    {
+        <li class="nav-item">
+            <span class="cart-icon">
+                <i class="fa-solid fa-cart-shopping fa-lg"></i>
+                <span class="cart-badge"></span>
+            </span>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @userFullName</a>
+        </li>
+        <li class="nav-item">
+            <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                <button type="submit" class="nav-link btn btn-link text-dark">Logout</button>
+            </form>
+        </li>
+    }
+    else
+    {
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Register">Register</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Login">Login</a>
+        </li>
+    }
 </ul>
+
+<script>
+</script>
