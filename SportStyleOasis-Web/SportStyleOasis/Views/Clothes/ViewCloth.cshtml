@@ -56,12 +56,12 @@
                             {
                                 <span>Comment: <span class="comment">@review.Comment,</span></span>
                             }
-                            CreateAt: @review.CreatedAt, UserName: @review.UserName
+                            CreateAt: @review.CreatedAt, User: @review.UserName
                         </span>
                         @if (await UserService.IsThisUserPostThisReview(userId, review.Id, isUserAdmin))
                         {
                             <button class="edit-btn btn btn-primary mb-2">Edit</button>
-                            <button class="btn btn-danger space delete-btn" data-review-id="@review.Id">Delete</button>
+                            <button id="kiro" class="btn btn-danger space delete-btn" data-review-id="@review.Id">Delete</button>
                         }
                     </div>
                 </li>
@@ -112,21 +112,19 @@
                 var initialRating = reviewContainer.data("initial-rating");
 
                 var editForm = `
-                                            <form class="edit-form" data-review-id="${reviewId}">
-                                                <label>Edit Comment:</label>
-                                                <input type="text" class="form-control mb-2" value="${initialComment}" name="editedComment"/>
-
-                                                <label>Edit Rating:</label>
-                                                <select class="form-control mb-2" name="editedRating" required>
-                                                    <option value="1">1</option>
-                                                    <option value="2">2</option>
-                                                    <option value="3">3</option>
-                                                    <option value="4">4</option>
-                                                    <option value="5">5</option>
-                                                </select>
-
-                                                <button type="button" class="btn btn-primary save-btn">Save</button>
-                                            </form>`;
+                            <form class="edit-form" data-review-id="${reviewId}">
+                                <label>Edit Comment:</label>
+                                <input type="text" class="form-control mb-2" value="${initialComment}" name="editedComment"/>
+                                <label>Edit Rating:</label>
+                                <select class="form-control mb-2" name="editedRating" required>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                </select>
+                                <button type="button" class="btn btn-primary save-btn">Save</button>
+                            </form>`;
 
                 var editFormContainer = $('<div>').html(editForm);
                 reviewContainer.html('').append(editFormContainer);
@@ -134,49 +132,47 @@
                 editFormContainer.find("[name='editedRating']").val(initialRating);
             }
 
-            function attachEventListeners() {
-                $(document).off("click", ".edit-btn").on("click", ".edit-btn", function () {
-                    var reviewContainer = $(this).closest(".comment-content");
-                    setupEditForm(reviewContainer);
-                });
+            // Delegate event listeners to document
+            $(document).on("click", ".edit-btn", function () {
+                var reviewContainer = $(this).closest(".comment-content");
+                setupEditForm(reviewContainer);
+            });
 
-                $(document).off("click", ".save-btn").on("click", ".save-btn", function () {
-                    var reviewContainer = $(this).closest(".comment-content");
-                    var reviewId = reviewContainer.data("review-id");
-                    var editedComment = reviewContainer.find("[name='editedComment']").val();
-                    var editedRating = reviewContainer.find("[name='editedRating']").val();
+            $(document).on("click", ".save-btn", function () {
+                var reviewContainer = $(this).closest(".comment-content");
+                var reviewId = reviewContainer.data("review-id");
+                var editedComment = reviewContainer.find("[name='editedComment']").val();
+                var editedRating = reviewContainer.find("[name='editedRating']").val();
 
-                    reviewContainer.data("initial-comment", editedComment);
-                    reviewContainer.data("initial-rating", editedRating);
+                reviewContainer.data("initial-comment", editedComment);
+                reviewContainer.data("initial-rating", editedRating);
 
-                    $.ajax({
-                        type: 'POST',
-                        url: '/Review/EditReview',
-                        data: { reviewId, editedComment, editedRating },
-                        success: function (response) {
-                            var formattedCreatedAt = new Date(response.createdAt).toLocaleDateString('en-US');
-                            var editButton = `<button class="edit-btn btn btn-primary">Edit</button>`;
+                $.ajax({
+                    type: 'POST',
+                    url: '/Review/EditReview',
+                    data: { reviewId, editedComment, editedRating },
+                    success: function (response) {
+                        var formattedCreatedAt = new Date(response.createdAt).toLocaleDateString('en-US');
+                        var editButton = `<button class="edit-btn btn btn-primary">Edit</button>`;
+                        var deleteButton = `<button class="btn btn-danger space delete-btn" data-review-id="${reviewId}">Delete</button>`;
+                        var updatedContent = `Rating: ${response.rating}, `;
 
-                            var updatedContent = `Rating: ${response.rating}, `;
-
-                            if (response.comment === null) {
-                                updatedContent += `CreatedAt: ${formattedCreatedAt}, User: ${response.userName} ${editButton}`;
-                            } else {
-                                updatedContent += `Comment: ${response.comment}, CreatedAt: ${formattedCreatedAt}, User: ${response.userName} ${editButton}`;
-                            }
-
-                            reviewContainer.find('.edit-form').remove();
-                            reviewContainer.append(updatedContent);
-                            attachEventListeners();
-                        },
-                        error: function (error) {
-                            console.error('Error updating comment:', error);
+                        if (response.comment === null) {
+                            updatedContent += `CreatedAt: ${formattedCreatedAt}, User: ${response.userName} ${editButton} ${deleteButton}`;
+                        } else {
+                            updatedContent += `Comment: ${response.comment}, CreatedAt: ${formattedCreatedAt}, User: ${response.userName} ${editButton} ${deleteButton}`;
                         }
-                    });
-                });
-            }
 
-            $(document).off("click", ".delete-btn").on("click", ".delete-btn", function () {
+                        reviewContainer.find('.edit-form').remove();
+                        reviewContainer.append(updatedContent);
+                    },
+                    error: function (error) {
+                        console.error('Error updating comment:', error);
+                    }
+                });
+            });
+
+            $(document).on("click", ".delete-btn", function () {
                 var reviewId = $(this).data("review-id");
                 confirmDelete(reviewId);
             });
@@ -198,8 +194,6 @@
                     });
                 }
             }
-
-            attachEventListeners();
         });
     </script>
-    }
+}
