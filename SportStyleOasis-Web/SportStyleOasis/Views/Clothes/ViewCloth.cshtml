@@ -28,9 +28,9 @@
 <div>
     <p><strong>Price:</strong> $@Model.Cloth.Price</p>
     <p><strong>Description:</strong> @Model.Cloth.Description</p>
-    <p><strong>Clothe Brand:</strong> @Model.Cloth.GarmentBrand</p>
-    <p><strong>Gender:</strong> @Model.Cloth.GarmentForGender</p>
-    <p><strong>Type of Clothes:</strong> @Model.Cloth.GarmentType</p>
+    <p><strong>Clothe Brand:</strong> @Model.Cloth.ClothBrand</p>
+    <p><strong>Gender:</strong> @Model.Cloth.ClothForGender</p>
+    <p><strong>Type of Clothes:</strong> @Model.Cloth.ClothType</p>
     <p><strong>Available Clothe Size:</strong></p>
     <select class="form-control mb-2" id="garmentBrand" name="GarmentBrand" required>
         @foreach (var clothInventory in Model.Cloth.ClothInventory)

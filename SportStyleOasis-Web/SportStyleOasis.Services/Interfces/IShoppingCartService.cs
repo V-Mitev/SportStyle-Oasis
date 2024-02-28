@@ -4,8 +4,10 @@
 
     public interface IShoppingCartService
     {
-        Task<ShoppingCartViewModel> FindShoppingCartByUserIdAsync(string userId);
+        Task<ShoppingCartViewModel> FindShoppingCartAsync(int cartId);
 
         Task<int> GetShoppingCartItemsAsync(int cartId);
+
+        Task<int> GetShoppingCartIdAsync(string userId);
     }
 }

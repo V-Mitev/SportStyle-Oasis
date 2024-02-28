@@ -95,7 +95,7 @@
 
         [HttpPost]
         [Authorize(Roles = AdminRoleName)]
-        public async Task<IActionResult> Edit(int id, UpdateGarmentViewModel model)
+        public async Task<IActionResult> Edit(int id, UpdateClothViewModel model)
         {
             if (!ModelState.IsValid)
             {

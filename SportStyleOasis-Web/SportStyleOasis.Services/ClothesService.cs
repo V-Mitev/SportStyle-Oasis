@@ -77,7 +77,7 @@
             await dbContext.SaveChangesAsync();
         }
 
-        public async Task<UpdateGarmentViewModel> FindGarmentToUpdateAsync(int id)
+        public async Task<UpdateClothViewModel> FindGarmentToUpdateAsync(int id)
         {
             var garment =
                 await dbContext.Clothes.FirstOrDefaultAsync(g => g.Id == id);
@@ -87,7 +87,7 @@
                 throw new InvalidOperationException($"Garment with ID {id} not found.");
             }
 
-            var oldGarment = new UpdateGarmentViewModel()
+            var oldGarment = new UpdateClothViewModel()
             {
                 Id = garment.Id,
                 Name = garment.Name,
@@ -95,9 +95,9 @@
                 Price = garment.Price,
                 Image = garment.Image,
                 Description = garment.Description,
-                GarmentType = (TypeOfClothes)garment.TypeOfClothes!,
-                GarmentBrand = (ClothesBrands)garment.ClothesBrands!,
-                GarmentForGender = (Gender)garment.ClothesForGender!
+                ClothType = (TypeOfClothes)garment.TypeOfClothes!,
+                ClothBrand = (ClothesBrands)garment.ClothesBrands!,
+                ClothForGender = (Gender)garment.ClothesForGender!
             };
 
             return oldGarment;
@@ -121,7 +121,7 @@
                 .ToListAsync();
         }
 
-        public async Task UpdateGarmentAsync(int id, UpdateGarmentViewModel model)
+        public async Task UpdateGarmentAsync(int id, UpdateClothViewModel model)
         {
             var oldGarment =
                 await dbContext.Clothes.FirstOrDefaultAsync(g => g.Id == id);
@@ -136,9 +136,9 @@
             oldGarment.Price = model.Price;
             oldGarment.Image = model.Image;
             oldGarment.Description = model.Description;
-            oldGarment.TypeOfClothes = model.GarmentType;
-            oldGarment.ClothesBrands = model.GarmentBrand;
-            oldGarment.ClothesForGender = model.GarmentForGender;
+            oldGarment.TypeOfClothes = model.ClothType;
+            oldGarment.ClothesBrands = model.ClothBrand;
+            oldGarment.ClothesForGender = model.ClothForGender;
 
             await dbContext.SaveChangesAsync();
         }
@@ -163,7 +163,7 @@
                 Price = currentGarment.Price,
                 Image = currentGarment.Image,
                 Description = currentGarment.Description,
-                GarmentType = (TypeOfClothes)currentGarment.TypeOfClothes!,
+                ClothType = (TypeOfClothes)currentGarment.TypeOfClothes!,
                 Reviews = currentGarment.Reviews
                     .OrderByDescending(r => r.CreatedAt)
                     .Select(r => new ReviewViewModel()

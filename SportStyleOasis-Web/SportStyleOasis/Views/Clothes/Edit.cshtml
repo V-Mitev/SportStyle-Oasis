@@ -1,4 +1,4 @@
-﻿@model UpdateGarmentViewModel
+﻿@model UpdateClothViewModel
 @using static SportStyleOasis.Common.EntityValidationConstants.Clothes;
 
 <form asp-controller="Clothes" asp-action="Edit" method="post">
@@ -33,13 +33,13 @@
     </div>
 
     <div class="form-group mb-2">
-        <label asp-for="GarmentBrand">Please select brand for this garment:</label>
+        <label asp-for="ClothBrand">Please select brand for this garment:</label>
         <select class="form-control" id="garmentBrand" name="GarmentBrand" required>
             @foreach (var garmentBrand in Enum.GetValues(typeof(ClothesBrands)))
             {
-                @if (garmentBrand.ToString() == Model.GarmentBrand.ToString())
+                @if (garmentBrand.ToString() == Model.ClothBrand.ToString())
                 {
-                    <option value="@Model.GarmentBrand">@Model.GarmentBrand</option>
+                    <option value="@Model.ClothBrand">@Model.ClothBrand</option>
                     continue;
                 }
 
@@ -49,13 +49,13 @@
     </div>
 
     <div class="form-group mb-2">
-        <label asp-for="GarmentForGender">Please select gender for this garment:</label>
+        <label asp-for="ClothForGender">Please select gender for this garment:</label>
         <select class="form-control" id="garmentGender" name="GarmentForGender" required>
             @foreach (var gender in Enum.GetValues(typeof(Gender)))
             {
-                @if (gender.ToString() == Model.GarmentForGender.ToString())
+                @if (gender.ToString() == Model.ClothForGender.ToString())
                 {
-                    <option value="@Model.GarmentForGender">@Model.GarmentForGender</option>
+                    <option value="@Model.ClothForGender">@Model.ClothForGender</option>
                     continue;
                 }
 
@@ -65,13 +65,13 @@
     </div>
 
     <div class="form-group mb-2">
-        <label asp-for="GarmentType">Please slecet type for this garment:</label>
+        <label asp-for="ClothType">Please slecet type for this garment:</label>
         <select class="form-control" id="garmentType" name="GarmentType" required>
             @foreach (var garmentType in Enum.GetValues(typeof(TypeOfClothes)))
             {
-                @if (garmentType.ToString() == Model.GarmentType.ToString())
+                @if (garmentType.ToString() == Model.ClothType.ToString())
                 {
-                    <option value="@Model.GarmentType">@Model.GarmentType</option>
+                    <option value="@Model.ClothType">@Model.ClothType</option>
                     continue;
                 }
                 <option value="@garmentType">@garmentType</option>

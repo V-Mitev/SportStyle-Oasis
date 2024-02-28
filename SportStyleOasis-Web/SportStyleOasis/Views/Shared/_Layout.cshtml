@@ -100,7 +100,16 @@
     });
 
     function goToShoppingCart(cartId) {
-        var url = '/ShoppingCart/ViewShoppingCart/' + cartId;
-        window.location.href = url;
+        $.ajax({
+            url: '/ShoppingCart/ViewShoppingCart',
+            type: 'GET',
+            data: { cartId },
+            success: function (response) {
+                window.location.href = '/ShoppingCart/ViewShoppingCart?cartId=' + cartId;
+            },
+            error: function (error) {
+                alert("An error occurred while processing your request. Please try again later.");
+            }
+        });
     }
 </script>

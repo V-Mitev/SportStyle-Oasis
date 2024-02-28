@@ -40,15 +40,15 @@
 @{
     var userId = User.GetId();
     var userFullName = await UserService.GetUserFullNameByIdAsync(User.GetId());
-    var shoppingCart = await ShoppingCartService.FindShoppingCartByUserIdAsync(userId);
-    var shoppingCartItems = await ShoppingCartService.GetShoppingCartItemsAsync(shoppingCart.Id);
+    var shoppingCartId = await ShoppingCartService.GetShoppingCartIdAsync(userId);
+    var shoppingCartItems = await ShoppingCartService.GetShoppingCartItemsAsync(shoppingCartId);
 }
 
 <ul class="navbar-nav">
     @if (SignInManager.IsSignedIn(User))
     {
         <li class="nav-item">
-            <span class="cart-icon" onclick="goToShoppingCart(@shoppingCart.Id)">
+            <span class="cart-icon" onclick="goToShoppingCart(@shoppingCartId)">
                 <i class="fa-solid fa-cart-shopping fa-lg"></i>
                 <span class="cart-badge">@shoppingCartItems</span>
             </span>

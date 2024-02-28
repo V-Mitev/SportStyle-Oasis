@@ -1,0 +1,9 @@
+﻿@model ShoppingCartViewModel
+@inject IUserService UserService;
+@{
+    var userName = await UserService.GetUserFullNameByIdAsync(User.GetId());
+
+    TempData["Title"] = $"Hello {userName} this is your shopping cart!";
+}
+
+<h1 class="text-center">@TempData["Title"]</h1>

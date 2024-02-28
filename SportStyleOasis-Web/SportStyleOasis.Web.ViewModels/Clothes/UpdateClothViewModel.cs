@@ -2,16 +2,16 @@
 {
     using SportStyleOasis.Data.Models.Enums;
 
-    public class UpdateGarmentViewModel : AllClothesViewModel
+    public class UpdateClothViewModel : AllClothesViewModel
     {
         public string Color { get; set; } = null!;
 
         public string Description { get; set; } = null!;
 
-        public Gender GarmentForGender { get; set; }
+        public Gender ClothForGender { get; set; }
 
-        public ClothesBrands GarmentBrand { get; set; }
+        public ClothesBrands ClothBrand { get; set; }
 
-        public TypeOfClothes GarmentType { get; set; }
+        public TypeOfClothes ClothType { get; set; }
     }
 }

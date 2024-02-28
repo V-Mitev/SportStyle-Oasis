@@ -10,9 +10,9 @@
 
         public Task DeleteGarmentAsync(int id);
 
-        public Task UpdateGarmentAsync(int id, UpdateGarmentViewModel model);
+        public Task UpdateGarmentAsync(int id, UpdateClothViewModel model);
 
-        public Task<UpdateGarmentViewModel> FindGarmentToUpdateAsync(int id);
+        public Task<UpdateClothViewModel> FindGarmentToUpdateAsync(int id);
 
         public Task<ClothViewModel> ViewClothAsync(int id);
 

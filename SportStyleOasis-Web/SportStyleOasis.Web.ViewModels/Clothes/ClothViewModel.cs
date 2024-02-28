@@ -3,7 +3,7 @@
     using SportStyleOasis.Web.ViewModels.ClothInventory;
     using SportStyleOasis.Web.ViewModels.Review;
 
-    public class ClothViewModel : UpdateGarmentViewModel
+    public class ClothViewModel : UpdateClothViewModel
     {
         public ClothViewModel()
         {
