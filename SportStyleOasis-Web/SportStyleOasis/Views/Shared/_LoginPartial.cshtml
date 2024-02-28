@@ -1,6 +1,7 @@
 ﻿@inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
 @inject IUserService UserService
+@inject IShoppingCartService ShoppingCartService
 @using SportStyleOasis.Web.Infrastructure.Extensions;
 
 <style>
@@ -16,14 +17,18 @@
         position: relative;
     }
 
+        .cart-icon:hover {
+            cursor: pointer;
+        }
+
     .cart-badge {
         position: absolute;
         top: -10px;
-        right: 10px;
+        right: 6px;
         background-color: red;
         color: white;
-        width: 20px;
-        height: 20px;
+        width: 23px;
+        height: 25px;
         border-radius: 50%;
         display: flex;
         align-items: center;
@@ -33,16 +38,19 @@
 </style>
 
 @{
+    var userId = User.GetId();
     var userFullName = await UserService.GetUserFullNameByIdAsync(User.GetId());
+    var shoppingCart = await ShoppingCartService.FindShoppingCartByUserIdAsync(userId);
+    var shoppingCartItems = await ShoppingCartService.GetShoppingCartItemsAsync(shoppingCart.Id);
 }
 
 <ul class="navbar-nav">
     @if (SignInManager.IsSignedIn(User))
     {
         <li class="nav-item">
-            <span class="cart-icon">
+            <span class="cart-icon" onclick="goToShoppingCart(@shoppingCart.Id)">
                 <i class="fa-solid fa-cart-shopping fa-lg"></i>
-                <span class="cart-badge"></span>
+                <span class="cart-badge">@shoppingCartItems</span>
             </span>
         </li>
         <li class="nav-item">
@@ -64,6 +72,3 @@
         </li>
     }
 </ul>
-
-<script>
-</script>

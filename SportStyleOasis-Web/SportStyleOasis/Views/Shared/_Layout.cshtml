@@ -98,4 +98,9 @@
             window.location.href = '/Clothes/ViewTypeOfCloth?gender=' + gender + '&clothing=' + typeForClothes;
         });
     });
+
+    function goToShoppingCart(cartId) {
+        var url = '/ShoppingCart/ViewShoppingCart/' + cartId;
+        window.location.href = url;
+    }
 </script>
