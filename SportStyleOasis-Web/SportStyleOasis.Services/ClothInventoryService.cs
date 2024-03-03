@@ -15,7 +15,7 @@
             this.dbContext = dbContext;
         }
 
-        public async Task<ClotheInventory> GetClothesWithFilteredInventory(int clothId, string clothSize)
+        public async Task<ClotheInventory> GetClothesWithFilteredInventory(int clothId, string clothSize, int quantity)
         {
             if (Enum.TryParse(clothSize, out ClothesSize clothSizeEnum))
             {
@@ -26,6 +26,11 @@
                 if (clothInventory == null)
                 {
                     throw new InvalidOperationException("This clothe was not found to add it in cart.");
+                }
+
+                if (clothInventory.AvailableQuantity < quantity)
+                {
+                    throw new InvalidOperationException("This clothe doesn't have enough available quantity.");
                 }
 
                 return clothInventory;

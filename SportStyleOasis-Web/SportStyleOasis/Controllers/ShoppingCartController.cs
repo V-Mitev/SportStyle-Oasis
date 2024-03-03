@@ -32,13 +32,13 @@
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddClotheToCart(int clothId, string size)
+        public async Task<IActionResult> AddClotheToCart(int clothId, string size, int quantity)
         {
             string userId = User.GetId();
 
             try
             {
-                await shoppingCartService.AddToShoppingCartClothe(userId, clothId, size);
+                await shoppingCartService.AddToShoppingCartClothe(userId, clothId, size, quantity);
 
                 TempData[SuccessMessage] =
                 "Successfully added clothe to the shopping cart !";

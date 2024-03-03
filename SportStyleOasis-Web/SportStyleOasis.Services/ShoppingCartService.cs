@@ -23,9 +23,9 @@
             this.flavorService = flavorService;
         }
 
-        public async Task AddToShoppingCartClothe(string userId, int clothId, string size)
+        public async Task AddToShoppingCartClothe(string userId, int clothId, string size, int quantity)
         {
-            var cloth = await clothInventoryService.GetClothesWithFilteredInventory(clothId, size);
+            var cloth = await clothInventoryService.GetClothesWithFilteredInventory(clothId, size, quantity);
 
             var shoppingCart = await dbContext.ShoppingCarts
                 .Where(sc => sc.UserId.ToString() == userId)

@@ -42,7 +42,7 @@
             {
                 @if (clothInventory.AvailableQuantity > 0)
                 {
-                    <option value="@clothInventory.ClothesSize">@clothInventory.ClothesSize</option>
+                    <option value="@($"{clothInventory.ClothesSize}|{clothInventory.AvailableQuantity}")">@clothInventory.ClothesSize</option>
                 }
             }
         </select>
@@ -51,6 +51,7 @@
 
         @if (isAuthenticated)
         {
+            <input type="number" class="form-control mb-2" id="quantity" min="1" value="1" step="1" required>
             <button type="button" class="btn btn-primary mb-2" onclick="addToCart(@clothId)">Add to cart</button>
         }
     </form>
@@ -220,16 +221,24 @@
 
             if (!form.checkValidity()) {
                 form.reportValidity();
-                return; // Stop further execution if validation fails
+                return;
             }
 
             setClothSize();
-            var size = document.getElementById('clothSize').value;
+            var sizeAndQuantity = document.getElementById('clothSize').value.split('|');
+            var size = sizeAndQuantity[0];
+            var quantity = document.getElementById('quantity').value;
+            var availableQuantity = parseInt(sizeAndQuantity[1]);
+
+            if (quantity > availableQuantity) {
+                alert(`Quantity exceeds available quantity (${availableQuantity}). Please select a lower quantity.`);
+                return;
+            }
 
             $.ajax({
                 url: '/ShoppingCart/AddClotheToCart',
                 type: 'POST',
-                data: { clothId, size },
+                data: { clothId, size, quantity },
                 success: function (response) {
                     window.location.reload();
                 },
