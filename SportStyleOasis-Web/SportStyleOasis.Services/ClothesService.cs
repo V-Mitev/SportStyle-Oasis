@@ -103,6 +103,27 @@
             return oldGarment;
         }
 
+        public async Task<Clothes> GetClothesWithFilteredInventory(int clothId, string clothSize)
+        {
+            var cloth = await dbContext.Clothes
+            .Include(c => c.ClotheInventories)
+            .FirstOrDefaultAsync(c => c.Id == clothId);
+
+            if (cloth == null)
+            {
+                throw new
+                    InvalidOperationException($"Clothe was not found. PLease contact with the administrator");
+            }
+
+            // If cloth is found, filter its inventory by the provided clothSize
+            // Filter the inventories dynamically based on clothSize
+            cloth.ClotheInventories = cloth.ClotheInventories
+                    .Where(ci => ci.ClothesSize.ToString()!.ToLower() == clothSize.ToLower())
+                    .ToList();
+
+            return cloth;
+        }
+
         public async Task<IEnumerable<AllClothesViewModel>> ReturnTypeOfClothesAsync(string gender, string typeOfClothes)
         {
             var genderEnum = (Gender)Enum.Parse(typeof(Gender), gender);
@@ -179,6 +200,7 @@
                     .OrderBy(ci => ci.ClothesSize)
                     .Select(ci => new ClothInventoryViewModel()
                     {
+                        Id = ci.Id,
                         AvailableQuantity = ci.AvailableQuantity,
                         ClothesSize = ci.ClothesSize
                     }).ToList()

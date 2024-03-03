@@ -7,6 +7,11 @@
 
     public class ClotheInventory
     {
+        public ClotheInventory()
+        {
+            ShoppingCarts = new HashSet<ShoppingCart>();
+        }
+
         [Key]
         public int Id { get; set; }
 
@@ -18,5 +23,7 @@
         [ForeignKey(nameof(Clothes))]
         public int ClothId { get; set; }
         public Clothes Clothes { get; set; } = null!;
+
+        public ICollection<ShoppingCart> ShoppingCarts { get; set; }
     }
 }

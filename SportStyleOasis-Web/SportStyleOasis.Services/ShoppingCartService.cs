@@ -2,8 +2,6 @@
 {
     using Microsoft.EntityFrameworkCore;
     using SportStyleOasis.Data;
-    using SportStyleOasis.Data.Models;
-    using SportStyleOasis.Data.Models.Enums;
     using SportStyleOasis.Services.Interfces;
     using SportStyleOasis.Web.ViewModels.Clothes;
     using SportStyleOasis.Web.ViewModels.ProteinPowder;
@@ -13,44 +11,40 @@
     public class ShoppingCartService : IShoppingCartService
     {
         private readonly SportStyleOasisDbContext dbContext;
+        private readonly IClothesService clothesService;
 
-        public ShoppingCartService(SportStyleOasisDbContext dbContext)
+        public ShoppingCartService(SportStyleOasisDbContext dbContext, IClothesService clothesService)
         {
             this.dbContext = dbContext;
+            this.clothesService = clothesService;
+        }
+
+        public async Task AddShoppingCartItems(string userId, int clothId, string size)
+        {
+            var cloth = await clothesService.GetClothesWithFilteredInventory(clothId, size);
+
+            var shoppingCart = await dbContext.ShoppingCarts
+                .Where(sc => sc.UserId.ToString() == userId)
+                .FirstOrDefaultAsync();
+
+            if (shoppingCart == null)
+            {
+                throw new InvalidOperationException("Shopping cart was not found for the user.");
+            }
+
+            //shoppingCart.Clothes.Add(cloth);
+            await dbContext.SaveChangesAsync();
         }
 
         public async Task<ShoppingCartViewModel> FindShoppingCartAsync(int cartId)
         {
             var shoppingCart = await dbContext.ShoppingCarts
-                .Include(sc => sc.Clothes)
-                .ThenInclude(c => c.ClotheInventories)
-                .Include(sc => sc.ProteinPowders)
+                .Include(sc => sc.ClotheInventories)
+                .Include(sc => sc.ProteinFlavors)
                 .Where(sc => sc.Id == cartId)
                 .Select(sc => new ShoppingCartViewModel()
                 {
-                    Id = sc.Id,
-                    Clothes = sc.Clothes
-                        .Select(c => new ClothForShoppingCartViewModel()
-                        {
-                            Id = c.Id,
-                            Color = c.Color,
-                            Name = c.Name,
-                            Image = c.Image,
-                            Price = c.Price,
-                            Size = (ClothesSize)c.ClotheInventories
-                                    .Where(ci => ci.ClothId == c.Id)
-                                    .Select(ci => ci.ClothesSize)
-                                    .FirstOrDefault()!
-                        }).ToList(),
-                    ProteinPowders = sc.ProteinPowders
-                        .Select(pp => new ProteinForShoppingCartViewModel()
-                        {
-                            Id = pp.Id,
-                            Name = pp.Name,
-                            Image = pp.Image,
-                            Price = pp.Price,
-                            Weight = pp.Weight
-                        }).ToList(),
+                    Id = sc.Id
                 })
                 .FirstOrDefaultAsync();
 
@@ -79,9 +73,14 @@
         public async Task<int> GetShoppingCartItemsAsync(int cartId)
         {
             var shoppingCart = await dbContext.ShoppingCarts
-                .FirstOrDefaultAsync(sc => sc.Id == cartId) ?? throw new InvalidOperationException("Shopping cart was not found for the user.");
+                .FirstOrDefaultAsync(sc => sc.Id == cartId);
 
-            return shoppingCart.ProteinPowders.Count + shoppingCart.Clothes.Count;
+            if (shoppingCart == null)
+            {
+                throw new InvalidOperationException("Shopping cart was not found for the user.");
+            }
+
+            return shoppingCart.ProteinFlavors.Count + shoppingCart.ClotheInventories.Count;
         }
     }
 }

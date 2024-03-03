@@ -7,8 +7,8 @@
     {
         public ShoppingCart()
         {
-            Clothes = new HashSet<Clothes>();
-            ProteinPowders = new HashSet<ProteinPowder>();
+            ClotheInventories = new HashSet<ClotheInventory>();
+            ProteinFlavors = new HashSet<ProteinFlavor>();
         }
 
         [Key]
@@ -19,8 +19,8 @@
 
         public ApplicationUser ApplicationUser { get; set; } = null!;
 
-        public ICollection<Clothes> Clothes { get; set; }
+        public ICollection<ClotheInventory> ClotheInventories { get; set; }
 
-        public ICollection<ProteinPowder> ProteinPowders { get; set; }
+        public ICollection<ProteinFlavor> ProteinFlavors { get; set; }
     }
 }

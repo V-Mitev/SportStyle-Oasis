@@ -1,4 +1,5 @@
-﻿@model ClothReviewViewModel
+﻿@using SportStyleOasis.Web.ViewModels.ClothInventory
+@model ClothReviewViewModel
 @inject IUserService UserService
 @inject IReviewService ReviewService
 @using static SportStyleOasis.Web.Infrastructure.Extensions.ClaimsPrincipalExtensions
@@ -7,6 +8,7 @@
     var userId = User.GetId();
     var isUserAdmin = User.IsAdmin();
     var isAuthenticated = User?.Identity?.IsAuthenticated ?? false;
+    var clothId = Model.Cloth.Id;
 }
 
 <style>
@@ -32,16 +34,26 @@
     <p><strong>Gender:</strong> @Model.Cloth.ClothForGender</p>
     <p><strong>Type of Clothes:</strong> @Model.Cloth.ClothType</p>
     <p><strong>Available Clothe Size:</strong></p>
-    <select class="form-control mb-2" id="garmentBrand" name="GarmentBrand" required>
-        @foreach (var clothInventory in Model.Cloth.ClothInventory)
-        {
-            @if (clothInventory.AvailableQuantity > 0)
-            {
-                <option value="@clothInventory.ClothesSize">@clothInventory.ClothesSize</option>
-            }
-        }
-    </select>
 
+    <form id="form" asp-controller="ShoppingCart" asp-action="AddClotheToCart" method="post">
+        <select class="form-control mb-2" id="garmentSize" name="GarmentSize" required>
+            <option value="" selected>Please select cloth size</option>
+            @foreach (var clothInventory in Model.Cloth.ClothInventory)
+            {
+                @if (clothInventory.AvailableQuantity > 0)
+                {
+                    <option value="@clothInventory.ClothesSize">@clothInventory.ClothesSize</option>
+                }
+            }
+        </select>
+
+        <input type="hidden" id="clothSize" value="" />
+
+        @if (isAuthenticated)
+        {
+            <button type="button" class="btn btn-primary mb-2" onclick="addToCart(@clothId)">Add to cart</button>
+        }
+    </form>
     <p><strong>Ratings:</strong></p>
     @if (Model.Cloth.Reviews != null && Model.Cloth.Reviews.Any())
     {
@@ -112,19 +124,19 @@
                 var initialRating = reviewContainer.data("initial-rating");
 
                 var editForm = `
-                            <form class="edit-form" data-review-id="${reviewId}">
-                                <label>Edit Comment:</label>
-                                <input type="text" class="form-control mb-2" value="${initialComment}" name="editedComment"/>
-                                <label>Edit Rating:</label>
-                                <select class="form-control mb-2" name="editedRating" required>
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                    <option value="4">4</option>
-                                    <option value="5">5</option>
-                                </select>
-                                <button type="button" class="btn btn-primary save-btn">Save</button>
-                            </form>`;
+                                                                                                                                    <form class="edit-form" data-review-id="${reviewId}">
+                                                                                                                                        <label>Edit Comment:</label>
+                                                                                                                                        <input type="text" class="form-control mb-2" value="${initialComment}" name="editedComment"/>
+                                                                                                                                        <label>Edit Rating:</label>
+                                                                                                                                        <select class="form-control mb-2" name="editedRating" required>
+                                                                                                                                            <option value="1">1</option>
+                                                                                                                                            <option value="2">2</option>
+                                                                                                                                            <option value="3">3</option>
+                                                                                                                                            <option value="4">4</option>
+                                                                                                                                            <option value="5">5</option>
+                                                                                                                                        </select>
+                                                                                                                                        <button type="button" class="btn btn-primary save-btn">Save</button>
+                                                                                                                                    </form>`;
 
                 var editFormContainer = $('<div>').html(editForm);
                 reviewContainer.html('').append(editFormContainer);
@@ -195,5 +207,36 @@
                 }
             }
         });
+
+        function setClothSize() {
+            // Get the selected value from the dropdown
+            var selectedSize = document.getElementById('garmentSize').value;
+            // Set the value of the hidden input field
+            document.getElementById('clothSize').value = selectedSize;
+        }
+
+        function addToCart(clothId) {
+            var form = document.getElementById('form');
+
+            if (!form.checkValidity()) {
+                form.reportValidity();
+                return; // Stop further execution if validation fails
+            }
+
+            setClothSize();
+            var size = document.getElementById('clothSize').value;
+
+            $.ajax({
+                url: '/ShoppingCart/AddClotheToCart',
+                type: 'POST',
+                data: { clothId, size },
+                success: function (response) {
+                    console.log(response);
+                },
+                error: function (error) {
+                    alert("An error occurred while adding clothes to the cart. Please try again later.");
+                }
+            });
+        }
     </script>
 }

@@ -6,6 +6,11 @@
 
     public class ProteinFlavor
     {
+        public ProteinFlavor()
+        {
+            ShoppingCarts = new HashSet<ShoppingCart>();
+        }
+
         [Key]
         public int Id { get; set; }
 
@@ -19,5 +24,7 @@
         [ForeignKey(nameof(Protein))]
         public int ProteinId { get; set; }
         public ProteinPowder Protein { get; set; } = null!;
+
+        public ICollection<ShoppingCart> ShoppingCarts { get; set; }
     }
 }

@@ -14,5 +14,7 @@
         public ICollection<ClothInventoryViewModel> ClothInventory { get; set; }
 
         public ICollection<ReviewViewModel> Reviews { get; set; }
+
+        public string? ClothSize { get; set; }
     }
 }

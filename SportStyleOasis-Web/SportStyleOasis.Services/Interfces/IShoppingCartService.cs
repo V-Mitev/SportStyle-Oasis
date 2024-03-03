@@ -9,5 +9,7 @@
         Task<int> GetShoppingCartItemsAsync(int cartId);
 
         Task<int> GetShoppingCartIdAsync(string userId);
+
+        Task AddShoppingCartItems(string userId, int clothId, string size);
     }
 }

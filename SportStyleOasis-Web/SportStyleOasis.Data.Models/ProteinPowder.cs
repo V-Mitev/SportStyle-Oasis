@@ -10,7 +10,6 @@
         {
             Reviews = new HashSet<Review>();
             ProteinFlavors = new HashSet<ProteinFlavor>();
-            ShoppingCarts = new HashSet<ShoppingCart>();
         }
 
         [Key]
@@ -42,7 +41,5 @@
         public ProteinPowderBrands? ProteinPowderBrands { get; set; }
 
         public ICollection<ProteinFlavor> ProteinFlavors { get; set; }
-
-        public ICollection<ShoppingCart> ShoppingCarts { get; set; }
     }
 }

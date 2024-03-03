@@ -3,8 +3,9 @@
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using SportStyleOasis.Services.Interfces;
+    using SportStyleOasis.Web.Infrastructure.Extensions;
+    using static SportStyleOasis.Common.NotificationMessagesConstant;
 
-    [Authorize]
     public class ShoppingCartController : Controller
     {
         private readonly IShoppingCartService shoppingCartService;
@@ -17,9 +18,44 @@
         [HttpGet]
         public async Task<IActionResult> ViewShoppingCart(int cartId)
         {
-            var shoppingCart = await shoppingCartService.FindShoppingCartAsync(cartId);
+            try
+            {
+                var shoppingCart = await shoppingCartService.FindShoppingCartAsync(cartId);
 
-            return View(shoppingCart);
+                return View(shoppingCart);
+            }
+            catch (Exception)
+            {
+                return GeneralError();
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddClotheToCart(int clothId, string size)
+        {
+            string userId = User.GetId();
+
+            try
+            {
+                await shoppingCartService.AddShoppingCartItems(userId, clothId, size);
+
+                TempData[SuccessMessage] =
+                "Successfully added clothe to the shopping cart !";
+
+                return Ok();
+            }
+            catch (Exception)
+            {
+                return GeneralError();
+            }
+        }
+
+        private IActionResult GeneralError()
+        {
+            TempData[ErrorMessage] =
+                "Unexpected error occurred! Please try again later or contact administrator";
+
+            return RedirectToAction("Index", "Home");
         }
     }
 }
