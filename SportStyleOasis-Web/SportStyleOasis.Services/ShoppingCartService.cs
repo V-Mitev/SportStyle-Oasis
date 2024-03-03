@@ -11,14 +11,19 @@
     {
         private readonly SportStyleOasisDbContext dbContext;
         private readonly IClothInventoryService clothInventoryService;
+        private readonly IFlavorService flavorService;
 
-        public ShoppingCartService(SportStyleOasisDbContext dbContext, IClothInventoryService clothInventoryService)
+        public ShoppingCartService(
+            SportStyleOasisDbContext dbContext, 
+            IClothInventoryService clothInventoryService,
+            IFlavorService flavorService)
         {
             this.dbContext = dbContext;
             this.clothInventoryService = clothInventoryService;
+            this.flavorService = flavorService;
         }
 
-        public async Task AddShoppingCartItems(string userId, int clothId, string size)
+        public async Task AddToShoppingCartClothe(string userId, int clothId, string size)
         {
             var cloth = await clothInventoryService.GetClothesWithFilteredInventory(clothId, size);
 
@@ -32,6 +37,23 @@
             }
 
             shoppingCart.ClotheInventories.Add(cloth);
+            await dbContext.SaveChangesAsync();
+        }
+
+        public async Task AddToShoppingCartProtein(string userId, int proteinId, string proteinFlavor)
+        {
+            var protein = await flavorService.GetProteinFlavorAsync(proteinId, proteinFlavor);
+
+            var shoppingCart = await dbContext.ShoppingCarts
+                .Where(sc => sc.UserId.ToString() == userId)
+                .FirstOrDefaultAsync();
+
+            if (shoppingCart == null)
+            {
+                throw new InvalidOperationException("Shopping cart was not found for the user.");
+            }
+
+            shoppingCart.ProteinFlavors.Add(protein);
             await dbContext.SaveChangesAsync();
         }
 

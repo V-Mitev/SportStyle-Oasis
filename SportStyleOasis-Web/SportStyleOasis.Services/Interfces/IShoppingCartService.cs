@@ -10,6 +10,8 @@
 
         Task<int> GetShoppingCartIdAsync(string userId);
 
-        Task AddShoppingCartItems(string userId, int clothId, string size);
+        Task AddToShoppingCartClothe(string userId, int clothId, string size);
+
+        Task AddToShoppingCartProtein(string userId, int proteinId, string proteinFlavor);
     }
 }

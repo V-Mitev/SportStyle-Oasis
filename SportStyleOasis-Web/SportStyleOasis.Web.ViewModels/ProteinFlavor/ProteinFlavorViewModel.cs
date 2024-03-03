@@ -1,11 +1,19 @@
 ﻿namespace SportStyleOasis.Web.ViewModels.ProteinFlavor
 {
+    using SportStyleOasis.Web.ViewModels.ProteinPowder;
     using System.ComponentModel.DataAnnotations;
     using static SportStyleOasis.Common.EntityValidationConstants.ProteinFlavor;
 
     public class ProteinFlavorViewModel
     {
+        public ProteinFlavorViewModel()
+        {
+            ProteinPowder = new ProteinPowderViewModel();    
+        }
+
         public int Id { get; set; }
+
+        public ProteinPowderViewModel ProteinPowder { get; set; }
 
         [Required]
         [MaxLength(ProteinFlavorNameMaxLength)]

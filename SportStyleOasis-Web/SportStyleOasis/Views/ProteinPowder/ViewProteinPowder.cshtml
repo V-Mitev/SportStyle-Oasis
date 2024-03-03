@@ -7,6 +7,7 @@
     var userId = User.GetId();
     var isUserAdmin = User.IsAdmin();
     var isAuthenticated = User?.Identity?.IsAuthenticated ?? false;
+    var proteinId = Model.ProteinPowder.Id;
 }
 
 <style>
@@ -33,12 +34,24 @@
     <p><strong>Weight in grams:</strong> @Model.ProteinPowder.Weight</p>
     <p><strong>Protein Type:</strong> @Model.ProteinPowder.TypeOfProtein</p>
     <p><strong>Availabe Protein Powder Flavors:</strong></p>
-    <select class="form-control mb-2" id="proteinFlavors" name="ProteinFlavors" required>
-        @foreach (var proteinPowderFlavor in Model.ProteinPowder.ProteinFlavors)
+
+    <form id="form" asp-controller="ShoppingCart" asp-action="AddProteinToCart" method="post">
+        <select class="form-control mb-2" id="proteinFlavors" required>
+            <option value="" selected>Please select protein flavor</option>
+
+            @foreach (var proteinPowderFlavor in Model.ProteinPowder.ProteinFlavors)
+            {
+                <option value="@proteinPowderFlavor.FlavorName">@proteinPowderFlavor.FlavorName</option>
+            }
+        </select>
+
+        <input type="hidden" id="proteinFlavor" value="" />
+
+        @if (isAuthenticated)
         {
-            <option value="@proteinPowderFlavor.FlavorName">@proteinPowderFlavor.FlavorName</option>
+            <button type="button" class="btn btn-primary mb-2" onclick="addToCart(@proteinId)">Add to cart</button>
         }
-    </select>
+    </form>
 
     <p><strong>Ratings:</strong></p>
     @if (Model.ProteinPowder.Reviews != null && Model.ProteinPowder.Reviews.Any())
@@ -113,19 +126,19 @@
                 var initialRating = reviewContainer.data("initial-rating");
 
                 var editForm = `
-                                    <form class="edit-form" data-review-id="${reviewId}">
-                                        <label>Edit Comment:</label>
-                                        <input type="text" class="form-control mb-2" value="${initialComment}" name="editedComment"/>
-                                        <label>Edit Rating:</label>
-                                        <select class="form-control mb-2" name="editedRating" required>
-                                            <option value="1">1</option>
-                                            <option value="2">2</option>
-                                            <option value="3">3</option>
-                                            <option value="4">4</option>
-                                            <option value="5">5</option>
-                                        </select>
-                                        <button type="button" class="btn btn-primary save-btn">Save</button>
-                                    </form>`;
+                                                            <form class="edit-form" data-review-id="${reviewId}">
+                                                                <label>Edit Comment:</label>
+                                                                <input type="text" class="form-control mb-2" value="${initialComment}" name="editedComment"/>
+                                                                <label>Edit Rating:</label>
+                                                                <select class="form-control mb-2" name="editedRating" required>
+                                                                    <option value="1">1</option>
+                                                                    <option value="2">2</option>
+                                                                    <option value="3">3</option>
+                                                                    <option value="4">4</option>
+                                                                    <option value="5">5</option>
+                                                                </select>
+                                                                <button type="button" class="btn btn-primary save-btn">Save</button>
+                                                            </form>`;
 
                 var editFormContainer = $('<div>').html(editForm);
                 reviewContainer.html('').append(editFormContainer);
@@ -196,5 +209,36 @@
                 }
             }
         });
+
+        function setProteinFlavor() {
+            // Get the selected value from the dropdown
+            var selectedSize = document.getElementById('proteinFlavors').value;
+            // Set the value of the hidden input field
+            document.getElementById('proteinFlavor').value = selectedSize;
+        }
+
+        function addToCart(proteinId) {
+            var form = document.getElementById('form');
+
+            if (!form.checkValidity()) {
+                form.reportValidity();
+                return; // Stop further execution if validation fails
+            }
+
+            setProteinFlavor();
+            var proteinFlavor = document.getElementById('proteinFlavor').value;
+
+            $.ajax({
+                url: '/ShoppingCart/AddProteinToCart',
+                type: 'POST',
+                data: { proteinId, proteinFlavor },
+                success: function (response) {
+                    window.location.reload(); // Reload the page after successful addition
+                },
+                error: function (error) {
+                    alert("An error occurred while adding protein to the cart. Please try again later.");
+                }
+            });
+        }
     </script>
 }

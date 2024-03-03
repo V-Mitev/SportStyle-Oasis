@@ -38,10 +38,30 @@
 
             try
             {
-                await shoppingCartService.AddShoppingCartItems(userId, clothId, size);
+                await shoppingCartService.AddToShoppingCartClothe(userId, clothId, size);
 
                 TempData[SuccessMessage] =
                 "Successfully added clothe to the shopping cart !";
+
+                return Ok();
+            }
+            catch (Exception)
+            {
+                return GeneralError();
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddProteinToCart(int proteinId, string proteinFlavor)
+        {
+            string userId = User.GetId();
+
+            try
+            {
+                await shoppingCartService.AddToShoppingCartProtein(userId, proteinId, proteinFlavor);
+
+                TempData[SuccessMessage] =
+                "Successfully added protein powder to the shopping cart !";
 
                 return Ok();
             }

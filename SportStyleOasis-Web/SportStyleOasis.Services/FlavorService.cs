@@ -86,5 +86,19 @@
             return
                proteinPowder.ProteinFlavors.Any(pf => pf.FlavorName.ToLower() == flavorName.ToLower());
         }
+
+        public async Task<ProteinFlavor> GetProteinFlavorAsync(int proteinId, string proteinFlavor)
+        {
+            var proteinFlavorModel = await dbContext.ProteinFlavor
+                .Include(pf => pf.Protein)
+                .FirstOrDefaultAsync(pf => pf.ProteinId == proteinId && pf.FlavorName == proteinFlavor);
+
+            if (proteinFlavorModel == null)
+            {
+                throw new InvalidOperationException("This protein flavor was not found to add it in cart.");
+            }
+
+            return proteinFlavorModel;
+        }
     }
 }
