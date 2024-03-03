@@ -6,4 +6,59 @@
     TempData["Title"] = $"Hello {userName} this is your shopping cart!";
 }
 
+<style>
+    .shopping-cart {
+        width: 100%;
+        overflow-x: auto; /* Allow horizontal scrolling if needed */
+        white-space: nowrap; /* Prevent items from wrapping to the next line */
+    }
+
+    .cart-item {
+        display: inline-block;
+        margin-right: 20px; /* Adjust spacing between items */
+        vertical-align: top; /* Align items at the top */
+        width: 200px; /* Adjust the width of each item */
+        white-space: normal; /* Allow wrapping within each item */
+    }
+
+    .item-image img {
+        width: 100%; /* Ensure image fills the container */
+        height: 200px; /* Set a fixed height for consistency */
+        object-fit: auto; /* Ensure the image covers the entire container */
+    }
+
+    .item-details {
+        padding: 10px;
+        background-color: #f9f9f9;
+    }
+
+        .item-details h3 {
+            margin-top: 0;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .item-details p {
+            margin: 0;
+            font-size: 14px;
+        }
+</style>
+
 <h1 class="text-center">@TempData["Title"]</h1>
+
+<div class="shopping-cart">
+    @foreach (var cloth in Model.Clothes)
+    {
+        <div class="cart-item">
+            <div class="item-image">
+                <img src="/images/@cloth.Image" alt="@cloth.Name">
+            </div>
+            <div class="item-details">
+                <h3>@cloth.Name</h3>
+                <p>Size: @cloth.Size</p>
+                <p>Color: @cloth.Color</p>
+                <p>Price: $@cloth.Price</p>
+            </div>
+        </div>
+    }
+</div>

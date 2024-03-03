@@ -5,8 +5,6 @@
     using SportStyleOasis.Data.Models;
     using SportStyleOasis.Data.Models.Enums;
     using SportStyleOasis.Services.Interfces;
-    using SportStyleOasis.Web.ViewModels.Clothes;
-    using SportStyleOasis.Web.ViewModels.ClothInventory;
 
     public class ClothInventoryService : IClothInventoryService
     {

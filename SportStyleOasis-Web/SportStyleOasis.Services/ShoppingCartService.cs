@@ -51,7 +51,8 @@
                         Color = ci.Clothe.Color,
                         Image = ci.Clothe.Image,
                         Name = ci.Clothe.Name,
-                        Price = ci.Clothe.Price
+                        Price = ci.Clothe.Price,
+                        Size = ci.ClothesSize.ToString()!
                     }).ToList()
                 })
                 .FirstOrDefaultAsync();
