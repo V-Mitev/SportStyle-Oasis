@@ -20,9 +20,9 @@
         [Range(ClotheMinAvailableQuantity, ClotheMaxAvailableQuantity)]
         public int AvailableQuantity { get; set; }
 
-        [ForeignKey(nameof(Clothes))]
+        [ForeignKey(nameof(Clothe))]
         public int ClothId { get; set; }
-        public Clothes Clothes { get; set; } = null!;
+        public Clothes Clothe { get; set; } = null!;
 
         public ICollection<ShoppingCart> ShoppingCarts { get; set; }
     }

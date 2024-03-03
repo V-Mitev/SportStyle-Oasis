@@ -6,6 +6,7 @@
     using SportStyleOasis.Web.Infrastructure.Extensions;
     using static SportStyleOasis.Common.NotificationMessagesConstant;
 
+    [Authorize]
     public class ShoppingCartController : Controller
     {
         private readonly IShoppingCartService shoppingCartService;

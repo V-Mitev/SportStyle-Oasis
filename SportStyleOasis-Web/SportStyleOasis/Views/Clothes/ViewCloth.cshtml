@@ -231,7 +231,7 @@
                 type: 'POST',
                 data: { clothId, size },
                 success: function (response) {
-                    console.log(response);
+                    window.location.reload();
                 },
                 error: function (error) {
                     alert("An error occurred while adding clothes to the cart. Please try again later.");

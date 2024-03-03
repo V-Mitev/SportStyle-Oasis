@@ -40,7 +40,7 @@
                 {
                     AvailableQuantity = kvp.Value,
                     ClothId = clothe.Id,
-                    Clothes = clothe,
+                    Clothe = clothe,
                     ClothesSize = kvp.Key
                 };
 
