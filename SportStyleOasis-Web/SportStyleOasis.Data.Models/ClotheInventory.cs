@@ -3,7 +3,7 @@
     using SportStyleOasis.Data.Models.Enums;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
-    using static SportStyleOasis.Common.EntityValidationConstants.Clothes;
+    using static SportStyleOasis.Common.EntityValidationConstants.ClothInventory;
 
     public class ClotheInventory
     {
@@ -17,7 +17,7 @@
 
         public ClothesSize? ClothesSize { get; set; }
 
-        [Range(ClotheMinAvailableQuantity, ClotheMaxAvailableQuantity)]
+        [Range(AvailableQuantityMinValue, AvailableQuantityMaxValue)]
         public int AvailableQuantity { get; set; }
 
         [ForeignKey(nameof(Clothe))]

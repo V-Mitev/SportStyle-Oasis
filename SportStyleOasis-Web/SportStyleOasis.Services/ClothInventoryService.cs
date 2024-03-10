@@ -5,6 +5,7 @@
     using SportStyleOasis.Data.Models;
     using SportStyleOasis.Data.Models.Enums;
     using SportStyleOasis.Services.Interfces;
+    using SportStyleOasis.Web.ViewModels.ClothInventory;
 
     public class ClothInventoryService : IClothInventoryService
     {
@@ -39,6 +40,36 @@
             {
                 throw new InvalidOperationException("This clothe size is not found to add it in the cart.");
             }
+        }
+
+        public async Task<EditClothInventoryViewModel> GetClothInventoryAsync(int clothId)
+        {
+            var clothInventories = await dbContext.ClotheInventories
+                .Where(ci => ci.ClothId == clothId)
+                .Select(ci => new EditClothInventoryViewModel()
+                {
+                    Id = ci.Id,
+                    ClothesSize = ci.ClothesSize,
+                    AvailableQuantity = ci.AvailableQuantity
+                })
+                .ToListAsync();
+
+            if (clothInventories == null)
+            {
+                throw new InvalidOperationException("The cloth invenory was not found");
+            }
+
+            var clothInvenotory = new EditClothInventoryViewModel()
+            {
+                Id = clothId
+            };
+
+            foreach (var ci in clothInventories)
+            {
+                clothInvenotory.ClotheQuantityAndSize.Add(ci.ClothesSize.ToString()!, ci.AvailableQuantity);
+            }
+
+            return clothInvenotory;
         }
     }
 }

@@ -1,0 +1,22 @@
+﻿@model EditClothInventoryViewModel
+@using static SportStyleOasis.Common.EntityValidationConstants.ClothInventory;
+@inject IClothesService ClothService
+
+@{
+    var clothName = await ClothService.GetClotheName(Model.Id);
+
+    TempData["Title"] = $"This is the cloth inventory of {clothName}";
+}
+
+<h1 class="text-center">@TempData["Title"]</h1>
+
+<form asp-controller="ClothInventory" asp-action="Edit" method="post">
+    @foreach (var clothInvenotry in Model.ClotheQuantityAndSize)
+    {
+        <div class="form-group">
+            <label asp-for="AvailableQuantity" class="form-label-add-edit">Available quantity for size: @clothInvenotry.Key</label>
+            <input asp-for="AvailableQuantity" class="form-control" value="@clothInvenotry.Value" required min="@AvailableQuantityMinValue" max="@AvailableQuantityMaxValue" />
+            <span asp-validation-for="AvailableQuantity" class="text-danger"></span>
+        </div>
+    }
+</form>

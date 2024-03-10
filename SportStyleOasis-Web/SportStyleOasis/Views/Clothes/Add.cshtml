@@ -1,5 +1,6 @@
 ﻿@model AddClotheViewModel
 @using static SportStyleOasis.Common.EntityValidationConstants.Clothes;
+@using static SportStyleOasis.Common.EntityValidationConstants.ClothInventory;
 
 @{
     TempData["Title"] = "Add new clothe";
@@ -113,7 +114,7 @@
     {
         <div class="form-group">
             <label asp-for="SizesAndQuantities">@clotheSize.Key</label>
-            <input name="SizesAndQuantities[@clotheSize.Key]" type="number" value="@clotheSize.Value" class="form-control" required step="1" min="@ClotheMinAvailableQuantity" max="@ClotheMaxAvailableQuantity" />
+            <input name="SizesAndQuantities[@clotheSize.Key]" type="number" value="@clotheSize.Value" class="form-control" required step="1" min="@AvailableQuantityMinValue" max="@AvailableQuantityMaxValue" />
             <span asp-validation-for="SizesAndQuantities" class="text-danger"></span>
         </div>
     }

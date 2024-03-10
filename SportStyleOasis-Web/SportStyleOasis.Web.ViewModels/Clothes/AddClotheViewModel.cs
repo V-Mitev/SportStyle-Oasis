@@ -3,6 +3,7 @@
     using SportStyleOasis.Data.Models.Enums;
     using System.ComponentModel.DataAnnotations;
     using static SportStyleOasis.Common.EntityValidationConstants.Clothes;
+    using static SportStyleOasis.Common.EntityValidationConstants.ClothInventory;
 
     public class AddClotheViewModel
     {
@@ -29,7 +30,7 @@
         [StringLength(DescriptionMaxLength, MinimumLength = DescriptionMinLength)]
         public string Description { get; set; } = null!;
 
-        [Range(ClotheMinAvailableQuantity, ClotheMaxAvailableQuantity)]
+        [Range(AvailableQuantityMinValue, AvailableQuantityMaxValue)]
         public int AvailableQuantity { get; set; }
 
         public ClothesBrands? ClothesBrands { get; set; }

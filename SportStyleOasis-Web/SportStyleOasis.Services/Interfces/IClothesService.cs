@@ -17,5 +17,7 @@
         public Task<ClothViewModel> ViewClothAsync(int id);
 
         public Task<IEnumerable<AllClothesViewModel>> ReturnTypeOfClothesAsync(string gender, string clothes);
+
+        public Task<string> GetClotheName(int clothId);
     }
 }
