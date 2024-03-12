@@ -12,7 +12,7 @@
 
         public  int  Id { get; set; }
 
-        public ClothForShoppingCartViewModel ClothForShoppingCart { get; set; }
+        public ClothForShoppingCartViewModel? ClothForShoppingCart { get; set; }
 
         public ClothesSize? ClothesSize { get; set; }
 

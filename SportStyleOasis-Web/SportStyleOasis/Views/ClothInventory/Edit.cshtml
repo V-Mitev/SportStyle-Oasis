@@ -10,13 +10,55 @@
 
 <h1 class="text-center">@TempData["Title"]</h1>
 
-<form asp-controller="ClothInventory" asp-action="Edit" method="post">
-    @foreach (var clothInvenotry in Model.ClotheQuantityAndSize)
+<form asp-controller="ClothInventory" asp-action="Edit" method="post" id="editForm">
+    @foreach (var clothInventory in Model.ClotheQuantityAndSize)
     {
-        <div class="form-group">
-            <label asp-for="AvailableQuantity" class="form-label-add-edit">Available quantity for size: @clothInvenotry.Key</label>
-            <input asp-for="AvailableQuantity" class="form-control" value="@clothInvenotry.Value" required min="@AvailableQuantityMinValue" max="@AvailableQuantityMaxValue" />
-            <span asp-validation-for="AvailableQuantity" class="text-danger"></span>
+        <div class="form-group mb-2">
+            <label asp-for="@clothInventory.Value" class="form-label-add-edit">Available quantity for size: @clothInventory.Key</label>
+            <input type="number" asp-for="@clothInventory.Value" class="form-control cloth-quantity" required min="@AvailableQuantityMinValue" max="@AvailableQuantityMaxValue" />
+            <span asp-validation-for="@clothInventory.Value" class="text-danger"></span>
+            <input type="hidden" name="ClotheQuantityAndSize[@clothInventory.Key]" class="hidden-quantity" value="@clothInventory.Value" />
         </div>
     }
+
+    <button type="button" id="saveChangesBtn" class="btn btn-primary">Save Changes</button>
 </form>
+
+@section Scripts {
+    <script>
+        // Function to load all available cloth sizes
+        function loadClothSizes() {
+            var clothSizes = [];
+
+            // Iterate over each cloth size input field and extract the cloth size from the name attribute
+            $('input[name^="ClotheQuantityAndSize["]').each(function () {
+                var clothSize = $(this).attr('name').split('[')[1].split(']')[0];
+                clothSizes.push(clothSize);
+            });
+
+            return clothSizes;
+        }
+
+        $(document).ready(function () {
+            $('#saveChangesBtn').click(function () {
+                // Load all available cloth sizes
+                var clothSizes = loadClothSizes();
+                var counter = 0;
+
+                // Iterate over each cloth-quantity input field to update corresponding hidden fields
+                $('.cloth-quantity').each(function () {
+                    var newValue = (this).value;
+
+                    if (counter != clothSizes.length) {
+                        var input = document.querySelector('input[name="ClotheQuantityAndSize[' + clothSizes[counter] + ']"]');
+                        input.value = newValue;
+                        counter++;
+                    }
+                });
+
+                // After updating the hidden fields, submit the form
+                $('#editForm').submit();
+            });
+        });
+    </script>
+}

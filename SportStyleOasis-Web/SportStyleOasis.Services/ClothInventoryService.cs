@@ -71,5 +71,26 @@
 
             return clothInvenotory;
         }
+
+        public async Task UpdateClothInventoryAsync(EditClothInventoryViewModel model)
+        {
+            var clothInventories = await dbContext.ClotheInventories
+                 .Where(ci => ci.ClothId == model.Id)
+                 .ToListAsync();
+
+            foreach (var clothInventory in clothInventories)
+            {
+                var clothSize = clothInventory.ClothesSize.ToString()!;
+
+                if (model.ClotheQuantityAndSize.ContainsKey(clothSize))
+                {
+                    var availableQuantity = model.ClotheQuantityAndSize[clothSize];
+
+                    clothInventory.AvailableQuantity = availableQuantity;
+                }
+            }
+
+            await dbContext.SaveChangesAsync();
+        }
     }
 }
