@@ -3,5 +3,7 @@
     public class ProteinPowderForShoppingCartViewModel : ProteinPowderViewModel
     {
         public string FlavorName { get; set; } = null!;
+
+        public int Quantity { get; set; }
     }
 }

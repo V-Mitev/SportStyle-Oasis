@@ -13,15 +13,18 @@
         private readonly SportStyleOasisDbContext dbContext;
         private readonly IClothInventoryService clothInventoryService;
         private readonly IFlavorService flavorService;
+        private readonly IClothOrderQuantityService clothOrderQuantityService;
 
         public ShoppingCartService(
-            SportStyleOasisDbContext dbContext, 
+            SportStyleOasisDbContext dbContext,
             IClothInventoryService clothInventoryService,
-            IFlavorService flavorService)
+            IFlavorService flavorService,
+            IClothOrderQuantityService clothOrderQuantityService)
         {
             this.dbContext = dbContext;
             this.clothInventoryService = clothInventoryService;
             this.flavorService = flavorService;
+            this.clothOrderQuantityService = clothOrderQuantityService;
         }
 
         public async Task AddToShoppingCartClothe(string userId, int clothId, string size, int quantity)
@@ -36,6 +39,8 @@
             {
                 throw new InvalidOperationException("Shopping cart was not found for the user.");
             }
+
+            cloth.ClotheOrderQuantity = await clothOrderQuantityService.AddClothOrderQuantityAsync(quantity);
 
             shoppingCart.ClotheInventories.Add(cloth);
             await dbContext.SaveChangesAsync();
@@ -75,7 +80,8 @@
                         Image = ci.Clothe.Image,
                         Name = ci.Clothe.Name,
                         Price = ci.Clothe.Price,
-                        Size = ci.ClothesSize.ToString()!
+                        Size = ci.ClothesSize.ToString()!,
+                        OrderedQuantity = ci.ClotheOrderQuantity!.Quantity
                     }).ToList(),
                     ProteinPowders = sc.ProteinFlavors
                     .Select(pf => new ProteinPowderForShoppingCartViewModel()

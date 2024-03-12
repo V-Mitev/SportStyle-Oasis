@@ -13,5 +13,7 @@
         public string Color { get; set; } = null!;
 
         public string Size { get; set; } = null!;
+
+        public int? OrderedQuantity { get; set; }
     }
 }

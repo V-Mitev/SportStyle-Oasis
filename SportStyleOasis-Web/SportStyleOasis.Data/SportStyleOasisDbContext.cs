@@ -26,6 +26,8 @@
 
         public DbSet<ProteinFlavor> ProteinFlavor { get; set; } = null!;
 
+        public DbSet<ClotheOrderQuantity> ClotheOrderQuantities { get; set; } = null!;
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.ApplyConfiguration<Clothes>(new ClothesConfiguration());

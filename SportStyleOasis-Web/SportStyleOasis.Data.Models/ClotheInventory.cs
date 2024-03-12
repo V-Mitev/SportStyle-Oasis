@@ -24,6 +24,8 @@
         public int ClothId { get; set; }
         public Clothes Clothe { get; set; } = null!;
 
+        public ClotheOrderQuantity? ClotheOrderQuantity { get; set; }
+
         public ICollection<ShoppingCart> ShoppingCarts { get; set; }
     }
 }
