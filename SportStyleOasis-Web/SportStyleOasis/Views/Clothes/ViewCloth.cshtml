@@ -47,6 +47,8 @@
             }
         </select>
 
+        <input type="hidden" id="clothSize" value="" />
+
         @if (isAuthenticated)
         {
             <input type="number" class="form-control mb-2" id="quantity" min="1" value="1" step="1" required>
@@ -208,14 +210,20 @@
             }
         });
 
+        function setClothSize() {
+            var selectedOption = document.getElementById('garmentSize').value;
+            document.getElementById('clothSize').value = selectedOption;
+        }
+
         function addToCart(clothId) {
             var form = document.getElementById('form');
 
             if (!form.checkValidity()) {
                 form.reportValidity();
-                return;
+                return; 
             }
-
+            
+            setClothSize();
             var sizeAndQuantity = document.getElementById('clothSize').value.split('|');
             var size = sizeAndQuantity[0];
             var quantity = document.getElementById('quantity').value;
