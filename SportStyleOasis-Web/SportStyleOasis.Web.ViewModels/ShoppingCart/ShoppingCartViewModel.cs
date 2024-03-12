@@ -8,13 +8,13 @@
         public ShoppingCartViewModel()
         {
             Clothes = new HashSet<ClothForShoppingCartViewModel>();
-            ProteinPowders = new HashSet<ProteinPowderViewModel>();
+            ProteinPowders = new HashSet<ProteinPowderForShoppingCartViewModel>();
         }
 
         public int Id { get; set; }
 
         public ICollection<ClothForShoppingCartViewModel> Clothes { get; set; }
 
-        public ICollection<ProteinPowderViewModel> ProteinPowders { get; set; }
+        public ICollection<ProteinPowderForShoppingCartViewModel> ProteinPowders { get; set; }
     }
 }

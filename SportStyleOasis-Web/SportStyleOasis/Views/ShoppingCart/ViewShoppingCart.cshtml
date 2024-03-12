@@ -17,14 +17,14 @@
         display: inline-block;
         margin-right: 20px; /* Adjust spacing between items */
         vertical-align: top; /* Align items at the top */
-        width: 200px; /* Adjust the width of each item */
+        width: 220px; /* Adjust the width of each item */
         white-space: normal; /* Allow wrapping within each item */
     }
 
     .item-image img {
         width: 100%; /* Ensure image fills the container */
         height: 200px; /* Set a fixed height for consistency */
-        object-fit: auto; /* Ensure the image covers the entire container */
+        object-fit: cover; /* Ensure the image covers the entire container */
     }
 
     .item-details {
@@ -58,6 +58,23 @@
                 <p>Size: @cloth.Size</p>
                 <p>Color: @cloth.Color</p>
                 <p>Price: $@cloth.Price</p>
+            </div>
+        </div>
+    }
+
+    @foreach (var proteinPowder in Model.ProteinPowders)
+    {
+        <div class="cart-item">
+            <div class="item-image">
+                <img src="/images/@proteinPowder.Image" alt="@proteinPowder.Name">
+            </div>
+            <div class="item-details">
+                <h3>@proteinPowder.Name</h3>
+                <p>Flavor: @proteinPowder.FlavorName</p>
+                <p>Type of protein: @proteinPowder.TypeOfProtein</p>
+                <p>Brand: @proteinPowder.ProteinPowderBrand</p>
+                <p>Weight: @proteinPowder.Weight grams.</p>
+                <p>Price: $@proteinPowder.Price</p>
             </div>
         </div>
     }

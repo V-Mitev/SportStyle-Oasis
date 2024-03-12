@@ -4,6 +4,7 @@
     using SportStyleOasis.Data;
     using SportStyleOasis.Services.Interfces;
     using SportStyleOasis.Web.ViewModels.Clothes;
+    using SportStyleOasis.Web.ViewModels.ProteinPowder;
     using SportStyleOasis.Web.ViewModels.ShoppingCart;
     using System.Threading.Tasks;
 
@@ -75,6 +76,18 @@
                         Name = ci.Clothe.Name,
                         Price = ci.Clothe.Price,
                         Size = ci.ClothesSize.ToString()!
+                    }).ToList(),
+                    ProteinPowders = sc.ProteinFlavors
+                    .Select(pf => new ProteinPowderForShoppingCartViewModel()
+                    {
+                        Id = pf.ProteinId,
+                        Name = pf.Protein.Name,
+                        Image = pf.Protein.Image,
+                        Price = pf.Protein.Price,
+                        Weight = pf.Protein.Weight,
+                        FlavorName = pf.FlavorName,
+                        TypeOfProtein = pf.Protein.TypeOfProtein,
+                        ProteinPowderBrand = pf.Protein.ProteinPowderBrands
                     }).ToList()
                 })
                 .FirstOrDefaultAsync();
