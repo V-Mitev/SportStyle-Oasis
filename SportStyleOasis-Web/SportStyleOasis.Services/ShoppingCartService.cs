@@ -155,19 +155,21 @@
 
             var clothSize = Enum.TryParse(size, out ClothesSize clothSizeEnum);
 
-            var clotInventory = await dbContext.ClotheInventories
-            .FirstOrDefaultAsync(a =>
-                a.Clothe.Id == clothId &&
-                a.ClothesSize == clothSizeEnum &&
-                a.ShoppingCarts.Contains(shoppingCart));
+            var clothInventory = await dbContext.ClotheInventories
+                .Include(ci => ci.ClotheOrderQuantity)
+                .FirstOrDefaultAsync(a =>
+                    a.Clothe.Id == clothId &&
+                    a.ClothesSize == clothSizeEnum &&
+                    a.ShoppingCarts.Contains(shoppingCart));
 
 
-            if (clotInventory == null)
+            if (clothInventory == null)
             {
-                throw new InvalidOperationException("Shopping cart clote was not found in this shopping cart.");
+                throw new InvalidOperationException("Shopping cart clothe was not found in this shopping cart.");
             }
 
-            shoppingCart.ClotheInventories.Remove(clotInventory);
+            shoppingCart.ClotheInventories.Remove(clothInventory);
+            dbContext.ClotheOrderQuantities.Remove(clothInventory.ClotheOrderQuantity!);
 
             await dbContext.SaveChangesAsync();
         }
@@ -185,7 +187,7 @@
 
             var proteinFlavor = await dbContext.ProteinFlavor
                 .Include(pf => pf.ProteinOrderQuantity)
-                .FirstOrDefaultAsync(pf => 
+                .FirstOrDefaultAsync(pf =>
                 pf.ProteinId == proteinId &&
                 pf.FlavorName == flavor &&
                 pf.ShoppingCarts.Contains(shoppingCart));

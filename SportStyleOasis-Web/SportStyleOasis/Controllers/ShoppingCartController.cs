@@ -10,10 +10,14 @@
     public class ShoppingCartController : Controller
     {
         private readonly IShoppingCartService shoppingCartService;
+        private readonly IClothesService clothesService;
 
-        public ShoppingCartController(IShoppingCartService shoppingCartService)
+        public ShoppingCartController(
+            IShoppingCartService shoppingCartService, 
+            IClothesService clothesService)
         {
             this.shoppingCartService = shoppingCartService;
+            this.clothesService = clothesService;
         }
 
         [HttpGet]
@@ -77,6 +81,10 @@
             try
             {
                 await shoppingCartService.RemoveClothFromCart(shoppingCartId, clothId, size);
+
+                var clothName = await clothesService.GetClotheName(clothId);
+
+                TempData[SuccessMessage] = $"Successfully removed {clothName} from the cart.";
 
                 return Ok();
             }
