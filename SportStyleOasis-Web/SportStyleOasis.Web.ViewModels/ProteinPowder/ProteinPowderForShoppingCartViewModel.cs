@@ -4,6 +4,6 @@
     {
         public string FlavorName { get; set; } = null!;
 
-        public int Quantity { get; set; }
+        public int? OrderedQuantity { get; set; }
     }
 }

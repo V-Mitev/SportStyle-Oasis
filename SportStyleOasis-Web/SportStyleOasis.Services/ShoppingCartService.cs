@@ -15,17 +15,20 @@
         private readonly IClothInventoryService clothInventoryService;
         private readonly IFlavorService flavorService;
         private readonly IClothOrderQuantityService clothOrderQuantityService;
+        private readonly IProteinOrderQuantityService proteinOrderQuantityService;
 
         public ShoppingCartService(
             SportStyleOasisDbContext dbContext,
             IClothInventoryService clothInventoryService,
             IFlavorService flavorService,
-            IClothOrderQuantityService clothOrderQuantityService)
+            IClothOrderQuantityService clothOrderQuantityService,
+            IProteinOrderQuantityService proteinOrderQuantityService)
         {
             this.dbContext = dbContext;
             this.clothInventoryService = clothInventoryService;
             this.flavorService = flavorService;
             this.clothOrderQuantityService = clothOrderQuantityService;
+            this.proteinOrderQuantityService = proteinOrderQuantityService;
         }
 
         public async Task AddToShoppingCartClothe(string userId, int clothId, string size, int quantity)
@@ -59,7 +62,9 @@
             {
                 throw new InvalidOperationException("Shopping cart was not found for the user.");
             }
-            
+
+            protein.ProteinOrderQuantity = await proteinOrderQuantityService.AddProteinOrderQuantityAsync(quantity);
+
             shoppingCart.ProteinFlavors.Add(protein);
             await dbContext.SaveChangesAsync();
         }
@@ -77,9 +82,9 @@
                     .Select(ci => new ClothForShoppingCartViewModel()
                     {
                         Id = ci.Clothe.Id,
+                        Name = ci.Clothe.Name,
                         Color = ci.Clothe.Color,
                         Image = ci.Clothe.Image,
-                        Name = ci.Clothe.Name,
                         Price = ci.Clothe.Price,
                         Size = ci.ClothesSize.ToString()!,
                         OrderedQuantity = ci.ClotheOrderQuantity!.Quantity
@@ -94,7 +99,8 @@
                         Weight = pf.Protein.Weight,
                         FlavorName = pf.FlavorName,
                         TypeOfProtein = pf.Protein.TypeOfProtein,
-                        ProteinPowderBrand = pf.Protein.ProteinPowderBrands
+                        ProteinPowderBrand = pf.Protein.ProteinPowderBrands,
+                        OrderedQuantity = pf.ProteinOrderQuantity!.Quantity
                     }).ToList()
                 })
                 .FirstOrDefaultAsync();
