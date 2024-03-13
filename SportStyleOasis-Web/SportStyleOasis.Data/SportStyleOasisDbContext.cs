@@ -28,6 +28,8 @@
 
         public DbSet<ClotheOrderQuantity> ClotheOrderQuantities { get; set; } = null!;
 
+        public DbSet<ProteinOrderQuantity> ProteinOrderQuantities { get; set; } = null!;
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.ApplyConfiguration<Clothes>(new ClothesConfiguration());

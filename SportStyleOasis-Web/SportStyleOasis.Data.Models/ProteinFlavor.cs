@@ -25,6 +25,8 @@
         public int ProteinId { get; set; }
         public ProteinPowder Protein { get; set; } = null!;
 
+        public ProteinOrderQuantity? ClotheOrderQuantity { get; set; }
+
         public ICollection<ShoppingCart> ShoppingCarts { get; set; }
     }
 }

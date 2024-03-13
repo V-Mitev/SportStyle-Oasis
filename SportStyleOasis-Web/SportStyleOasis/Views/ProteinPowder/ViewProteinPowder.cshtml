@@ -41,7 +41,10 @@
 
             @foreach (var proteinPowderFlavor in Model.ProteinPowder.ProteinFlavors)
             {
-                <option value="@proteinPowderFlavor.FlavorName">@proteinPowderFlavor.FlavorName</option>
+                if (proteinPowderFlavor.Quantity > 0)
+                {
+                    <option value="@($"{proteinPowderFlavor.FlavorName}|{proteinPowderFlavor.Quantity}")">@proteinPowderFlavor.FlavorName</option>
+                }
             }
         </select>
 
@@ -49,6 +52,7 @@
 
         @if (isAuthenticated)
         {
+            <input type="number" class="form-control mb-2" id="quantity" min="1" value="1" step="1" required>
             <button type="button" class="btn btn-primary mb-2" onclick="addToCart(@proteinId)">Add to cart</button>
         }
     </form>
@@ -126,19 +130,19 @@
                 var initialRating = reviewContainer.data("initial-rating");
 
                 var editForm = `
-                                                            <form class="edit-form" data-review-id="${reviewId}">
-                                                                <label>Edit Comment:</label>
-                                                                <input type="text" class="form-control mb-2" value="${initialComment}" name="editedComment"/>
-                                                                <label>Edit Rating:</label>
-                                                                <select class="form-control mb-2" name="editedRating" required>
-                                                                    <option value="1">1</option>
-                                                                    <option value="2">2</option>
-                                                                    <option value="3">3</option>
-                                                                    <option value="4">4</option>
-                                                                    <option value="5">5</option>
-                                                                </select>
-                                                                <button type="button" class="btn btn-primary save-btn">Save</button>
-                                                            </form>`;
+                                                                    <form class="edit-form" data-review-id="${reviewId}">
+                                                                        <label>Edit Comment:</label>
+                                                                        <input type="text" class="form-control mb-2" value="${initialComment}" name="editedComment"/>
+                                                                        <label>Edit Rating:</label>
+                                                                        <select class="form-control mb-2" name="editedRating" required>
+                                                                            <option value="1">1</option>
+                                                                            <option value="2">2</option>
+                                                                            <option value="3">3</option>
+                                                                            <option value="4">4</option>
+                                                                            <option value="5">5</option>
+                                                                        </select>
+                                                                        <button type="button" class="btn btn-primary save-btn">Save</button>
+                                                                    </form>`;
 
                 var editFormContainer = $('<div>').html(editForm);
                 reviewContainer.html('').append(editFormContainer);
@@ -212,9 +216,9 @@
 
         function setProteinFlavor() {
             // Get the selected value from the dropdown
-            var selectedSize = document.getElementById('proteinFlavors').value;
+            var selectedFlavor = document.getElementById('proteinFlavors').value;
             // Set the value of the hidden input field
-            document.getElementById('proteinFlavor').value = selectedSize;
+            document.getElementById('proteinFlavor').value = selectedFlavor;
         }
 
         function addToCart(proteinId) {
@@ -226,12 +230,20 @@
             }
 
             setProteinFlavor();
-            var proteinFlavor = document.getElementById('proteinFlavor').value;
+            var proteinFlavor = document.getElementById('proteinFlavor').value.split('|');
+            var flavor = proteinFlavor[0];
+            var quantity = document.getElementById('quantity').value;
+            var availableQuantity = parseInt(proteinFlavor[1]);
+
+            if (quantity > availableQuantity) {
+                alert(`Quantity exceeds available quantity (${availableQuantity}). Please select a lower quantity.`);
+                return;
+            }
 
             $.ajax({
                 url: '/ShoppingCart/AddProteinToCart',
                 type: 'POST',
-                data: { proteinId, proteinFlavor },
+                data: { proteinId, flavor, quantity },
                 success: function (response) {
                     window.location.reload(); // Reload the page after successful addition
                 },

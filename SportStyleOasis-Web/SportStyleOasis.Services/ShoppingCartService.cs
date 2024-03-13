@@ -47,7 +47,7 @@
             await dbContext.SaveChangesAsync();
         }
 
-        public async Task AddToShoppingCartProtein(string userId, int proteinId, string proteinFlavor)
+        public async Task AddToShoppingCartProtein(string userId, int proteinId, string proteinFlavor, int quantity)
         {
             var protein = await flavorService.GetProteinFlavorAsync(proteinId, proteinFlavor);
 
@@ -59,7 +59,7 @@
             {
                 throw new InvalidOperationException("Shopping cart was not found for the user.");
             }
-
+            
             shoppingCart.ProteinFlavors.Add(protein);
             await dbContext.SaveChangesAsync();
         }

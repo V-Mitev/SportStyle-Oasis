@@ -52,13 +52,13 @@
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddProteinToCart(int proteinId, string proteinFlavor)
+        public async Task<IActionResult> AddProteinToCart(int proteinId, string flavor, int quantity)
         {
             string userId = User.GetId();
 
             try
             {
-                await shoppingCartService.AddToShoppingCartProtein(userId, proteinId, proteinFlavor);
+                await shoppingCartService.AddToShoppingCartProtein(userId, proteinId, flavor, quantity);
 
                 TempData[SuccessMessage] =
                 "Successfully added protein powder to the shopping cart !";
