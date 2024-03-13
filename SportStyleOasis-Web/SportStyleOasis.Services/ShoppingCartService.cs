@@ -171,5 +171,34 @@
 
             await dbContext.SaveChangesAsync();
         }
+
+        public async Task RemoveProteinFromCart(int shoppingCartId, int proteinId, string flavor)
+        {
+            var shoppingCart = await dbContext.ShoppingCarts
+               .Include(sc => sc.ProteinFlavors)
+               .FirstOrDefaultAsync(sc => sc.Id == shoppingCartId);
+
+            if (shoppingCart == null)
+            {
+                throw new InvalidOperationException("Shopping cart was not found for the user.");
+            }
+
+            var proteinFlavor = await dbContext.ProteinFlavor
+                .Include(pf => pf.ProteinOrderQuantity)
+                .FirstOrDefaultAsync(pf => 
+                pf.ProteinId == proteinId &&
+                pf.FlavorName == flavor &&
+                pf.ShoppingCarts.Contains(shoppingCart));
+
+            if (proteinFlavor == null)
+            {
+                throw new InvalidOperationException("This protein was not found in the shopping cart.");
+            }
+
+            shoppingCart.ProteinFlavors.Remove(proteinFlavor);
+            dbContext.ProteinOrderQuantities.Remove(proteinFlavor.ProteinOrderQuantity!);
+
+            await dbContext.SaveChangesAsync();
+        }
     }
 }

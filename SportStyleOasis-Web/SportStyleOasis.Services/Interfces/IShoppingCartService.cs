@@ -15,5 +15,7 @@
         Task AddToShoppingCartProtein(string userId, int proteinId, string proteinFlavor, int quantity);
 
         Task RemoveClothFromCart(int shoppingCartId, int clothId, string size);
+
+        Task RemoveProteinFromCart(int shoppingCartId, int proteinId, string flavor);
     }
 }

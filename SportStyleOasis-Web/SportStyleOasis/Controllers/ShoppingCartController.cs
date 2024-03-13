@@ -86,6 +86,23 @@
             }
         }
 
+        [HttpPost]
+        public async Task<IActionResult> RemoveProteinFromCart(int shoppingCartId, int proteinId, string flavor)
+        {
+            try
+            {
+                await shoppingCartService.RemoveProteinFromCart(shoppingCartId, proteinId, flavor);
+
+                TempData[SuccessMessage] = "Successfully remove protein powder from the cart.";
+
+                return Ok();
+            }
+            catch (Exception)
+            {
+                return GeneralError();
+            }
+        }
+
         private IActionResult GeneralError()
         {
             TempData[ErrorMessage] =
