@@ -2,6 +2,7 @@
 {
     using Microsoft.EntityFrameworkCore;
     using SportStyleOasis.Data;
+    using SportStyleOasis.Data.Models.Enums;
     using SportStyleOasis.Services.Interfces;
     using SportStyleOasis.Web.ViewModels.Clothes;
     using SportStyleOasis.Web.ViewModels.ProteinPowder;
@@ -133,6 +134,36 @@
             }
 
             return shoppingCart.ProteinFlavors.Count + shoppingCart.ClotheInventories.Count;
+        }
+
+        public async Task RemoveClothFromCart(int shoppingCartId, int clothId, string size)
+        {
+            var shoppingCart = await dbContext.ShoppingCarts
+                .Include(sc => sc.ClotheInventories)
+                .FirstOrDefaultAsync(sc => sc.Id == shoppingCartId);
+
+            if (shoppingCart == null)
+            {
+                throw new InvalidOperationException("Shopping cart was not found for the user.");
+            }
+
+            var clothSize = Enum.TryParse(size, out ClothesSize clothSizeEnum);
+
+            var clotInventory = await dbContext.ClotheInventories
+            .FirstOrDefaultAsync(a =>
+                a.Clothe.Id == clothId &&
+                a.ClothesSize == clothSizeEnum &&
+                a.ShoppingCarts.Contains(shoppingCart));
+
+
+            if (clotInventory == null)
+            {
+                throw new InvalidOperationException("Shopping cart clote was not found in this shopping cart.");
+            }
+
+            shoppingCart.ClotheInventories.Remove(clotInventory);
+
+            await dbContext.SaveChangesAsync();
         }
     }
 }

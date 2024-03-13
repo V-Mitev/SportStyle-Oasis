@@ -19,6 +19,8 @@
         vertical-align: top; /* Align items at the top */
         width: 220px; /* Adjust the width of each item */
         white-space: normal; /* Allow wrapping within each item */
+        position: relative;
+        /* Add other styling for cart item container */
     }
 
     .item-image img {
@@ -42,6 +44,21 @@
             margin: 0;
             font-size: 14px;
         }
+
+    .remove-item-btn {
+        position: absolute;
+        bottom: 5px;
+        right: 5px;
+        background-color: transparent;
+        border: none;
+        color: black;
+        font-size: 18px;
+        cursor: pointer;
+    }
+
+        .remove-item-btn:hover {
+            color: red;
+        }
 </style>
 
 <h1 class="text-center">@TempData["Title"]</h1>
@@ -59,6 +76,7 @@
                 <p>Color: @cloth.Color</p>
                 <p>Price: $@cloth.Price</p>
                 <p>Quantity: @cloth.OrderedQuantity</p>
+                <button class="remove-item-btn" data-cart-id="@Model.Id" data-cloth-id="@cloth.Id" data-cloth-size="@cloth.Size">X</button>
             </div>
         </div>
     }
@@ -80,3 +98,29 @@
         </div>
     }
 </div>
+
+<script>
+    $(document).on("click", ".remove-item-btn", function () {
+        const url = '/ShoppingCart/RemoveClothFromCart';
+
+        var shoppingCartId = $(this).data("cart-id");
+        var clothId = $(this).data("cloth-id");
+        var size = $(this).data("cloth-size");
+
+        console.log(`${shoppingCartId}, ${clothId} ${size}`);
+
+        if (confirm('Are you sure you want to remove this clothe ?')) {
+            $.ajax({
+                url: url,
+                type: 'POST',
+                data: { shoppingCartId, clothId, size },
+                success: function (result) {
+                    location.reload();
+                },
+                error: function (error) {
+                    console.log(error);
+                }
+            });
+        }
+    });
+</script>

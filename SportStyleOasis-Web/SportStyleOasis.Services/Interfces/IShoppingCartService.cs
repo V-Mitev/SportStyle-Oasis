@@ -13,5 +13,7 @@
         Task AddToShoppingCartClothe(string userId, int clothId, string size, int quantity);
 
         Task AddToShoppingCartProtein(string userId, int proteinId, string proteinFlavor);
+
+        Task RemoveClothFromCart(int shoppingCartId, int clothId, string size);
     }
 }

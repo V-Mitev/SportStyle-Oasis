@@ -71,6 +71,21 @@
             }
         }
 
+        [HttpPost]
+        public async Task<IActionResult> RemoveClothFromCart(int shoppingCartId, int clothId, string size)
+        {
+            try
+            {
+                await shoppingCartService.RemoveClothFromCart(shoppingCartId, clothId, size);
+
+                return Ok();
+            }
+            catch (Exception)
+            {
+                return GeneralError();
+            }
+        }
+
         private IActionResult GeneralError()
         {
             TempData[ErrorMessage] =
