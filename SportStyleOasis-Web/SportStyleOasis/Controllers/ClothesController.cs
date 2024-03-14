@@ -56,7 +56,7 @@
             {
                 await clothesService.AddClotheAsync(model);
 
-                TempData[SuccessMessage] = "Successfully added clothe.";
+                TempData[SuccessMessage] = $"Successfully added {model.Name}.";
 
                 return RedirectToAction("All", "Clothes");
             }
@@ -72,9 +72,10 @@
         {
             try
             {
-                await clothesService.DeleteGarmentAsync(id);
+                var clothName = await clothesService.GetClotheName(id);
 
-                TempData[SuccessMessage] = "You have successfully delete this garmnet.";
+                await clothesService.DeleteGarmentAsync(id);
+                TempData[SuccessMessage] = $"You have successfully delete this {clothName}.";
 
                 return RedirectToAction("All", "Clothes");
             }
@@ -106,7 +107,7 @@
             {
                 await clothesService.UpdateGarmentAsync(id, model);
 
-                TempData[SuccessMessage] = $"The garment '{model.Name}' was successfully edited!";
+                TempData[SuccessMessage] = $"The clothe {model.Name} was successfully edited!";
 
                 return RedirectToAction("All");
             }

@@ -19,5 +19,7 @@
         public Task<bool> DoesТheProteinAlreadyExist(string porteinPowderName);
 
         public Task<int?> FindProteinPowderToReturnId(string porteinPowderName);
+
+        public Task<string> GetProteinPowderName(int proteinPowderId);
     }
 }

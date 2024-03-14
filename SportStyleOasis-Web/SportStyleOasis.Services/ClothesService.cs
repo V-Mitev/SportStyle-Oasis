@@ -105,17 +105,17 @@
 
         public async Task<string> GetClotheName(int clothId)
         {
-            var a = await dbContext.Clothes
+            var clothName = await dbContext.Clothes
                 .Where(c => c.Id == clothId)
                 .Select(c => c.Name)
                 .FirstOrDefaultAsync();
 
-            if (a == null)
+            if (clothName == null)
             {
                 throw new InvalidOperationException("This cloth do not exists");
             }
 
-            return a;
+            return clothName;
         }
 
         public async Task<Clothes> GetClothesWithFilteredInventory(int clothId, string clothSize)

@@ -182,5 +182,20 @@
                 .Select(pp => pp.Id)
                 .FirstOrDefaultAsync();
         }
+
+        public async Task<string> GetProteinPowderName(int proteinPowderId)
+        {
+            var proteinPowderName = await dbContext.ProteinPowder
+                .Where(p => p.Id == proteinPowderId)
+                .Select(p => p.Name)
+                .FirstOrDefaultAsync();
+
+            if (String.IsNullOrEmpty(proteinPowderName))
+            {
+                throw new InvalidOperationException("This protein powder do not exists.");
+            }
+
+            return proteinPowderName;
+        }
     }
 }

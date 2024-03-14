@@ -11,13 +11,16 @@
     {
         private readonly IShoppingCartService shoppingCartService;
         private readonly IClothesService clothesService;
+        private readonly IProteinPowderService proteinPowderService;
 
         public ShoppingCartController(
             IShoppingCartService shoppingCartService, 
-            IClothesService clothesService)
+            IClothesService clothesService,
+            IProteinPowderService proteinPowderService)
         {
             this.shoppingCartService = shoppingCartService;
             this.clothesService = clothesService;
+            this.proteinPowderService = proteinPowderService;
         }
 
         [HttpGet]
@@ -44,8 +47,10 @@
             {
                 await shoppingCartService.AddToShoppingCartClothe(userId, clothId, size, quantity);
 
+                var clothName = await clothesService.GetClotheName(clothId);
+
                 TempData[SuccessMessage] =
-                "Successfully added clothe to the shopping cart !";
+                $"Successfully added {clothName} to the shopping cart !";
 
                 return Ok();
             }
@@ -64,8 +69,10 @@
             {
                 await shoppingCartService.AddToShoppingCartProtein(userId, proteinId, flavor, quantity);
 
+                var proteinPowderName = await proteinPowderService.GetProteinPowderName(proteinId);
+
                 TempData[SuccessMessage] =
-                "Successfully added protein powder to the shopping cart !";
+                $"Successfully added {proteinPowderName} to the shopping cart !";
 
                 return Ok();
             }
@@ -80,9 +87,9 @@
         {
             try
             {
-                await shoppingCartService.RemoveClothFromCart(shoppingCartId, clothId, size);
-
                 var clothName = await clothesService.GetClotheName(clothId);
+
+                await shoppingCartService.RemoveClothFromCart(shoppingCartId, clothId, size);
 
                 TempData[SuccessMessage] = $"Successfully removed {clothName} from the cart.";
 
@@ -99,9 +106,11 @@
         {
             try
             {
+                var proteinPowderName = await proteinPowderService.GetProteinPowderName(proteinId);
+
                 await shoppingCartService.RemoveProteinFromCart(shoppingCartId, proteinId, flavor);
 
-                TempData[SuccessMessage] = "Successfully remove protein powder from the cart.";
+                TempData[SuccessMessage] = $"Successfully remove {proteinPowderName} from the cart.";
 
                 return Ok();
             }
