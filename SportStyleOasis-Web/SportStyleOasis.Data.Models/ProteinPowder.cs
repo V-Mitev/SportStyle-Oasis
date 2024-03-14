@@ -38,6 +38,8 @@
 
         public TypeOfProtein? TypeOfProtein { get; set; }
 
+        public bool IsOnSale { get; set; }
+
         public ProteinPowderBrands? ProteinPowderBrands { get; set; }
 
         public ICollection<ProteinFlavor> ProteinFlavors { get; set; }

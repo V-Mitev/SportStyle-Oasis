@@ -37,6 +37,8 @@
         [Range(typeof(decimal), MinClothePrice, MaxClothePrice)]
         public decimal Price { get; set; }
 
+        public bool IsOnSale { get; set; }
+
         public TypeOfClothes? TypeOfClothes { get; set; }
 
         public ICollection<Review> Reviews { get; set; }

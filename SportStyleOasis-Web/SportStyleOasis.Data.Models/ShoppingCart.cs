@@ -9,6 +9,7 @@
         {
             ClotheInventories = new HashSet<ClotheInventory>();
             ProteinFlavors = new HashSet<ProteinFlavor>();
+            Total = 0;
         }
 
         [Key]
@@ -18,6 +19,8 @@
         public Guid UserId { get; set; }
 
         public ApplicationUser ApplicationUser { get; set; } = null!;
+
+        public int Total { get; set; }
 
         public ICollection<ClotheInventory> ClotheInventories { get; set; }
 
