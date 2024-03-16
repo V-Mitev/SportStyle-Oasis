@@ -7,12 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\SportStyleOasis.Data\SportStyleOasis.Data.csproj" />
-    <ProjectReference Include="..\SportStyleOasis.Services.Data.Models\SportStyleOasis.Services.Data.Models.csproj" />
     <ProjectReference Include="..\SportStyleOasis.Web.ViewModels\SportStyleOasis.Web.ViewModels.csproj" />
   </ItemGroup>
 

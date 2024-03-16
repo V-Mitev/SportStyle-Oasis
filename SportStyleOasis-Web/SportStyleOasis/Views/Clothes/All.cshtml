@@ -1,31 +1,91 @@
-﻿@model IEnumerable<AllClothesViewModel>
+﻿@model AllClothesQueryModel
+@inject IClothesService ClothService;
+@{
+    var allClothesCount = await ClothService.AllClothesCount();
+}
 
-<style>
-    .card-img-container {
-        width: 200px;
-        height: 200px;
-        cursor: pointer;
-    }
+<form method="get">
+    <div class="row text-center mb-3">
+        <div class="form-group col-md-4 d-flex justify-content-between">
+            <div class="form-group">
+                <label asp-for="ClotheBrand"></label>
+                <select asp-for="ClotheBrand" class="form-control">
+                    <option value="">All</option>
+                    @foreach (var brand in Model.ClothesBrands)
+                    {
+                        <option value="@brand">@brand</option>
+                    }
+                </select>
+            </div>
 
-    .card-img-container img {
-        width: 100%;
-        height: auto;
-        object-fit: cover;
-    }
-</style>
-
-<div class="row">
-    @foreach (var item in Model)
-    {
-        <div class="col-md-4 mb-4">
-            <div class="card">
-                <img src="~/images/@item.Image" class="card-img-container" alt="@item.Name Image" onclick="openCloth(@item.Id)">
-                <div class="card-body">
-                    <h5 class="card-title">@item.Name</h5>
-                    <p><strong>Price:</strong> $@item.Price</p>
-                </div>
+            <div class="form-group">
+                <label asp-for="ClothesPerPage"></label>
+                <select asp-for="ClothesPerPage" class="form-control">
+                    <option value="3">3</option>
+                    <option value="6">6</option>
+                    <option value="9">9</option>
+                    <option value="@allClothesCount">All</option>
+                </select>
             </div>
         </div>
+        <div class="form-group col-md-3">
+            <label asp-for="SearchString"></label>
+            <input asp-for="SearchString" class="form-control" placeholder="..." autocomplete="off">
+        </div>
+
+        <div class="col-md-3">
+            <div class="form-group mt-4">
+                <input type="submit" value="Search" class="btn btn-primary" />
+                <input type="hidden" asp-for="ClotheBrand" />
+            </div>
+        </div>
+    </div>
+</form>
+
+@{
+    var previousPage = Model.CurrentPage - 1;
+
+    if (previousPage < 1)
+    {
+        previousPage = 1;
+    }
+
+    var maxPage = Math.Ceiling((double)Model.TotalClothes / Model.ClothesPerPage);
+}
+
+<div class="row mb-5">
+    <div class="col-md-6 d-grid gap-2 d-md-flex justify-content-md-start">
+        <a class="btn btn-primary @(Model.CurrentPage == 1 ? "disabled" : string.Empty)"
+           asp-controller="Clothes"
+           asp-action="All"
+           asp-route-currentPage="@previousPage"
+           asp-route-clotheBrand="@Model.ClotheBrand"
+           asp-route-searchTerm="@Model.SearchString"><<</a>
+    </div>
+
+    @{
+        var shouldButtonBeDisabled = Model.CurrentPage == maxPage || !Model.Clothes.Any();
+    }
+
+    <div class="col-md-6 d-grid gap-2 d-md-flex justify-content-md-end">
+        <a class="btn btn-primary @(shouldButtonBeDisabled ? "disabled" : string.Empty)"
+           asp-controller="Clothes"
+           asp-action="All"
+           asp-route-currentPage="@(Model.CurrentPage + 1)"
+           asp-route-clotheBrand="@Model.ClotheBrand"
+           asp-route-searchTerm="@Model.SearchString">>></a>
+    </div>
+</div>
+
+@if (!Model.Clothes.Any())
+{
+    <h2 class="text-center">No clothes found by the given criteria!</h2>
+}
+
+<div class="row">
+    @foreach (var clothes in Model.Clothes)
+    {
+        <partial name="_ClothesPartial" model="@clothes" />
     }
 </div>
 

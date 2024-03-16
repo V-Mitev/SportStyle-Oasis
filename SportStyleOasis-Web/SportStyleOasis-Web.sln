@@ -15,13 +15,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SportStyleOasis.Data.Models
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SportStyleOasis.Common", "SportStyleOasis.Common\SportStyleOasis.Common.csproj", "{E00AADED-75D9-4C95-8C50-B523572A0C55}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SportStyleOasis.Web.ViewModels", "SportStyleOasis.Web.ViewModels\SportStyleOasis.Web.ViewModels.csproj", "{20FB2F6E-7A77-4BF9-9EFE-064AF93E4FA2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SportStyleOasis.Web.ViewModels", "SportStyleOasis.Web.ViewModels\SportStyleOasis.Web.ViewModels.csproj", "{20FB2F6E-7A77-4BF9-9EFE-064AF93E4FA2}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{49CA8FC5-7C1E-43AA-8C69-F9E109208242}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SportStyleOasis.Services", "SportStyleOasis.Services\SportStyleOasis.Services.csproj", "{F599744D-6B2D-41D9-AAB4-F6E01BFEB5F5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SportStyleOasis.Services", "SportStyleOasis.Services\SportStyleOasis.Services.csproj", "{F599744D-6B2D-41D9-AAB4-F6E01BFEB5F5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SportStyleOasis.Web.Infrastructure", "SportStyleOasis.Web.Infrastructure\SportStyleOasis.Web.Infrastructure.csproj", "{9590818D-1CC6-42B9-A3D7-B80EC0D1E607}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SportStyleOasis.Web.Infrastructure", "SportStyleOasis.Web.Infrastructure\SportStyleOasis.Web.Infrastructure.csproj", "{9590818D-1CC6-42B9-A3D7-B80EC0D1E607}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SportStyleOasis.Services.Data.Models", "SportStyleOasis.Services.Data.Models\SportStyleOasis.Services.Data.Models.csproj", "{91103129-102E-4076-ACE5-D65D75039A2E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -57,6 +59,10 @@ Global
 		{9590818D-1CC6-42B9-A3D7-B80EC0D1E607}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9590818D-1CC6-42B9-A3D7-B80EC0D1E607}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9590818D-1CC6-42B9-A3D7-B80EC0D1E607}.Release|Any CPU.Build.0 = Release|Any CPU
+		{91103129-102E-4076-ACE5-D65D75039A2E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{91103129-102E-4076-ACE5-D65D75039A2E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{91103129-102E-4076-ACE5-D65D75039A2E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{91103129-102E-4076-ACE5-D65D75039A2E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -68,6 +74,7 @@ Global
 		{20FB2F6E-7A77-4BF9-9EFE-064AF93E4FA2} = {874206ED-5DEC-425A-A633-528216108293}
 		{F599744D-6B2D-41D9-AAB4-F6E01BFEB5F5} = {49CA8FC5-7C1E-43AA-8C69-F9E109208242}
 		{9590818D-1CC6-42B9-A3D7-B80EC0D1E607} = {874206ED-5DEC-425A-A633-528216108293}
+		{91103129-102E-4076-ACE5-D65D75039A2E} = {49CA8FC5-7C1E-43AA-8C69-F9E109208242}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DA4F2D79-AE2B-48B6-BFF5-94F3FB0E7B98}

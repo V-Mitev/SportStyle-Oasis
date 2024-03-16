@@ -1,10 +1,11 @@
 ﻿namespace SportStyleOasis.Services.Interfces
 {
+    using SportStyleOasis.Services.Data.Models;
     using SportStyleOasis.Web.ViewModels.Clothes;
 
     public interface IClothesService
     {
-        public Task<IEnumerable<AllClothesViewModel>> AllAsync();
+        public Task<AllClothesFilteredAndPagedServiceModel> AllAsync(AllClothesQueryModel queryModel);
 
         public Task AddClotheAsync(AddClotheViewModel model);
 
@@ -19,5 +20,7 @@
         public Task<IEnumerable<AllClothesViewModel>> ReturnTypeOfClothesAsync(string gender, string clothes);
 
         public Task<string> GetClotheName(int clothId);
+
+        public Task<int> AllClothesCount();
     }
 }

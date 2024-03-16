@@ -1,9 +1,11 @@
 ﻿namespace SportStyleOasis.Services
 {
+    using Microsoft.AspNetCore.Http;
     using Microsoft.EntityFrameworkCore;
     using SportStyleOasis.Data;
     using SportStyleOasis.Data.Models;
     using SportStyleOasis.Data.Models.Enums;
+    using SportStyleOasis.Services.Data.Models;
     using SportStyleOasis.Services.Interfces;
     using SportStyleOasis.Web.ViewModels.Clothes;
     using SportStyleOasis.Web.ViewModels.ClothInventory;
@@ -51,17 +53,49 @@
             await dbContext.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<AllClothesViewModel>> AllAsync()
+        public async Task<AllClothesFilteredAndPagedServiceModel> AllAsync(AllClothesQueryModel queryModel)
         {
-            return await dbContext.Clothes
+            IQueryable<Clothes> clothesQuery = dbContext.Clothes
+                .AsQueryable();
+
+            if (queryModel.ClotheBrand.HasValue)
+            {
+                clothesQuery = clothesQuery
+                    .Where(c => c.ClothesBrands == queryModel.ClotheBrand);
+            }
+
+            if (!string.IsNullOrEmpty(queryModel.SearchString))
+            {
+                var wildCard = $"%{queryModel.SearchString.ToLower()}%";
+
+                clothesQuery = clothesQuery
+                    .Where(c => EF.Functions.Like(c.Name, wildCard));
+            }
+
+            var allClothes = await clothesQuery
+                .Skip((queryModel.CurrentPage - 1) * queryModel.ClothesPerPage)
+                .Take(queryModel.ClothesPerPage)
                 .Select(c => new AllClothesViewModel()
                 {
                     Id = c.Id,
                     Name = c.Name,
-                    Price = c.Price,
-                    Image = c.Image
+                    Image = c.Image,
+                    Price = c.Price
                 })
                 .ToListAsync();
+
+            int totalClothes = clothesQuery.Count();
+
+            return new AllClothesFilteredAndPagedServiceModel()
+            {
+                Clothes = allClothes,
+                TotalClothesCount = totalClothes,
+            };
+        }
+
+        public async Task<int> AllClothesCount()
+        {
+            return await dbContext.Clothes.CountAsync();
         }
 
         public async Task DeleteGarmentAsync(int id)

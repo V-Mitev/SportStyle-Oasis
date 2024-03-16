@@ -4,11 +4,12 @@
     using Microsoft.AspNetCore.Mvc;
     using SportStyleOasis.Data.Models.Enums;
     using SportStyleOasis.Services.Interfces;
+    using SportStyleOasis.Web.Infrastructure.Extensions;
     using SportStyleOasis.Web.ViewModels.Clothes;
     using SportStyleOasis.Web.ViewModels.ClothReview;
     using SportStyleOasis.Web.ViewModels.Review;
-    using static SportStyleOasis.Common.NotificationMessagesConstant;
     using static SportStyleOasis.Common.GeneralApplicationConstants;
+    using static SportStyleOasis.Common.NotificationMessagesConstant;
 
     [Authorize]
     public class ClothesController : Controller
@@ -22,11 +23,16 @@
 
         [HttpGet]
         [AllowAnonymous]
-        public async Task<IActionResult> All()
+        public async Task<IActionResult> All([FromQuery] AllClothesQueryModel queryModel)
         {
-            var clothes = await clothesService.AllAsync();
+            queryModel.ClothesBrands = Enum.GetValues<ClothesBrands>();
 
-            return View(clothes);
+            var serviceModel = await clothesService.AllAsync(queryModel);
+
+            queryModel.Clothes = serviceModel.Clothes;
+            queryModel.TotalClothes = serviceModel.TotalClothesCount;
+            
+            return View(queryModel);
         }
 
         [HttpGet]

@@ -39,7 +39,7 @@
 
 @{
     var userId = User.GetId();
-    var userFullName = await UserService.GetUserFullNameByIdAsync(User.GetId());
+    var userFullName = await UserService.GetUserFullNameByIdAsync(userId);
 }
 
 <ul class="navbar-nav">
