@@ -1,4 +1,4 @@
-﻿namespace SportStyleOasis.Services.Data.Models
+﻿namespace SportStyleOasis.Services.Data.Models.Clothes
 {
     using SportStyleOasis.Web.ViewModels.Clothes;
 

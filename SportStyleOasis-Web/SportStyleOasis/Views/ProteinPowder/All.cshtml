@@ -1,55 +1,95 @@
-﻿@model IEnumerable<AllProteinPowderViewModel>
+﻿@model AllProteinsQueryModel
 @inject IProteinPowderService ProteinPowderService;
 
 @{
     TempData["Title"] = "Here you can see all our protein powders";
-}
 
-<style>
-    .card-img-container {
-        width: 200px;
-        height: 200px;
-        cursor: pointer;
-    }
-
-        .card-img-container img {
-            width: 100%;
-            height: auto;
-            object-fit: cover;
-        }
-</style>
-
-@* This check is in place to prevent someone from attempting to add a large quantity of unflavored proteins, which would be deleted upon page refresh. *@
-@foreach (var model in Model)
-{
-    var proteinPowder = await ProteinPowderService.FindProteinPowder(model.Id);
-
-    var timeforAddFlavorExpired = proteinPowder.TimeForAddFlavor.AddMinutes(5);
-    var currentTime = DateTime.UtcNow;
-
-    if (timeforAddFlavorExpired <= currentTime)
-    {
-        if (proteinPowder.ProteinFlavors.Count == 0)
-        {
-            await ProteinPowderService.DeleteProteinPowder(model.Id);
-        }
-    }
+    var allProteinPowdersCount = await ProteinPowderService.AllProteinsCount();
 }
 
 <h1 class="text-center">@TempData["Title"]</h1>
 
-<div class="row">
-    @foreach (var proteinPowder in Model)
-    {
-        <div class="col-md-4 mb-4">
-            <div class="card">
-                <img src="~/images/@proteinPowder.Image" class="card-img-container" alt="@proteinPowder.Name Image" onclick="openProtein(@proteinPowder.Id)">
-                <div class="card-body">
-                    <h5 class="card-title">@proteinPowder.Name</h5>
-                    <p><strong>Price:</strong> $@proteinPowder.Price</p>
-                </div>
+<form method="get">
+    <div class="row text-center mb-3">
+        <div class="form-group col-md-4 d-flex justify-content-between">
+            <div class="form-group">
+                <label asp-for="ProteinPowderBrand"></label>
+                <select asp-for="ProteinPowderBrand" class="form-control">
+                    <option value="">All</option>
+                    @foreach (var brand in Model.ProteinBrands)
+                    {
+                        <option value="@brand">@brand</option>
+                    }
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="ProteinsPerPage"></label>
+                <select asp-for="ProteinsPerPage" class="form-control">
+                    <option value="3">3</option>
+                    <option value="6">6</option>
+                    <option value="9">9</option>
+                    <option value="@allProteinPowdersCount">All</option>
+                </select>
             </div>
         </div>
+        <div class="form-group col-md-3">
+            <label asp-for="SearchString"></label>
+            <input asp-for="SearchString" class="form-control" placeholder="..." autocomplete="off">
+        </div>
+
+        <div class="col-md-3">
+            <div class="form-group mt-4">
+                <input type="submit" value="Search" class="btn btn-primary" />
+            </div>
+        </div>
+    </div>
+</form>
+
+@{
+    var previousPage = Model.CurrentPage - 1;
+
+    if (previousPage < 1)
+    {
+        previousPage = 1;
+    }
+
+    var maxPage = Math.Ceiling((double)Model.TotalProteins / Model.ProteinsPerPage);
+}
+
+<div class="row mb-5">
+    <div class="col-md-6 d-grid gap-2 d-md-flex justify-content-md-start">
+        <a class="btn btn-primary @(Model.CurrentPage == 1 ? "disabled" : string.Empty)"
+           asp-controller="ProteinPowder"
+           asp-action="All"
+           asp-route-currentPage="@previousPage"
+           asp-route-proteinPowderBrand="@Model.ProteinPowderBrand"
+           asp-route-searchTerm="@Model.SearchString"><<</a>
+    </div>
+
+    @{
+        var shouldButtonBeDisabled = Model.CurrentPage == maxPage || !Model.ProteinPowders.Any();
+    }
+
+    <div class="col-md-6 d-grid gap-2 d-md-flex justify-content-md-end">
+        <a class="btn btn-primary @(shouldButtonBeDisabled ? "disabled" : string.Empty)"
+           asp-controller="ProteinPowder"
+           asp-action="All"
+           asp-route-currentPage="@(Model.CurrentPage + 1)"
+           asp-route-proteinPowderBrand="@Model.ProteinPowderBrand"
+           asp-route-searchTerm="@Model.SearchString">>></a>
+    </div>
+</div>
+
+@if (!Model.ProteinPowders.Any())
+{
+    <h2 class="text-center">No protein powders found by the given criteria!</h2>
+}
+
+<div class="row">
+    @foreach (var protein in Model.ProteinPowders)
+    {
+        <partial name="_ProteinPartial" model="@protein" />
     }
 </div>
 

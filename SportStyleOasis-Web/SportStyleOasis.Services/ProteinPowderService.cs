@@ -3,6 +3,7 @@
     using Microsoft.EntityFrameworkCore;
     using SportStyleOasis.Data;
     using SportStyleOasis.Data.Models;
+    using SportStyleOasis.Services.Data.Models.ProteinPowder;
     using SportStyleOasis.Services.Interfces;
     using SportStyleOasis.Web.ViewModels.ProteinFlavor;
     using SportStyleOasis.Web.ViewModels.ProteinPowder;
@@ -35,25 +36,57 @@
             await dbContext.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<AllProteinPowderViewModel>> AllAsync()
+        public async Task<AllProteinsFilteredAndPagedServiceModel> AllAsync(AllProteinsQueryModel queryModel)
         {
-            return await dbContext.ProteinPowder
+            IQueryable<ProteinPowder> proteinPowderQuery = dbContext.ProteinPowder
                 .Include(pp => pp.ProteinFlavors)
+                .AsQueryable();
+
+            if (queryModel.ProteinPowderBrand.HasValue)
+            {
+                proteinPowderQuery = proteinPowderQuery
+                    .Where(c => c.ProteinPowderBrands == queryModel.ProteinPowderBrand);
+            }
+
+            if (!string.IsNullOrEmpty(queryModel.SearchString))
+            {
+                var wildCard = $"%{queryModel.SearchString.ToLower()}%";
+
+                proteinPowderQuery = proteinPowderQuery
+                    .Where(c => EF.Functions.Like(c.Name, wildCard));
+            }
+
+            var allClothes = await proteinPowderQuery
+                .Skip((queryModel.CurrentPage - 1) * queryModel.ProteinsPerPage)
+                .Take(queryModel.ProteinsPerPage)
                 .Select(pp => new AllProteinPowderViewModel()
                 {
                     Id = pp.Id,
                     Name = pp.Name,
-                    Price = pp.Price,
                     Image = pp.Image,
+                    Price = pp.Price,
                     ProteinFlavors = pp.ProteinFlavors
-                        .Select(pf => new ProteinFlavorViewModel()
-                        {
-                            FlavorName = pf.FlavorName,
-                            Quantity = pf.Quantity
-                        }).ToList(),
+                                .Select(pf => new ProteinFlavorViewModel()
+                                {
+                                    FlavorName = pf.FlavorName,
+                                    Quantity = pf.Quantity
+                                }).ToList(),
                     ProteinPowderBrand = pp.ProteinPowderBrands,
                 })
                 .ToListAsync();
+
+            int totalProteinPowders = proteinPowderQuery.Count();
+
+            return new AllProteinsFilteredAndPagedServiceModel()
+            {
+                ProteinPowders = allClothes,
+                TotalProteinsCount = totalProteinPowders,
+            };
+        }
+
+        public async Task<int> AllProteinsCount()
+        {
+            return await dbContext.ProteinPowder.CountAsync();
         }
 
         public async Task DeleteProteinPowder(int id)

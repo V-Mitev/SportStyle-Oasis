@@ -1,6 +1,6 @@
 ﻿namespace SportStyleOasis.Services.Interfces
 {
-    using SportStyleOasis.Services.Data.Models;
+    using SportStyleOasis.Services.Data.Models.Clothes;
     using SportStyleOasis.Web.ViewModels.Clothes;
 
     public interface IClothesService

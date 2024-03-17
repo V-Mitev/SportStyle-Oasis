@@ -28,11 +28,6 @@
         [HttpPost]
         public async Task<IActionResult> Add(ProteinFlavorViewModel model, int id)
         {
-            if (!ModelState.IsValid)
-            {
-                return View(model);
-            }
-
             var isAlreadyAddedFlavor = await flavorService.IsFlavorAlreadyAdded(id, model.FlavorName);
 
             if (isAlreadyAddedFlavor)
@@ -46,7 +41,7 @@
 
                 TempData[SuccessMessage] = $"Successfully added flavor {model.FlavorName} to protein powder.";
 
-                return RedirectToAction("ViewProteinPowder", "ProteinPowder", new { id = id });
+                return RedirectToAction("ViewProteinPowder", "ProteinPowder", new { id });
             }
             catch (Exception)
             {

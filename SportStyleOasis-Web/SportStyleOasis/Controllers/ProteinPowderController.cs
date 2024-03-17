@@ -2,12 +2,14 @@
 {
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
+    using SportStyleOasis.Data.Models.Enums;
+    using SportStyleOasis.Services.Data.Models.ProteinPowder;
     using SportStyleOasis.Services.Interfces;
     using SportStyleOasis.Web.ViewModels.ProteinPowder;
     using SportStyleOasis.Web.ViewModels.ProteinReview;
     using SportStyleOasis.Web.ViewModels.Review;
-    using static SportStyleOasis.Common.NotificationMessagesConstant;
     using static SportStyleOasis.Common.GeneralApplicationConstants;
+    using static SportStyleOasis.Common.NotificationMessagesConstant;
 
     [Authorize]
     public class ProteinPowderController : Controller
@@ -21,11 +23,16 @@
 
         [HttpGet]
         [AllowAnonymous]
-        public async Task<IActionResult> All()
+        public async Task<IActionResult> All([FromQuery] AllProteinsQueryModel queryModel)
         {
-            var proteinPowders = await proteinPowderService.AllAsync();
+            queryModel.ProteinBrands = Enum.GetValues<ProteinPowderBrands>();
 
-            return View(proteinPowders);
+            var serviceModel = await proteinPowderService.AllAsync(queryModel);
+
+            queryModel.ProteinPowders = serviceModel.ProteinPowders;
+            queryModel.TotalProteins = serviceModel.TotalProteinsCount;
+
+            return View(queryModel);
         }
 
         [HttpGet]

@@ -1,11 +1,10 @@
 ﻿namespace SportStyleOasis.Services
 {
-    using Microsoft.AspNetCore.Http;
     using Microsoft.EntityFrameworkCore;
     using SportStyleOasis.Data;
     using SportStyleOasis.Data.Models;
     using SportStyleOasis.Data.Models.Enums;
-    using SportStyleOasis.Services.Data.Models;
+    using SportStyleOasis.Services.Data.Models.Clothes;
     using SportStyleOasis.Services.Interfces;
     using SportStyleOasis.Web.ViewModels.Clothes;
     using SportStyleOasis.Web.ViewModels.ClothInventory;

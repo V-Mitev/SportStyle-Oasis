@@ -1,0 +1,45 @@
+﻿@model AllProteinPowderViewModel
+@inject IProteinPowderService ProteinPowderService;
+
+@{
+    // This check is in place to prevent someone from attempting to add a large quantity of unflavored proteins.
+    // Which would be deleted upon page refresh.
+
+    var proteinPowder = await ProteinPowderService.FindProteinPowder(Model.Id);
+
+    var timeforAddFlavorExpired = proteinPowder.TimeForAddFlavor.AddMinutes(5);
+    var currentTime = DateTime.UtcNow;
+
+    if (timeforAddFlavorExpired <= currentTime)
+    {
+        if (proteinPowder.ProteinFlavors.Count == 0)
+        {
+            await ProteinPowderService.DeleteProteinPowder(proteinPowder.Id);
+        }
+    }
+}
+
+<style>
+    .card-img-container {
+        width: 200px;
+        height: 200px;
+        cursor: pointer;
+    }
+
+        .card-img-container img {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+        }
+</style>
+
+<div class="col-md-4 mb-4">
+    <div class="card">
+        <img src="~/images/@Model.Image" class="card-img-container" alt="@Model.Name Image"
+             onclick="openProtein(@Model.Id)">
+        <div class="card-body">
+            <h5 class="card-title">@Model.Name</h5>
+            <p><strong>Price:</strong> $@Model.Price</p>
+        </div>
+    </div>
+</div>
