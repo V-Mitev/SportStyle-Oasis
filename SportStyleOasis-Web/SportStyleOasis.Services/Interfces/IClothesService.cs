@@ -22,5 +22,7 @@
         public Task<string> GetClotheName(int clothId);
 
         public Task<int> AllClothesCount();
+
+        public Task<IEnumerable<string>> GetAvailableColorsForClothAsync(string clothName);
     }
 }

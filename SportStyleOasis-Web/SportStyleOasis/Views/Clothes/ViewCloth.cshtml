@@ -2,6 +2,7 @@
 @model ClothReviewViewModel
 @inject IUserService UserService
 @inject IReviewService ReviewService
+@inject IClothesService ClothService
 @using static SportStyleOasis.Web.Infrastructure.Extensions.ClaimsPrincipalExtensions
 
 @{
@@ -9,6 +10,7 @@
     var isUserAdmin = User.IsAdmin();
     var isAuthenticated = User?.Identity?.IsAuthenticated ?? false;
     var clothId = Model.Cloth.Id;
+    var availableClothes = await ClothService.GetAvailableColorsForClothAsync(Model.Cloth.Name);
 }
 
 <style>
@@ -18,6 +20,19 @@
 
     .btn {
         vertical-align: baseline;
+    }
+
+    .color-option {
+        display: inline-block;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        margin-right: 5px;
+        cursor: pointer;
+    }
+
+    .selected {
+        border: 2px solid black;
     }
 </style>
 
@@ -33,9 +48,27 @@
     <p><strong>Clothe Brand:</strong> @Model.Cloth.ClothBrand</p>
     <p><strong>Gender:</strong> @Model.Cloth.ClothForGender</p>
     <p><strong>Type of Clothes:</strong> @Model.Cloth.ClothType</p>
-    <p><strong>Available Clothe Size:</strong></p>
+
+    <input type="hidden" id="selected-color" value="@Model.Cloth.Color" />
 
     <form id="form" asp-controller="ShoppingCart" asp-action="AddClotheToCart" method="post">
+        <p><strong>Available Cloth Colors:</strong></p>
+        <div id="color-options">
+            <span class="color-option selected" style="background-color: @Model.Cloth.Color"></span>
+
+            @foreach (var clothColor in availableClothes)
+            {
+                if (Model.Cloth.Color == clothColor)
+                {
+                    continue;
+                }
+
+                <span class="color-option" style="background-color: @clothColor"></span>
+            }
+        </div>
+
+        <p><strong>Available Clothe Size:</strong></p>
+
         <select class="form-control mb-2" id="garmentSize" name="GarmentSize" required>
             <option value="" selected>Please select cloth size</option>
             @foreach (var clothInventory in Model.Cloth.ClothInventory)
@@ -126,19 +159,19 @@
                 var initialRating = reviewContainer.data("initial-rating");
 
                 var editForm = `
-                                                                                                                                    <form class="edit-form" data-review-id="${reviewId}">
-                                                                                                                                        <label>Edit Comment:</label>
-                                                                                                                                        <input type="text" class="form-control mb-2" value="${initialComment}" name="editedComment"/>
-                                                                                                                                        <label>Edit Rating:</label>
-                                                                                                                                        <select class="form-control mb-2" name="editedRating" required>
-                                                                                                                                            <option value="1">1</option>
-                                                                                                                                            <option value="2">2</option>
-                                                                                                                                            <option value="3">3</option>
-                                                                                                                                            <option value="4">4</option>
-                                                                                                                                            <option value="5">5</option>
-                                                                                                                                        </select>
-                                                                                                                                        <button type="button" class="btn btn-primary save-btn">Save</button>
-                                                                                                                                    </form>`;
+                                                                                                                                                                                                            <form class="edit-form" data-review-id="${reviewId}">
+                                                                                                                                                                                                                <label>Edit Comment:</label>
+                                                                                                                                                                                                                <input type="text" class="form-control mb-2" value="${initialComment}" name="editedComment"/>
+                                                                                                                                                                                                                <label>Edit Rating:</label>
+                                                                                                                                                                                                                <select class="form-control mb-2" name="editedRating" required>
+                                                                                                                                                                                                                    <option value="1">1</option>
+                                                                                                                                                                                                                    <option value="2">2</option>
+                                                                                                                                                                                                                    <option value="3">3</option>
+                                                                                                                                                                                                                    <option value="4">4</option>
+                                                                                                                                                                                                                    <option value="5">5</option>
+                                                                                                                                                                                                                </select>
+                                                                                                                                                                                                                <button type="button" class="btn btn-primary save-btn">Save</button>
+                                                                                                                                                                                                            </form>`;
 
                 var editFormContainer = $('<div>').html(editForm);
                 reviewContainer.html('').append(editFormContainer);
@@ -220,9 +253,9 @@
 
             if (!form.checkValidity()) {
                 form.reportValidity();
-                return; 
+                return;
             }
-            
+
             setClothSize();
             var sizeAndQuantity = document.getElementById('clothSize').value.split('|');
             var size = sizeAndQuantity[0];
@@ -245,6 +278,26 @@
                     alert("An error occurred while adding clothes to the cart. Please try again later.");
                 }
             });
+        }
+
+        $(".color-option").click(function () {
+            $(".color-option").removeClass("selected");
+            $(this).addClass("selected");
+
+            var selectedColor = $(this).css("background-color");
+            $("#selected-color").val(rgbToName(selectedColor));
+        });
+
+        function rgbToName(rgb) {
+            var colorNames = {
+                "rgb(255, 0, 0)": "red",
+                "rgb(0, 255, 0)": "green",
+                "rgb(0, 0, 255)": "blue",
+                "rgb(128, 128, 128)": "gray",
+                "rgb(0, 0, 0)": "dark",
+                "rgb(255, 255, 255)": "white"
+            };
+            return colorNames[rgb] || rgb;
         }
     </script>
 }

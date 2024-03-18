@@ -136,6 +136,34 @@
             return oldGarment;
         }
 
+        public async Task<IEnumerable<string>> GetAvailableColorsForClothAsync(string clothName)
+        {
+            if (string.IsNullOrEmpty(clothName))
+            {
+                throw new InvalidOperationException("This cloth name doesn't exist.");
+            }
+
+            var equalsClothes =  await dbContext.Clothes
+                .Include(c => c.ClotheInventories)
+                .Where(c => c.Name == clothName)
+                .ToListAsync();
+
+            var availableColors = new HashSet<string>();
+
+            foreach (var cloth in equalsClothes)
+            {
+                foreach (var clothInventory in cloth.ClotheInventories)
+                {
+                    if (clothInventory.AvailableQuantity > 0)
+                    {
+                        availableColors.Add(cloth.Color);
+                    }
+                }
+            }
+
+            return availableColors;
+        }
+
         public async Task<string> GetClotheName(int clothId)
         {
             var clothName = await dbContext.Clothes
