@@ -1,5 +1,6 @@
 ﻿namespace SportStyleOasis.Services.Interfces
 {
+    using SportStyleOasis.Data.Models;
     using SportStyleOasis.Services.Data.Models.Clothes;
     using SportStyleOasis.Web.ViewModels.Clothes;
 
@@ -23,6 +24,6 @@
 
         public Task<int> AllClothesCount();
 
-        public Task<IEnumerable<string>> GetAvailableColorsForClothAsync(string clothName);
+        public Task<IEnumerable<Clothes>> GetAvailableColorsForClothAsync(string clothName);
     }
 }

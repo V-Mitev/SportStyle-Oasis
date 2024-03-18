@@ -54,16 +54,16 @@
     <form id="form" asp-controller="ShoppingCart" asp-action="AddClotheToCart" method="post">
         <p><strong>Available Cloth Colors:</strong></p>
         <div id="color-options">
-            <span class="color-option selected" style="background-color: @Model.Cloth.Color"></span>
+            <span class="color-option selected" style="background-color: @Model.Cloth.Color" data-cloth-id="@Model.Cloth.Id"></span>
 
-            @foreach (var clothColor in availableClothes)
+            @foreach (var cloth in availableClothes)
             {
-                if (Model.Cloth.Color == clothColor)
+                if (Model.Cloth.Color == cloth.Color)
                 {
                     continue;
                 }
 
-                <span class="color-option" style="background-color: @clothColor"></span>
+                <span class="color-option" style="background-color: @cloth.Color" data-cloth-id="@cloth.Id"></span>
             }
         </div>
 
@@ -159,19 +159,19 @@
                 var initialRating = reviewContainer.data("initial-rating");
 
                 var editForm = `
-                                                                                                                                                                                                            <form class="edit-form" data-review-id="${reviewId}">
-                                                                                                                                                                                                                <label>Edit Comment:</label>
-                                                                                                                                                                                                                <input type="text" class="form-control mb-2" value="${initialComment}" name="editedComment"/>
-                                                                                                                                                                                                                <label>Edit Rating:</label>
-                                                                                                                                                                                                                <select class="form-control mb-2" name="editedRating" required>
-                                                                                                                                                                                                                    <option value="1">1</option>
-                                                                                                                                                                                                                    <option value="2">2</option>
-                                                                                                                                                                                                                    <option value="3">3</option>
-                                                                                                                                                                                                                    <option value="4">4</option>
-                                                                                                                                                                                                                    <option value="5">5</option>
-                                                                                                                                                                                                                </select>
-                                                                                                                                                                                                                <button type="button" class="btn btn-primary save-btn">Save</button>
-                                                                                                                                                                                                            </form>`;
+                                                                                                                                                                                                                    <form class="edit-form" data-review-id="${reviewId}">
+                                                                                                                                                                                                                        <label>Edit Comment:</label>
+                                                                                                                                                                                                                        <input type="text" class="form-control mb-2" value="${initialComment}" name="editedComment"/>
+                                                                                                                                                                                                                        <label>Edit Rating:</label>
+                                                                                                                                                                                                                        <select class="form-control mb-2" name="editedRating" required>
+                                                                                                                                                                                                                            <option value="1">1</option>
+                                                                                                                                                                                                                            <option value="2">2</option>
+                                                                                                                                                                                                                            <option value="3">3</option>
+                                                                                                                                                                                                                            <option value="4">4</option>
+                                                                                                                                                                                                                            <option value="5">5</option>
+                                                                                                                                                                                                                        </select>
+                                                                                                                                                                                                                        <button type="button" class="btn btn-primary save-btn">Save</button>
+                                                                                                                                                                                                                    </form>`;
 
                 var editFormContainer = $('<div>').html(editForm);
                 reviewContainer.html('').append(editFormContainer);
@@ -286,6 +286,12 @@
 
             var selectedColor = $(this).css("background-color");
             $("#selected-color").val(rgbToName(selectedColor));
+
+            var clothId = $(this).data("cloth-id");
+
+            var url = '/Clothes/ViewCloth/' + clothId;
+
+            window.location.href = url;
         });
 
         function rgbToName(rgb) {

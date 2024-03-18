@@ -136,7 +136,7 @@
             return oldGarment;
         }
 
-        public async Task<IEnumerable<string>> GetAvailableColorsForClothAsync(string clothName)
+        public async Task<IEnumerable<Clothes>> GetAvailableColorsForClothAsync(string clothName)
         {
             if (string.IsNullOrEmpty(clothName))
             {
@@ -148,7 +148,7 @@
                 .Where(c => c.Name == clothName)
                 .ToListAsync();
 
-            var availableColors = new HashSet<string>();
+            var availableColors = new HashSet<Clothes>();
 
             foreach (var cloth in equalsClothes)
             {
@@ -156,7 +156,7 @@
                 {
                     if (clothInventory.AvailableQuantity > 0)
                     {
-                        availableColors.Add(cloth.Color);
+                        availableColors.Add(cloth);
                     }
                 }
             }
