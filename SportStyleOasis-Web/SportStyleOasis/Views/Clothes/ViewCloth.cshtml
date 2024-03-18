@@ -49,8 +49,6 @@
     <p><strong>Gender:</strong> @Model.Cloth.ClothForGender</p>
     <p><strong>Type of Clothes:</strong> @Model.Cloth.ClothType</p>
 
-    <input type="hidden" id="selected-color" value="@Model.Cloth.Color" />
-
     <form id="form" asp-controller="ShoppingCart" asp-action="AddClotheToCart" method="post">
         <p><strong>Available Cloth Colors:</strong></p>
         <div id="color-options">
@@ -159,19 +157,19 @@
                 var initialRating = reviewContainer.data("initial-rating");
 
                 var editForm = `
-                                                                                                                                                                                                                    <form class="edit-form" data-review-id="${reviewId}">
-                                                                                                                                                                                                                        <label>Edit Comment:</label>
-                                                                                                                                                                                                                        <input type="text" class="form-control mb-2" value="${initialComment}" name="editedComment"/>
-                                                                                                                                                                                                                        <label>Edit Rating:</label>
-                                                                                                                                                                                                                        <select class="form-control mb-2" name="editedRating" required>
-                                                                                                                                                                                                                            <option value="1">1</option>
-                                                                                                                                                                                                                            <option value="2">2</option>
-                                                                                                                                                                                                                            <option value="3">3</option>
-                                                                                                                                                                                                                            <option value="4">4</option>
-                                                                                                                                                                                                                            <option value="5">5</option>
-                                                                                                                                                                                                                        </select>
-                                                                                                                                                                                                                        <button type="button" class="btn btn-primary save-btn">Save</button>
-                                                                                                                                                                                                                    </form>`;
+                                                                                                                                                                                                                                                            <form class="edit-form" data-review-id="${reviewId}">
+                                                                                                                                                                                                                                                                <label>Edit Comment:</label>
+                                                                                                                                                                                                                                                                <input type="text" class="form-control mb-2" value="${initialComment}" name="editedComment"/>
+                                                                                                                                                                                                                                                                <label>Edit Rating:</label>
+                                                                                                                                                                                                                                                                <select class="form-control mb-2" name="editedRating" required>
+                                                                                                                                                                                                                                                                    <option value="1">1</option>
+                                                                                                                                                                                                                                                                    <option value="2">2</option>
+                                                                                                                                                                                                                                                                    <option value="3">3</option>
+                                                                                                                                                                                                                                                                    <option value="4">4</option>
+                                                                                                                                                                                                                                                                    <option value="5">5</option>
+                                                                                                                                                                                                                                                                </select>
+                                                                                                                                                                                                                                                                <button type="button" class="btn btn-primary save-btn">Save</button>
+                                                                                                                                                                                                                                                            </form>`;
 
                 var editFormContainer = $('<div>').html(editForm);
                 reviewContainer.html('').append(editFormContainer);
@@ -284,26 +282,11 @@
             $(".color-option").removeClass("selected");
             $(this).addClass("selected");
 
-            var selectedColor = $(this).css("background-color");
-            $("#selected-color").val(rgbToName(selectedColor));
-
             var clothId = $(this).data("cloth-id");
 
             var url = '/Clothes/ViewCloth/' + clothId;
 
             window.location.href = url;
         });
-
-        function rgbToName(rgb) {
-            var colorNames = {
-                "rgb(255, 0, 0)": "red",
-                "rgb(0, 255, 0)": "green",
-                "rgb(0, 0, 255)": "blue",
-                "rgb(128, 128, 128)": "gray",
-                "rgb(0, 0, 0)": "dark",
-                "rgb(255, 255, 255)": "white"
-            };
-            return colorNames[rgb] || rgb;
-        }
     </script>
 }
