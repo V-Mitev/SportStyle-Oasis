@@ -1,4 +1,10 @@
 ﻿@model ContactViewModel
+@using static SportStyleOasis.Common.GeneralApplicationConstants;
+@inject IUserService UserService;
+
+@{
+    var userFullName = await UserService.GetUserFullNameByIdAsync(User.GetId());
+}
 
 <style>
     #map {
@@ -20,19 +26,21 @@
         <div class="contact-form">
             <form asp-controller="Home" asp-action="Contact" method="post">
                 <div class="form-group">
-                    <label asp-for="Name" class="form-label-add-edit">Name</label>
-                    <input asp-for="Name" class="form-control" required placeholder="Your name" />
-                    <span asp-validation-for="Name" class="text-danger"></span>
+                    <label asp-for="FullName" class="form-label-add-edit">Name</label>
+                    <input asp-for="FullName" class="form-control" required placeholder="Your name" value="@userFullName" min="@FullNameMinLenght" max="@FullNameMaxLenght"/>
+                    <span asp-validation-for="FullName" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="Email" class="form-label-add-edit">Email</label>
-                    <input asp-for="Email" class="form-control" required placeholder="Your email" />
-                    <span asp-validation-for="Email" class="text-danger"></span>
+                    <label asp-for="Subject" class="form-label-add-edit">Email</label>
+                    <input asp-for="Subject" class="form-control" required placeholder="Your subject"/>
+                    <span asp-validation-for="Subject" class="text-danger"></span>
                 </div>
                 <div class="form-group mb-2">
                     <label asp-for="Message" class="form-label-add-edit">Message</label>
                     <textarea asp-for="Message" class="form-control" required rows="3" placeholder="Your message to us"></textarea>
+                    <span asp-validation-for="Message" class="text-danger"></span>
                 </div>
+
                 <button type="submit" class="btn btn-primary mb-2">Submit</button>
             </form>
         </div>

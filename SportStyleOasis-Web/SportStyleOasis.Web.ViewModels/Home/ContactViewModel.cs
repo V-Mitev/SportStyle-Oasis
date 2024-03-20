@@ -1,17 +1,23 @@
 ﻿namespace SportStyleOasis.Web.ViewModels.Home
 {
     using System.ComponentModel.DataAnnotations;
+    using static SportStyleOasis.Common.GeneralApplicationConstants;
 
     public class ContactViewModel
     {
         [Required]
-        public string Name { get; set; } = null!;
+        [StringLength(FullNameMaxLenght, MinimumLength = FullNameMinLenght)]
+        public string FullName { get; set; } = null!;
 
         [Required]
-        [EmailAddress]
+        [StringLength(SubjectMaxLenght, MinimumLength = SubjectMinLenght)]
+        public string Subject { get; set; } = null!;
+
+        [Required]
         public string Email { get; set; } = null!;
 
         [Required]
+        [MinLength(MessageMinLength)]
         public string Message { get; set; } = null!;
     }
 }

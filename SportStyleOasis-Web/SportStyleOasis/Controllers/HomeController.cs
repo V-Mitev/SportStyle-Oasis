@@ -6,6 +6,7 @@
     using SportStyleOasis.Web.Infrastructure.Extensions;
     using SportStyleOasis.Web.ViewModels.Home;
     using static Common.GeneralApplicationConstants;
+    using static SportStyleOasis.Common.NotificationMessagesConstant;
 
     public class HomeController : Controller
     {
@@ -53,29 +54,49 @@
         [HttpPost]
         public async Task<IActionResult> Contact(ContactViewModel model)
         {
+            var email = User?.Identity?.Name;
+
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            if (email == null)
+            {
+                return GeneralError();
+            }
+
             try
             {
-                await SendMail();
-            }
-            catch (Exception e)
-            {
-                throw new InvalidOperationException(e.Message);
-            }
+                await SendMail(email, model);
 
-            return View();
+                return RedirectToAction("Contact", "Home");
+            }
+            catch (Exception)
+            {
+                return GeneralError();
+            }
         }
 
-        public async Task SendMail()
+        private async Task SendMail(string email, ContactViewModel model)
         {
             var apiKey = configuration["SendGridApiKey:apiKey"];
             var client = new SendGridClient(apiKey);
-            var from = new EmailAddress("vmitev2001@abv.bg", "Vladimir");
-            var subject = "Sending with SendGrid is Fun";
+            var from = new EmailAddress($"{email}", $"{model.FullName}");
+            var subject = $"{model.Subject}";
             var to = new EmailAddress("vladimirmitev6969@gmail.com", "Vladimir Mitev");
-            var plainTextContent = "and easy to do anywhere, even with C#";
-            var htmlContent = "<strong>and easy to do anywhere, even with C#</strong>";
+            var plainTextContent = $"{model.Message}";
+            var htmlContent = $"<strong>{model.Message}</strong>";
             var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
             var response = await client.SendEmailAsync(msg);
+        }
+
+        private IActionResult GeneralError()
+        {
+            TempData[ErrorMessage] =
+                "Unexpected error occurred! Please try again later or contact administrator";
+
+            return RedirectToAction("Index", "Home");
         }
     }
 }
