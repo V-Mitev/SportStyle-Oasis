@@ -80,11 +80,12 @@
 
         private async Task SendMail(string email, ContactViewModel model)
         {
+            var adminEmail = configuration["SendGridApiKey:email"];
             var apiKey = configuration["SendGridApiKey:apiKey"];
             var client = new SendGridClient(apiKey);
             var from = new EmailAddress($"{email}", $"{model.FullName}");
             var subject = $"{model.Subject}";
-            var to = new EmailAddress("vladimirmitev6969@gmail.com", "Vladimir Mitev");
+            var to = new EmailAddress($"{adminEmail}", "Vladimir Mitev");
             var plainTextContent = $"{model.Message}";
             var htmlContent = $"<strong>{model.Message}</strong>";
             var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);

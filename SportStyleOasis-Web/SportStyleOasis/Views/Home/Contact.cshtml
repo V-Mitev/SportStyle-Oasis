@@ -1,9 +1,10 @@
 ﻿@model ContactViewModel
 @using static SportStyleOasis.Common.GeneralApplicationConstants;
 @inject IUserService UserService;
-
+@inject IConfiguration configuration;
 @{
     var userFullName = await UserService.GetUserFullNameByIdAsync(User.GetId());
+    var apiKey = configuration["GoogleMapsApiKey:googleApiKey"];
 }
 
 <style>
@@ -73,5 +74,5 @@
 </script>
 
 <script async defer
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDYExPLlbJnoXZxJnVinhgl3dYq7fbrN54&callback=initMap&loading=async">
+        src="https://maps.googleapis.com/maps/api/js?key=@apiKey&callback=initMap&loading=async">
 </script>
