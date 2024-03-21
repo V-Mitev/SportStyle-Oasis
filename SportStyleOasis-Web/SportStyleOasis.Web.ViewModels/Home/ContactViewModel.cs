@@ -14,9 +14,6 @@
         public string Subject { get; set; } = null!;
 
         [Required]
-        public string Email { get; set; } = null!;
-
-        [Required]
         [MinLength(MessageMinLength)]
         public string Message { get; set; } = null!;
     }

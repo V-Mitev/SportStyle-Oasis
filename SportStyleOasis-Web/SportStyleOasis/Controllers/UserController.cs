@@ -2,21 +2,33 @@
 {
     using Griesoft.AspNetCore.ReCaptcha;
     using Microsoft.AspNetCore.Authentication;
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.WebUtilities;
     using SportStyleOasis.Data.Models;
     using SportStyleOasis.Web.ViewModels.User;
+    using System.Net;
+    using System.Net.Mail;
+    using System.Text;
+    using System.Text.Encodings.Web;
     using static SportStyleOasis.Common.NotificationMessagesConstant;
 
+    [AllowAnonymous]
     public class UserController : Controller
     {
         private readonly SignInManager<ApplicationUser> signInManager;
         private readonly UserManager<ApplicationUser> userManager;
+        private readonly IConfiguration configuration;
 
-        public UserController(SignInManager<ApplicationUser> signInManager, UserManager<ApplicationUser> userManager)
+        public UserController(
+            SignInManager<ApplicationUser> signInManager,
+            UserManager<ApplicationUser> userManager,
+            IConfiguration configuration)
         {
             this.signInManager = signInManager;
             this.userManager = userManager;
+            this.configuration = configuration;
         }
 
         [HttpGet]
@@ -72,10 +84,27 @@
 
                 return View(model);
             }
+            try
+            {
+                // Generate email confirmation token
+                var token = await userManager.GenerateEmailConfirmationTokenAsync(user);
+                token = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(token));
 
-            await signInManager.SignInAsync(user, isPersistent: false);
+                // Construct the callback URL for email confirmation
+                var confirmationLink = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = token }, Request.Scheme);
 
-            return RedirectToAction("Index", "Home");
+                SendEmail(model.Email, "Confirm your email",
+               $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(confirmationLink!)}'>clicking here</a>.");
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            // Send the confirmation email
+
+
+            // Redirect to a page indicating that the user should check their email for activation
+            return Redirect("https://localhost:7105/RegisterConfirmation");
         }
 
         [HttpGet]
@@ -108,7 +137,7 @@
                 return View(model);
             }
 
-            var isPasswordMatch = 
+            var isPasswordMatch =
                 await signInManager.CheckPasswordSignInAsync(user, model.Password, false);
 
             if (!isPasswordMatch.Succeeded)
@@ -118,18 +147,52 @@
                 return View(model);
             }
 
-            var result = 
+            var result =
                 await signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, false);
 
             if (!result.Succeeded)
             {
-                TempData[ErrorMessage] = 
+                TempData[ErrorMessage] =
                     "There was an error while loggin in! Please try again latter or cantact an administrator.";
 
                 return View(model);
             }
 
             return Redirect(model.ReturnUrl ?? "/Home/Index");
+        }
+
+        private bool SendEmail(string email, string subject, string confirmLink)
+        {
+            var myEmail = configuration["SendGridApiKey:email"];
+            var gmailPasscode = configuration["GoogleGmailPassword:googleGmailPassCode"];
+
+            try
+            {
+                using (MailMessage mail = new MailMessage())
+                {
+                    mail.From = new MailAddress(myEmail);
+                    mail.To.Add(email);
+                    mail.Subject = subject;
+                    mail.IsBodyHtml = true;
+                    mail.Body = confirmLink;
+
+                    using (SmtpClient smtp = new SmtpClient("smtp.gmail.com", 587))
+                    {
+                        smtp.EnableSsl = true;
+                        smtp.UseDefaultCredentials = false;
+                        smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
+                        smtp.Credentials = new NetworkCredential($"{myEmail}", $"{gmailPasscode}");
+
+                        smtp.Send(mail);
+                    }
+                }
+
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
     }
 }

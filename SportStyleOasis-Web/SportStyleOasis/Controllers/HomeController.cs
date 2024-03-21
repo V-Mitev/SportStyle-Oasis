@@ -89,7 +89,7 @@
             var plainTextContent = $"{model.Message}";
             var htmlContent = $"<strong>{model.Message}</strong>";
             var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
-            var response = await client.SendEmailAsync(msg);
+            await client.SendEmailAsync(msg);
         }
 
         private IActionResult GeneralError()
