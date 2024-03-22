@@ -91,17 +91,16 @@
                 token = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(token));
 
                 // Construct the callback URL for email confirmation
-                var confirmationLink = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = token }, Request.Scheme);
+                var confirmationLink = Url.Action("ConfirmEmail", "User", new { userId = user.Id, code = token }, Request.Scheme);
 
+                // Send the confirmation email
                 SendEmail(model.Email, "Confirm your email",
                $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(confirmationLink!)}'>clicking here</a>.");
             }
             catch (Exception)
             {
-                throw;
+                return GeneralError();
             }
-            // Send the confirmation email
-
 
             // Redirect to a page indicating that the user should check their email for activation
             return Redirect("https://localhost:7105/RegisterConfirmation");
@@ -161,6 +160,31 @@
             return Redirect(model.ReturnUrl ?? "/Home/Index");
         }
 
+        [HttpGet]
+        public async Task<IActionResult> ConfirmEmail(string userId, string code)
+        {
+            if (userId == null || code == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            var user = await userManager.FindByIdAsync(userId);
+            if (user == null)
+            {
+                TempData[ErrorMessage] = "Unable to load user with this data.";
+                return RedirectToAction("Index", "Home");
+            }
+
+            code = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(code));
+            var result = await userManager.ConfirmEmailAsync(user, code);
+            var model = new ConfirmEmailViewModel()
+            {
+                Message = result.Succeeded ? "Thank you for confirming your email." : "Error confirming your email."
+            };
+
+            return View(model);
+        }
+
         private bool SendEmail(string email, string subject, string confirmLink)
         {
             var myEmail = configuration["SendGridApiKey:email"];
@@ -193,6 +217,14 @@
             {
                 return false;
             }
+        }
+
+        private IActionResult GeneralError()
+        {
+            TempData[ErrorMessage] =
+                "Unexpected error occurred! Please try again later or contact administrator";
+
+            return RedirectToAction("Index", "Home");
         }
     }
 }
