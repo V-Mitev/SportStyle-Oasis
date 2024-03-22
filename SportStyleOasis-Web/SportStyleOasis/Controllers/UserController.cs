@@ -129,17 +129,18 @@
 
             var user = await userManager.FindByEmailAsync(model.Email);
 
-            if (user == null)
+            var isPasswordMatch =
+                await signInManager.CheckPasswordSignInAsync(user, model.Password, false);
+
+            if (user.EmailConfirmed == false)
             {
-                TempData[ErrorMessage] = "Email or password are invalid";
+                TempData["WarningMessage"] =
+                    "Account not activated. Please check your email for the activation link.";
 
                 return View(model);
             }
 
-            var isPasswordMatch =
-                await signInManager.CheckPasswordSignInAsync(user, model.Password, false);
-
-            if (!isPasswordMatch.Succeeded)
+            if (user == null || !isPasswordMatch.Succeeded)
             {
                 TempData[ErrorMessage] = "Email or password are invalid";
 
