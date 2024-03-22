@@ -103,7 +103,7 @@
             }
 
             // Redirect to a page indicating that the user should check their email for activation
-            return Redirect("https://localhost:7105/RegisterConfirmation");
+            return RedirectToAction("RegisterConfirmation");
         }
 
         [HttpGet]
@@ -158,6 +158,12 @@
             }
 
             return Redirect(model.ReturnUrl ?? "/Home/Index");
+        }
+
+        [HttpGet]
+        public IActionResult RegisterConfirmation()
+        {
+            return View();
         }
 
         [HttpGet]
