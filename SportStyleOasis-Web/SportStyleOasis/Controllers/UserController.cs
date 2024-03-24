@@ -172,7 +172,7 @@
         {
             if (userId == null || code == null)
             {
-                return RedirectToAction("Index", "Home");
+                return GeneralError();
             }
 
             var user = await userManager.FindByIdAsync(userId);
@@ -184,6 +184,7 @@
 
             code = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(code));
             var result = await userManager.ConfirmEmailAsync(user, code);
+
             var model = new ConfirmEmailViewModel()
             {
                 Message = result.Succeeded ? "Thank you for confirming your email." : "Error confirming your email."

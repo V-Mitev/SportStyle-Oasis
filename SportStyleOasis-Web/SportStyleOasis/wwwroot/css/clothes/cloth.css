@@ -1,0 +1,97 @@
+﻿main {
+    font-family: 'Times New Roman';
+}
+
+img {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+.color-option {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    margin-right: 5px;
+    cursor: pointer;
+    margin: 15px 10px 15px 0;
+}
+
+.selected {
+    border: 2px solid black;
+}
+
+.product {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+    .product .values {
+        border: 1px solid black;
+        border-radius: 5px;
+        margin-left: 15px;
+        padding: 15px;
+    }
+
+    .product .image {
+        width: 30%;
+        display: inline-block;
+        object-fit: cover;
+        object-position: 50% 50%;
+        border-radius: 30%;
+    }
+
+        .product .image img {
+            border-radius: 5px;
+        }
+
+    .product .name {
+        font-size: 46px;
+        font-weight: bold;
+    }
+
+    .product .price {
+        font-size: 30px;
+    }
+
+    .product .btn.add {
+        color: white;
+        font-size: 15px;
+        padding: 10px;
+        background-color: rgb(81, 97, 120);
+        border: 5px solid rgb(47, 47, 73);
+        text-transform: uppercase;
+    }
+
+    .product .description {
+        font-size: 18px;
+        margin: 0;
+    }
+
+    .product .btn.add:hover {
+        cursor: pointer;
+        background-color: rgb(65, 85, 102);
+    }
+
+.review .form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    flex-wrap: wrap;
+}
+
+    .review .form .rating {
+        width: 150px;
+    }
+
+    .review .form .comment {
+        width: 50%;
+    }
+
+    .review .full-review {
+        display: flex;
+        align-items: center;
+    }
