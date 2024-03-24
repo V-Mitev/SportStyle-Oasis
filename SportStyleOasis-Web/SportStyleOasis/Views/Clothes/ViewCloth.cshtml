@@ -11,7 +11,7 @@
     var availableClothes = await ClothService.GetAvailableColorsForClothAsync(Model.Cloth.Name);
 }
 
-<link href="/css/clothes/cloth.css" rel="stylesheet" />
+<link href="/css/clothes/viewCloth.css" rel="stylesheet" />
 
 <h1 class="name text-center">@Model.Cloth.Name</h1>
 
@@ -41,8 +41,7 @@
                 }
             </div>
 
-            <select class="form-control mb-2" id="garmentSize" name="GarmentSize" required
-
+            <select class="form-control mb-2" id="garmentSize" name="GarmentSize" required>
                 <option value="" selected>Please select cloth size</option>
                 @foreach (var clothInventory in Model.Cloth.ClothInventory)
                 {
@@ -130,5 +129,5 @@
 </div>
 
 @section scripts {
-    <script src="~/js/clothe/ViewCloth.js"></script>
+    <script src="~/js/clothe/viewCloth.js"></script>
 }

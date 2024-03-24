@@ -4,6 +4,8 @@
     var allClothesCount = await ClothService.AllClothesCount();
 }
 
+<link href="/css/clothes/all.css" rel="stylesheet" />
+
 <form method="get">
     <div class="row text-center mb-3">
         <div class="form-group col-md-4 d-flex justify-content-between">
@@ -89,11 +91,5 @@
 </div>
 
 @section scripts {
-    <script>
-        function openCloth(itemId) {
-            var url = '/Clothes/ViewCloth/' + itemId;
-
-            window.location.href = url;
-        }
-    </script>
+    <script src="/js/clothe/all.js"></script>
 }
