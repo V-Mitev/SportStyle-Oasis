@@ -7,6 +7,8 @@
     var allProteinPowdersCount = await ProteinPowderService.AllProteinsCount();
 }
 
+<link href="/css/proteinPowder/all.css" rel="stylesheet" />
+
 <h1 class="text-center">@TempData["Title"]</h1>
 
 <form method="get">
@@ -94,11 +96,5 @@
 </div>
 
 @section scripts {
-    <script>
-        function openProtein(proteinId) {
-            var url = '/ProteinPowder/ViewProteinPowder/' + proteinId;
-
-            window.location.href = url;
-        }
-    </script>
+    <script src="/js/proteinPowder/all.js"></script>
 }
