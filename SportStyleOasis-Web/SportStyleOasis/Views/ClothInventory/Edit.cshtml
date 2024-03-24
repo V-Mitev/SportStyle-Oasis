@@ -5,7 +5,7 @@
 @{
     var clothName = await ClothService.GetClotheName(Model.Id);
 
-    TempData["Title"] = $"This is the cloth inventory of {clothName}";
+    TempData["Title"] = $"This is the inventory of {clothName}";
 }
 
 <h1 class="text-center">@TempData["Title"]</h1>
@@ -21,44 +21,9 @@
         </div>
     }
 
-    <button type="button" id="saveChangesBtn" class="btn btn-primary">Save Changes</button>
+    <button type="submit" id="saveChangesBtn" class="btn btn-primary" onclick="saveChanges()">Save Changes</button>
 </form>
 
 @section Scripts {
-    <script>
-        // Function to load all available cloth sizes
-        function loadClothSizes() {
-            var clothSizes = [];
-
-            // Iterate over each cloth size input field and extract the cloth size from the name attribute
-            $('input[name^="ClotheQuantityAndSize["]').each(function () {
-                var clothSize = $(this).attr('name').split('[')[1].split(']')[0];
-                clothSizes.push(clothSize);
-            });
-
-            return clothSizes;
-        }
-
-        $(document).ready(function () {
-            $('#saveChangesBtn').click(function () {
-                // Load all available cloth sizes
-                var clothSizes = loadClothSizes();
-                var counter = 0;
-
-                // Iterate over each cloth-quantity input field to update corresponding hidden fields
-                $('.cloth-quantity').each(function () {
-                    var newValue = (this).value;
-
-                    if (counter != clothSizes.length) {
-                        var input = document.querySelector('input[name="ClotheQuantityAndSize[' + clothSizes[counter] + ']"]');
-                        input.value = newValue;
-                        counter++;
-                    }
-                });
-
-                // After updating the hidden fields, submit the form
-                $('#editForm').submit();
-            });
-        });
-    </script>
+    <script src="/js/clotheInventory/editInventory.js"></script>
 }
