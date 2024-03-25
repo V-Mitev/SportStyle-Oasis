@@ -22,6 +22,7 @@
             {
                 var clothInventory = await dbContext.ClotheInventories
                 .Include(ci => ci.Clothe)
+                .Include(ci => ci.ClotheOrderQuantity)
                 .FirstOrDefaultAsync(ci => ci.ClothId == clothId && ci.ClothesSize == clothSizeEnum);
 
                 if (clothInventory == null)

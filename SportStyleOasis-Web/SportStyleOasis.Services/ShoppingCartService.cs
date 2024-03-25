@@ -31,11 +31,12 @@
             this.proteinOrderQuantityService = proteinOrderQuantityService;
         }
 
-        public async Task AddToShoppingCartClothe(string userId, int clothId, string size, int quantity)
+        public async Task<bool> AddToShoppingCartClothe(string userId, int clothId, string size, int quantity)
         {
-            var cloth = await clothInventoryService.GetClothesWithFilteredInventory(clothId, size, quantity);
+            var clothInventory = await clothInventoryService.GetClothesWithFilteredInventory(clothId, size, quantity);
 
             var shoppingCart = await dbContext.ShoppingCarts
+                .Include(sc => sc.ClotheInventories)
                 .Where(sc => sc.UserId.ToString() == userId)
                 .FirstOrDefaultAsync();
 
@@ -44,10 +45,28 @@
                 throw new InvalidOperationException("Shopping cart was not found for the user.");
             }
 
-            cloth.ClotheOrderQuantity = await clothOrderQuantityService.AddClothOrderQuantityAsync(quantity);
+            if (shoppingCart.ClotheInventories.Contains(clothInventory))
+            {
+                var alreadyAddedCloth = shoppingCart.ClotheInventories
+                    .FirstOrDefault(ci => ci.ClothId == clothInventory.ClothId)!;
 
-            shoppingCart.ClotheInventories.Add(cloth);
+                if (clothInventory.AvailableQuantity >= alreadyAddedCloth.ClotheOrderQuantity!.Quantity + quantity)
+                {
+                    clothInventory.ClotheOrderQuantity!.Quantity += quantity;
+                    await dbContext.SaveChangesAsync();
+
+                    return true;
+                }
+
+                return false;
+            }
+
+            clothInventory.ClotheOrderQuantity = await clothOrderQuantityService.AddClothOrderQuantityAsync(quantity);
+
+            shoppingCart.ClotheInventories.Add(clothInventory);
             await dbContext.SaveChangesAsync();
+
+            return true;
         }
 
         public async Task AddToShoppingCartProtein(string userId, int proteinId, string proteinFlavor, int quantity)

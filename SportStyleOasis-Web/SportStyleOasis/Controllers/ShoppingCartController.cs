@@ -45,12 +45,20 @@
 
             try
             {
-                await shoppingCartService.AddToShoppingCartClothe(userId, clothId, size, quantity);
-
                 var clothName = await clothesService.GetClotheName(clothId);
 
+                var result = await shoppingCartService.AddToShoppingCartClothe(userId, clothId, size, quantity);
+
+                if (result == false)
+                {
+                    TempData[WarningMessage] =
+                        $"Please add less or we don't have enough quantity of this {clothName}.";
+
+                    return Ok();
+                }
+
                 TempData[SuccessMessage] =
-                $"Successfully added {clothName} to the shopping cart !";
+                    $"Successfully added {clothName} to the shopping cart !";
 
                 return Ok();
             }
