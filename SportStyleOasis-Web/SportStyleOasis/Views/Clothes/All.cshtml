@@ -1,4 +1,5 @@
-﻿@model AllClothesQueryModel
+﻿@using System.ComponentModel.DataAnnotations
+@model AllClothesQueryModel
 @inject IClothesService ClothService;
 @{
     var allClothesCount = await ClothService.AllClothesCount();
@@ -33,9 +34,9 @@
             <label asp-for="TypeOfClothe"></label>
             <select asp-for="TypeOfClothe" class="form-control">
                 <option value="">All</option>
-                @foreach (var typeOfClothe in Model.TypeOfClothes)
+                @foreach (TypeOfClothes typeOfClothe in Model.TypeOfClothes)
                 {
-                    <option value="@typeOfClothe">@typeOfClothe</option>
+                    <option value="@typeOfClothe">@typeOfClothe.GetDisplayName()</option>
                 }
             </select>
         </div>

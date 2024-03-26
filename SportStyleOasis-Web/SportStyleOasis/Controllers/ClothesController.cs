@@ -4,7 +4,6 @@
     using Microsoft.AspNetCore.Mvc;
     using SportStyleOasis.Data.Models.Enums;
     using SportStyleOasis.Services.Interfces;
-    using SportStyleOasis.Web.Infrastructure.Extensions;
     using SportStyleOasis.Web.ViewModels.Clothes;
     using SportStyleOasis.Web.ViewModels.ClothReview;
     using SportStyleOasis.Web.ViewModels.Review;
@@ -141,22 +140,6 @@
                 };
 
                 return View(viewModel);
-            }
-            catch (Exception)
-            {
-                return GeneralError();
-            }
-        }
-
-        [HttpGet]
-        [AllowAnonymous]
-        public async Task<IActionResult> ViewTypeOfCloth(string gender, string clothing)
-        {
-            try
-            {
-                var model = await clothesService.ReturnTypeOfClothesAsync(gender, clothing);
-
-                return View(model);
             }
             catch (Exception)
             {
