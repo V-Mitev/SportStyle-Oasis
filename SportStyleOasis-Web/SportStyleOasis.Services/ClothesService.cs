@@ -57,6 +57,18 @@
             IQueryable<Clothes> clothesQuery = dbContext.Clothes
                 .AsQueryable();
 
+            if (queryModel.Gender.HasValue)
+            {
+                clothesQuery = clothesQuery
+                    .Where(c => c.ClothesForGender == queryModel.Gender);
+            }
+
+            if (queryModel.TypeOfClothe.HasValue)
+            {
+                clothesQuery = clothesQuery
+                    .Where(c => c.TypeOfClothes == queryModel.TypeOfClothe);
+            }
+
             if (queryModel.ClotheBrand.HasValue)
             {
                 clothesQuery = clothesQuery

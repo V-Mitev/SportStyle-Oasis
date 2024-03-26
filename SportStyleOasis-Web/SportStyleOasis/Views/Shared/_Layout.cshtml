@@ -52,7 +52,7 @@
                                 Female
                             </a>
                             <div class="dropdown-menu" aria-labelledby="menDropdown">
-                                <a class="dropdown-item text-dark hover-menu" data-gender="Female" data-clothing="TShirt">T-Shirt</a>
+                                <a class="dropdown-item text-dark hover-menu" data-gender="Female" data-clothing="TShirt" asp-controller="Clothes" asp-action="All" asp-route-typeOfClothe="TShirt" asp-route-gender="Female">T-Shirt</a>
                                 <a class="dropdown-item text-dark hover-menu" data-gender="Female" data-clothing="Bottom">Bottom</a>
                                 <a class="dropdown-item text-dark hover-menu" data-gender="Female" data-clothing="Sweatshirt">Sweatshirt</a>
                                 <a class="dropdown-item text-dark hover-menu" data-gender="Female" data-clothing="Tracksuit">Tracksuit</a>
@@ -91,16 +91,16 @@
 </html>
 
 <script>
-    $(document).ready(function () {
-        $('.dropdown-item').click(function (e) {
-            e.preventDefault();
+    // $(document).ready(function () {
+    //     $('.dropdown-item').click(function (e) {
+    //         e.preventDefault();
 
-            var gender = $(this).data('gender');
-            var typeForClothes = $(this).data('clothing');
+    //         var gender = $(this).data('gender');
+    //         var typeForClothes = $(this).data('clothing');
 
-            window.location.href = '/Clothes/ViewTypeOfCloth?gender=' + gender + '&clothing=' + typeForClothes;
-        });
-    });
+    //         window.location.href = '/Clothes/ViewTypeOfCloth?gender=' + gender + '&clothing=' + typeForClothes;
+    //     });
+    // });
 
     function goToShoppingCart(cartId) {
         $.ajax({

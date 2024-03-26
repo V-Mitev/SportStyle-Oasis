@@ -11,9 +11,18 @@
             CurrentPage = DefaultPage;
             ClothesPerPage = EntitiesPerPage;
 
-            Clothes = new HashSet<AllClothesViewModel>();   
+            Clothes = new HashSet<AllClothesViewModel>();
+
+            Genders = new HashSet<Gender>();
+            TypeOfClothes = new HashSet<TypeOfClothes>();
             ClothesBrands = new HashSet<ClothesBrands>();
         }
+
+        [DisplayName("Gender")]
+        public Gender? Gender { get; set; }
+
+        [DisplayName("Type of clothe")]
+        public TypeOfClothes? TypeOfClothe { get; set; }
 
         [DisplayName("Clothes brand")]
         public ClothesBrands? ClotheBrand { get; set; }
@@ -23,12 +32,16 @@
 
         public int CurrentPage { get; set; }
 
-        [DisplayName("Number of Clothes Per Page")]
+        [DisplayName("Clothes Per Page")]
         public int ClothesPerPage { get; set; }
 
         public int TotalClothes { get; set; }
 
-        public ICollection<ClothesBrands> ClothesBrands { get; set; }
+        public IEnumerable<Gender> Genders { get; set; }
+
+        public IEnumerable<TypeOfClothes> TypeOfClothes { get; set; }
+
+        public IEnumerable<ClothesBrands> ClothesBrands { get; set; }
 
         public ICollection<AllClothesViewModel> Clothes { get; set; }
     }

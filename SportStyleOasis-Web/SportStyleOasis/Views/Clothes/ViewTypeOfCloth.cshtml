@@ -1,18 +1,6 @@
 ﻿@model IEnumerable<AllClothesViewModel>
 
-<style>
-    .card-img-container {
-        width: 200px;
-        height: 200px;
-        cursor: pointer;
-    }
-
-        .card-img-container img {
-            width: 100%;
-            height: auto;
-            object-fit: cover;
-        }
-</style>
+<link href="/css/clothes//viewTypeOfCloth.css" rel="stylesheet" />
 
 <div class="row">
     @foreach (var item in Model)
@@ -30,11 +18,5 @@
 </div>
 
 @section scripts {
-    <script>
-        function openCloth(itemId) {
-            var url = '/Clothes/ViewCloth/' + itemId;
-
-            window.location.href = url;
-        }
-    </script>
+    <script src="/js/clothe/viewTypeOfClothe.js"></script>
 }

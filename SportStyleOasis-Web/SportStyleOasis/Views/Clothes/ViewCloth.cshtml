@@ -66,20 +66,20 @@
 <div class="review">
     @if (!await ReviewService.IsUserAddReviewToClotheAsync(userId, Model.Cloth.Id) && isAuthenticated)
     {
-        <form asp-controller="Review" asp-action="AddClotheReview" method="post" class="form">
+        <form id="reviewForm" asp-controller="Review" asp-action="AddClotheReview" method="post" class="form">
             <input type="hidden" name="clothId" value="@Model.Cloth.Id" />
 
             <label asp-for="Review.Rating">Rating:</label>
-            <select asp-for="Review.Rating" asp-items="new SelectList(new List<int> { 1, 2, 3, 4, 5 })" class="form-control rating" required>
+            <select asp-for="Review.Rating" asp-items="new SelectList(new List<int> { 1, 2, 3, 4, 5 })" class="form-control rating" required id="raiting">
                 <option value="">Select Rating</option>
             </select>
             <span asp-validation-for="Review.Rating" class="text-danger"></span>
 
             <label asp-for="Review.Comment">Comment:</label>
-            <textarea asp-for="Review.Comment" class="form-control mb-2 comment"></textarea>
+            <textarea asp-for="Review.Comment" class="form-control mb-2 comment" id="value"></textarea>
             <span asp-validation-for="Review.Comment" class="text-danger"></span>
 
-            <input type="submit" value="Submit Review" class="btn btn-primary mb-2" />
+            <input type="submit" value="Submit Review" class="btn btn-primary mb-2" onclick="addReview(this)"/>
         </form>
     }
 

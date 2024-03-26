@@ -26,6 +26,8 @@
         public async Task<IActionResult> All([FromQuery] AllClothesQueryModel queryModel)
         {
             queryModel.ClothesBrands = Enum.GetValues<ClothesBrands>();
+            queryModel.TypeOfClothes = Enum.GetValues<TypeOfClothes>();
+            queryModel.Genders = Enum.GetValues<Gender>();
 
             var serviceModel = await clothesService.AllAsync(queryModel);
 

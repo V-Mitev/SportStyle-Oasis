@@ -7,38 +7,57 @@
 <link href="/css/clothes/all.css" rel="stylesheet" />
 
 <form method="get">
-    <div class="row text-center mb-3">
-        <div class="form-group col-md-4 d-flex justify-content-between">
-            <div class="form-group">
-                <label asp-for="ClotheBrand"></label>
-                <select asp-for="ClotheBrand" class="form-control">
-                    <option value="">All</option>
-                    @foreach (var brand in Model.ClothesBrands)
-                    {
-                        <option value="@brand">@brand</option>
-                    }
-                </select>
-            </div>
-
-            <div class="form-group">
-                <label asp-for="ClothesPerPage"></label>
-                <select asp-for="ClothesPerPage" class="form-control">
-                    <option value="3">3</option>
-                    <option value="6">6</option>
-                    <option value="9">9</option>
-                    <option value="@allClothesCount">All</option>
-                </select>
-            </div>
+    <div class="row text-center mb-3 justify-content-center align-items-center">
+        <div class="form-group col-md-2">
+            <label asp-for="ClothesPerPage"></label>
+            <select asp-for="ClothesPerPage" class="form-control">
+                <option value="3">3</option>
+                <option value="6">6</option>
+                <option value="9">9</option>
+                <option value="@allClothesCount">All</option>
+            </select>
         </div>
-        <div class="form-group col-md-3">
+
+        <div class="form-group col-md-1">
+            <label asp-for="Gender"></label>
+            <select asp-for="Gender" class="form-control">
+                <option value="">All</option>
+                @foreach (var gender in Model.Genders)
+                {
+                    <option value="@gender">@gender</option>
+                }
+            </select>
+        </div>
+
+        <div class="form-group col-md-2">
+            <label asp-for="TypeOfClothe"></label>
+            <select asp-for="TypeOfClothe" class="form-control">
+                <option value="">All</option>
+                @foreach (var typeOfClothe in Model.TypeOfClothes)
+                {
+                    <option value="@typeOfClothe">@typeOfClothe</option>
+                }
+            </select>
+        </div>
+
+        <div class="form-group col-md-2">
+            <label asp-for="ClotheBrand"></label>
+            <select asp-for="ClotheBrand" class="form-control">
+                <option value="">All</option>
+                @foreach (var brand in Model.ClothesBrands)
+                {
+                    <option value="@brand">@brand</option>
+                }
+            </select>
+        </div>
+
+        <div class="form-group col-md-2">
             <label asp-for="SearchString"></label>
             <input asp-for="SearchString" class="form-control" placeholder="..." autocomplete="off">
         </div>
 
-        <div class="col-md-3">
-            <div class="form-group mt-4">
-                <input type="submit" value="Search" class="btn btn-primary" />
-            </div>
+        <div class="form-group col-md-3 align-self-end">
+            <input type="submit" value="Search" class="btn btn-primary" />
         </div>
     </div>
 </form>

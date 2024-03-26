@@ -132,3 +132,21 @@ function colorOption(element) {
 
     window.location.href = url;
 }
+
+function addReview() {
+    var model = document.getElementById('reviewForm');
+    console.log(model);
+
+    $.ajax({
+        url: '/Review/AddReview',
+        type: 'POST',
+        data: model,
+        success: function (response) {
+            window.location.reload();
+        },
+        error: function (status, error) {
+            console.error("Error occurred:", status, error);
+            alert("An error occurred. Please try again later.");
+        }
+    });
+}
