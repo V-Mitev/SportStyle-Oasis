@@ -17,7 +17,7 @@ namespace SportStyleOasis.Data.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.28")
+                .HasAnnotation("ProductVersion", "6.0.26")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
@@ -34,7 +34,7 @@ namespace SportStyleOasis.Data.Migrations
 
                     b.HasIndex("ShoppingCartsId");
 
-                    b.ToTable("ClotheInventoryShoppingCart");
+                    b.ToTable("ClotheInventoryShoppingCart", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole<System.Guid>", b =>
@@ -184,7 +184,7 @@ namespace SportStyleOasis.Data.Migrations
 
                     b.HasIndex("ShoppingCartsId");
 
-                    b.ToTable("ProteinFlavorShoppingCart");
+                    b.ToTable("ProteinFlavorShoppingCart", (string)null);
                 });
 
             modelBuilder.Entity("SportStyleOasis.Data.Models.ApplicationUser", b =>
@@ -289,7 +289,7 @@ namespace SportStyleOasis.Data.Migrations
 
                     b.HasIndex("ClotheOrderQuantityId");
 
-                    b.ToTable("ClotheInventories");
+                    b.ToTable("ClotheInventories", (string)null);
 
                     b.HasData(
                         new
@@ -342,7 +342,7 @@ namespace SportStyleOasis.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ClotheOrderQuantities");
+                    b.ToTable("ClotheOrderQuantities", (string)null);
                 });
 
             modelBuilder.Entity("SportStyleOasis.Data.Models.Clothes", b =>
@@ -389,7 +389,7 @@ namespace SportStyleOasis.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Clothes");
+                    b.ToTable("Clothes", (string)null);
 
                     b.HasData(
                         new
@@ -461,7 +461,7 @@ namespace SportStyleOasis.Data.Migrations
 
                     b.HasIndex("ProteinOrderQuantityId");
 
-                    b.ToTable("ProteinFlavor");
+                    b.ToTable("ProteinFlavor", (string)null);
 
                     b.HasData(
                         new
@@ -514,7 +514,7 @@ namespace SportStyleOasis.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ProteinOrderQuantities");
+                    b.ToTable("ProteinOrderQuantities", (string)null);
                 });
 
             modelBuilder.Entity("SportStyleOasis.Data.Models.ProteinPowder", b =>
@@ -559,7 +559,7 @@ namespace SportStyleOasis.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ProteinPowder");
+                    b.ToTable("ProteinPowder", (string)null);
 
                     b.HasData(
                         new
@@ -571,7 +571,7 @@ namespace SportStyleOasis.Data.Migrations
                             Name = "Impact Whey Protein",
                             Price = 33.99m,
                             ProteinPowderBrands = 3,
-                            TimeForAddFlavor = new DateTime(2024, 3, 26, 13, 31, 15, 645, DateTimeKind.Utc).AddTicks(2050),
+                            TimeForAddFlavor = new DateTime(2024, 3, 16, 10, 54, 1, 350, DateTimeKind.Utc).AddTicks(9325),
                             TypeOfProtein = 0,
                             Weight = 1000
                         },
@@ -584,7 +584,7 @@ namespace SportStyleOasis.Data.Migrations
                             Name = "Pure Whey Protein Isolate",
                             Price = 54.99m,
                             ProteinPowderBrands = 0,
-                            TimeForAddFlavor = new DateTime(2024, 3, 26, 13, 31, 15, 645, DateTimeKind.Utc).AddTicks(2069),
+                            TimeForAddFlavor = new DateTime(2024, 3, 16, 10, 54, 1, 350, DateTimeKind.Utc).AddTicks(9341),
                             TypeOfProtein = 2,
                             Weight = 1000
                         },
@@ -597,7 +597,7 @@ namespace SportStyleOasis.Data.Migrations
                             Name = "Vegan Protein",
                             Price = 11.99m,
                             ProteinPowderBrands = 5,
-                            TimeForAddFlavor = new DateTime(2024, 3, 26, 13, 31, 15, 645, DateTimeKind.Utc).AddTicks(2074),
+                            TimeForAddFlavor = new DateTime(2024, 3, 16, 10, 54, 1, 350, DateTimeKind.Utc).AddTicks(9535),
                             TypeOfProtein = 1,
                             Weight = 1000
                         });
@@ -636,7 +636,7 @@ namespace SportStyleOasis.Data.Migrations
 
                     b.HasIndex("ProteinPowderId");
 
-                    b.ToTable("Review");
+                    b.ToTable("Review", (string)null);
 
                     b.HasData(
                         new
@@ -644,7 +644,7 @@ namespace SportStyleOasis.Data.Migrations
                             Id = 1,
                             ClothesId = 1,
                             Comment = "I really like the design and comfort of this gray T-shirt. Perfect for casual wear.",
-                            CreatedAt = new DateTime(2024, 3, 26, 13, 31, 15, 645, DateTimeKind.Utc).AddTicks(8988),
+                            CreatedAt = new DateTime(2024, 3, 16, 10, 54, 1, 351, DateTimeKind.Utc).AddTicks(6870),
                             Rating = 4.5,
                             UserName = "TestUserName"
                         },
@@ -653,7 +653,7 @@ namespace SportStyleOasis.Data.Migrations
                             Id = 2,
                             ClothesId = 2,
                             Comment = "The black T-shirt fits well and has a nice price. Great for everyday use.",
-                            CreatedAt = new DateTime(2024, 3, 26, 13, 31, 15, 645, DateTimeKind.Utc).AddTicks(8998),
+                            CreatedAt = new DateTime(2024, 3, 16, 10, 54, 1, 351, DateTimeKind.Utc).AddTicks(6882),
                             Rating = 4.0,
                             UserName = "TestUserName"
                         },
@@ -662,7 +662,7 @@ namespace SportStyleOasis.Data.Migrations
                             Id = 3,
                             ClothesId = 3,
                             Comment = "Absolutely love the style and feel of this white T-shirt. It's a must-have for any wardrobe!",
-                            CreatedAt = new DateTime(2024, 3, 26, 13, 31, 15, 645, DateTimeKind.Utc).AddTicks(9001),
+                            CreatedAt = new DateTime(2024, 3, 16, 10, 54, 1, 351, DateTimeKind.Utc).AddTicks(6885),
                             Rating = 5.0,
                             UserName = "TestUserName"
                         },
@@ -670,7 +670,7 @@ namespace SportStyleOasis.Data.Migrations
                         {
                             Id = 4,
                             Comment = "Great taste and mixes well. Impact Whey is my go-to protein for post-workout recovery.",
-                            CreatedAt = new DateTime(2024, 3, 26, 13, 31, 15, 645, DateTimeKind.Utc).AddTicks(9005),
+                            CreatedAt = new DateTime(2024, 3, 16, 10, 54, 1, 351, DateTimeKind.Utc).AddTicks(6889),
                             ProteinPowderId = 1,
                             Rating = 5.0,
                             UserName = "TestUserName"
@@ -679,7 +679,7 @@ namespace SportStyleOasis.Data.Migrations
                         {
                             Id = 5,
                             Comment = "Bulk Isolate Protein delivers excellent results. It's a bit pricey, but the quality is worth it.",
-                            CreatedAt = new DateTime(2024, 3, 26, 13, 31, 15, 645, DateTimeKind.Utc).AddTicks(9012),
+                            CreatedAt = new DateTime(2024, 3, 16, 10, 54, 1, 351, DateTimeKind.Utc).AddTicks(6898),
                             ProteinPowderId = 2,
                             Rating = 4.7999999999999998,
                             UserName = "TestUserName"
@@ -688,7 +688,7 @@ namespace SportStyleOasis.Data.Migrations
                         {
                             Id = 6,
                             Comment = "As a vegan, I love ProteinWorks' Vegan Protein. Tastes great and meets my nutritional needs perfectly.",
-                            CreatedAt = new DateTime(2024, 3, 26, 13, 31, 15, 645, DateTimeKind.Utc).AddTicks(9016),
+                            CreatedAt = new DateTime(2024, 3, 16, 10, 54, 1, 351, DateTimeKind.Utc).AddTicks(6901),
                             ProteinPowderId = 3,
                             Rating = 4.9000000000000004,
                             UserName = "TestUserName"
@@ -714,7 +714,7 @@ namespace SportStyleOasis.Data.Migrations
                     b.HasIndex("UserId")
                         .IsUnique();
 
-                    b.ToTable("ShoppingCarts");
+                    b.ToTable("ShoppingCarts", (string)null);
                 });
 
             modelBuilder.Entity("ClotheInventoryShoppingCart", b =>

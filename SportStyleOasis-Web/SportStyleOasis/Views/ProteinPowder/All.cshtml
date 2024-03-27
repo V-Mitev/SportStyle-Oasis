@@ -18,9 +18,9 @@
                 <label asp-for="ProteinPowderBrand"></label>
                 <select asp-for="ProteinPowderBrand" class="form-control">
                     <option value="">All</option>
-                    @foreach (var brand in Model.ProteinBrands)
+                    @foreach (ProteinPowderBrands brand in Model.ProteinBrands)
                     {
-                        <option value="@brand">@brand</option>
+                        <option value="@brand">@brand.GetDisplayName()</option>
                     }
                 </select>
             </div>

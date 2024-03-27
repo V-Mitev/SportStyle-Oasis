@@ -76,14 +76,14 @@
 
             }
 
-            @foreach (var proteinPowderBrands in Enum.GetValues(typeof(ProteinPowderBrands)))
+            @foreach (ProteinPowderBrands proteinPowderBrands in Enum.GetValues(typeof(ProteinPowderBrands)))
             {
                 @if (proteinPowderBrands.ToString() == Model.ProteinPowderBrands.ToString())
                 {
                     continue;
                 }
 
-                <option value="@proteinPowderBrands">@proteinPowderBrands</option>
+                <option value="@proteinPowderBrands">@proteinPowderBrands.GetDisplayName()</option>
             }
         </select>
     </div>
