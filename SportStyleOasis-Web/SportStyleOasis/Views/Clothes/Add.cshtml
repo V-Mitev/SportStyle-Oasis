@@ -54,14 +54,14 @@
 
             }
 
-            @foreach (var clothebrand in Enum.GetValues(typeof(ClothesBrands)))
+            @foreach (ClothesBrands clothebrand in Enum.GetValues(typeof(ClothesBrands)))
             {
                 @if (clothebrand.ToString() == Model.ClothesBrands.ToString())
                 {
                     continue;
                 }
 
-                <option value="@clothebrand">@clothebrand</option>
+                <option value="@clothebrand">@clothebrand.GetDisplayName()</option>
             }
         </select>
     </div>
@@ -99,13 +99,13 @@
                 <option value="">Select a type of clothes</option>
             }
 
-            @foreach (var typeOfClothes in Enum.GetValues(typeof(TypeOfClothes)))
+            @foreach (TypeOfClothes typeOfClothes in Enum.GetValues(typeof(TypeOfClothes)))
             {
                 @if (typeOfClothes.ToString() == Model.TypeOfClothes.ToString())
                 {
                     continue;
                 }
-                <option value="@typeOfClothes">@typeOfClothes</option>
+                <option value="@typeOfClothes">@typeOfClothes.GetDisplayName()</option>
             }
         </select>
     </div>
