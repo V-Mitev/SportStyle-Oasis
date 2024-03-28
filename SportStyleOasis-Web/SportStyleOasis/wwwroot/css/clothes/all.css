@@ -1,4 +1,10 @@
-﻿.card-img-container {
+﻿.card {
+    position: relative;
+    width: 360px; /* can be omitted for a regular non-lazy image */
+    max-width: 100%;
+}
+
+.card-img-container {
     width: 200px;
     height: 200px;
     cursor: pointer;
@@ -9,3 +15,18 @@
         height: auto;
         object-fit: cover;
     }
+
+.card .second.image {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity .2s;
+}
+
+.card:hover .second.image {
+    opacity: 1;
+}
