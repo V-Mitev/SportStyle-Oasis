@@ -44,21 +44,35 @@ function saveBtnClickHandler(element) {
         data: { reviewId, editedComment, editedRating },
         success: function (response) {
             var formattedCreatedAt = new Date(response.createdAt).toLocaleDateString('en-US');
-            var editButton = `<button class="btn btn-primary ms-2 me-2" onclick="editBtnClickHandler(this)">Edit</button>`;
-            var deleteButton = `<button class="btn btn-danger space delete-btn" data-review-id="${reviewId}" onclick="deleteBtnClickHandler(this)">Delete</button>`;
-            var updatedContent = `Rating: ${response.rating}, `;
+            var editButton = `<button class="btn edit-btn" onclick="editBtnClickHandler(this)"><i class="fa-solid fa-pencil"></i></button>`;
+            var deleteButton = `<button class="btn delete-btn" data-review-id="${reviewId}" onclick="deleteBtnClickHandler(this)">X</button>`;
 
-            if (response.comment === null) {
-                updatedContent += `CreatedAt: ${formattedCreatedAt}, User: ${response.userName} ${editButton} ${deleteButton}`;
-            } else {
-                updatedContent += `Comment: ${response.comment}, CreatedAt: ${formattedCreatedAt}, User: ${response.userName} ${editButton} ${deleteButton}`;
+            if (response.comment == null) {
+                response.comment = '';
             }
+
+            var updatedContent = `
+                <div class="review-content">
+                    <p class="username">${response.userName}</p>
+                    <div class="user-data">
+                        <p class="rating">`;
+            for (var i = 0; i < response.rating; i++) {
+                updatedContent += `<span class="star">★</span>`;
+            }
+            updatedContent += `</p>
+                        <p class="createdAt">${formattedCreatedAt}</p>
+                            </div>
+                            <p class="comment">
+                            ${response.comment}<span class="buttons-container">
+                            ${editButton} ${deleteButton}</span>
+                            </p>
+            </div>`;
 
             reviewContainer.find('.edit-form').remove();
             reviewContainer.html(updatedContent);
         },
         error: function (error) {
-            console.error('Error updating comment:', error);
+            alert('Error updating comment. Please try again later.');
         }
     });
 }
@@ -135,7 +149,6 @@ function colorOption(element) {
 
 function addReview() {
     var model = document.getElementById('reviewForm');
-    console.log(model);
 
     $.ajax({
         url: '/Review/AddReview',
@@ -145,7 +158,6 @@ function addReview() {
             window.location.reload();
         },
         error: function (status, error) {
-            console.error("Error occurred:", status, error);
             alert("An error occurred. Please try again later.");
         }
     });

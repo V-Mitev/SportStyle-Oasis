@@ -91,7 +91,69 @@ img {
         width: 50%;
     }
 
-    .review .full-review {
-        display: flex;
-        align-items: center;
-    }
+.review.list.item {
+    list-style: none;
+}
+
+.full-review {
+    width: 50%;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    border: 1px solid black;
+}
+
+.review-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.username {
+    font-weight: bold;
+}
+
+.user-data {
+    display: flex;
+    justify-content: space-between;
+}
+
+.createdAt {
+    font-weight: bold;
+    font-style: italic;
+    margin-left: auto;
+}
+
+.star {
+    color: yellow;
+    font-size: 20px;
+}
+
+.comment {
+    display: flex;
+    font-weight: bold;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.buttons-container {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.comment, .user-data, .username {
+    margin: 0;
+}
+
+.delete-btn {
+    color: red;
+}
+
+.delete-btn:hover {
+    color: white;
+    background-color: red;
+}
+
+.edit-btn:hover {
+    color: white;
+    background-color: blue;
+}

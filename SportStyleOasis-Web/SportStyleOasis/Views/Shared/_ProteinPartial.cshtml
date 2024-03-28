@@ -23,7 +23,7 @@
     <div class="card">
         <img src="~/images/@Model.Image" class="card-img-container" alt="@Model.Name Image"
              onclick="openProtein(@Model.Id)">
-        <img src="~/images/white_tshirt.jpg" alt="Alternate Text" class="card-img-container second image" />
+        <img src="~/images/white_tshirt.jpg" alt="Alternate Text" class="card-img-container second image" onclick="openProtein(@Model.Id)"/>
         <div class="card-body">
             <h5 class="card-title">@Model.Name</h5>
             <p><strong>Price:</strong> $@Model.Price</p>

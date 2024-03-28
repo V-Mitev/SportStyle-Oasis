@@ -4,7 +4,7 @@
     <div class="card">
         <img src="~/images/@Model.Image" class="card-img-container" alt="@Model.Name Image"
              onclick="openCloth(@Model.Id)">
-             <img src="~/images/bulk_isolate_protein.jpg" class="card-img-container second image"/>
+        <img src="~/images/bulk_isolate_protein.jpg" class="card-img-container second image" onclick="openCloth(@Model.Id)" />
         <div class="card-body">
             <h5 class="card-title">@Model.Name</h5>
             <p><strong>Price:</strong> $@Model.Price</p>

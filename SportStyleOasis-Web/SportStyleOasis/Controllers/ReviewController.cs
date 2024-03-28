@@ -21,13 +21,8 @@
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddClotheReview(ClothReviewViewModel model, int clothId)
+        public async Task<IActionResult> AddClotheReview(ClothReviewViewModel model, int clothId, string userId)
         {
-            if (clothId == 0)
-            {
-                return GeneralError();
-            }
-
             if (model.Review.Rating == 0)
             {
                 TempData[ErrorMessage] = "Please select rating before submitting your review.";
@@ -35,10 +30,15 @@
                 return RedirectToAction("ViewCloth", "Clothes", new { id = clothId });
             }
 
-            var userFullName = await userService.GetUserFullNameByIdAsync(User.GetId());
+            if (clothId == 0 || userId == null)
+            {
+                return GeneralError();
+            }
 
             try
             {
+                var userFullName = await userService.GetUserFullNameByIdAsync(userId);
+
                 await reviewService.AddReviewAsync(model.Review, clothId, 0, userFullName);
 
                 return RedirectToAction("ViewCloth", "Clothes", new { id = clothId });

@@ -28,7 +28,7 @@
 
         <form id="form" asp-controller="ShoppingCart" asp-action="AddClotheToCart" method="post">
             <div id="color-options">
-                <span class="color-option selected" style="background-color: @Model.Cloth.Color" data-cloth-id="@Model.Cloth.Id" onclick="colorOption(this)"></span>
+                <span class="color-option selected" style="background-color: @Model.Cloth.Color" data-cloth-id="@clothId" onclick="colorOption(this)"></span>
 
                 @foreach (var cloth in availableClothes)
                 {
@@ -64,10 +64,11 @@
 </div>
 
 <div class="review">
-    @if (!await ReviewService.IsUserAddReviewToClotheAsync(userId, Model.Cloth.Id) && isAuthenticated)
+    @if (!await ReviewService.IsUserAddReviewToClotheAsync(userId, clothId) && isAuthenticated)
     {
         <form id="reviewForm" asp-controller="Review" asp-action="AddClotheReview" method="post" class="form">
-            <input type="hidden" name="clothId" value="@Model.Cloth.Id" />
+            <input type="hidden" name="clothId" value="@clothId" />
+            <input type="hidden" name="userId" value="@userId" />
 
             <label asp-for="Review.Rating">Rating:</label>
             <select asp-for="Review.Rating" asp-items="new SelectList(new List<int> { 1, 2, 3, 4, 5 })" class="form-control rating" required id="raiting">
@@ -79,31 +80,43 @@
             <textarea asp-for="Review.Comment" class="form-control mb-2 comment" id="value"></textarea>
             <span asp-validation-for="Review.Comment" class="text-danger"></span>
 
-            <input type="submit" value="Submit Review" class="btn btn-primary mb-2" onclick="addReview(this)"/>
+            <input type="submit" value="Submit Review" class="btn btn-primary mb-2" onclick="addReview(this)" />
         </form>
     }
 
     <p><strong>Reviews:</strong></p>
+
     @if (Model.Cloth.Reviews != null && Model.Cloth.Reviews.Any())
     {
-        <ul>
+        <ul class="review list">
             @foreach (var review in Model.Cloth.Reviews)
             {
-                <li>
+                <li class="review list item">
                     <div class="full-review" data-review-id="@review.Id" data-initial-comment="@review.Comment" data-initial-rating="@review.Rating">
-                        <span>
-                            Rating: @review.Rating,
-                            @if (review.Comment != null)
-                            {
-                                <span>Comment: @review.Comment,</span>
-                            }
-                            CreateAt: @review.CreatedAt, User: @review.UserName
-                        </span>
-                        @if (await UserService.IsThisUserPostThisReview(userId, review.Id, isUserAdmin))
-                        {
-                            <button class="btn btn-primary ms-2 me-2" onclick="editBtnClickHandler(this)">Edit</button>
-                            <button class="btn delete-btn" data-review-id="@review.Id" onclick="deleteBtnClickHandler(this)">Delete</button>
-                        }
+                        <div class="review">
+                            <div class="review-content">
+                                <p class="username">@review.UserName</p>
+                                <div class="user-data">
+                                    <p class="rating">
+                                        @for (int i = 0; i < review.Rating; i++)
+                                        {
+                                            <span class="star">★</span>
+                                        }
+                                    </p>
+                                    <p class="createdAt">@review.CreatedAt.ToString("MMMM dd, yyyy")</p>
+                                </div>
+                                <p class="comment">
+                                    @review.Comment
+                                    <span class="buttons-container">
+                                        @if (await UserService.IsThisUserPostThisReview(userId, review.Id, isUserAdmin))
+                                        {
+                                            <button class="btn edit-btn" onclick="editBtnClickHandler(this)"><i class="fa-solid fa-pencil"></i></button>
+                                            <button class="btn delete-btn" data-review-id="@review.Id" onclick="deleteBtnClickHandler(this)">X</button>
+                                        }
+                                    </span>
+                                </p>
+                            </div>
+                        </div>
                     </div>
                 </li>
             }
@@ -114,13 +127,12 @@
         <p>There are no reviews yet</p>
     }
 </div>
-
 <div>
     @if (isUserAdmin)
     {
         <div class="d-flex">
-            <a asp-controller="Clothes" asp-action="Edit" asp-route-id="@Model.Cloth.Id" class="btn btn-warning me-2">Edit</a>
-            <form asp-controller="Clothes" asp-action="Delete" method="post" asp-route-id="@Model.Cloth.Id">
+            <a asp-controller="Clothes" asp-action="Edit" asp-route-id="@clothId" class="btn btn-warning me-2">Edit</a>
+            <form asp-controller="Clothes" asp-action="Delete" method="post" asp-route-id="@clothId">
                 <input type="submit" value="Delete" class="btn btn-danger me-2" onclick="return confirm('Are you sure you want to delete this garment: @Model.Cloth.Name')" />
             </form>
             <a asp-controller="ClothInventory" asp-action="Edit" asp-route-id="@clothId" class="btn btn-primary">Edit cloth inventory</a>
