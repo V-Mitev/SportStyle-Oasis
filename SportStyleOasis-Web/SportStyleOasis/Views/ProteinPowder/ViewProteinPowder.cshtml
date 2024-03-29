@@ -14,39 +14,42 @@
 
 <h1 class="text-center">@Model.ProteinPowder.Name</h1>
 
-<div>
-    <img src="~/images/@Model.ProteinPowder.Image" alt="@Model.ProteinPowder.Name Image">
-</div>
+<div class="product">
+    <div class="image">
+        <img src="~/images/@Model.ProteinPowder.Image" alt="@Model.ProteinPowder.Name Image">
+    </div>
 
-<div>
-    <p><strong>Price:</strong> $@Model.ProteinPowder.Price</p>
-    <p><strong>Description:</strong> @Model.ProteinPowder.Description</p>
-    <p><strong>Protein Powder Brand:</strong> @Model.ProteinPowder.ProteinPowderBrand</p>
-    <p><strong>Weight in grams:</strong> @Model.ProteinPowder.Weight</p>
-    <p><strong>Protein Type:</strong> @Model.ProteinPowder.TypeOfProtein</p>
-    <p><strong>Availabe Protein Powder Flavors:</strong></p>
+    <div class="values">
+        <p class="price">Price: $@Model.ProteinPowder.Price</p>
+        <p>Brand: @Model.ProteinPowder.ProteinPowderBrand</p>
+        <p>Weight in grams: @Model.ProteinPowder.Weight</p>
+        <p>Protein Type: @Model.ProteinPowder.TypeOfProtein</p>
+        <p class="description">Description: @Model.ProteinPowder.Description</p>
 
-    <form id="form" asp-controller="ShoppingCart" asp-action="AddProteinToCart" method="post">
-        <select class="form-control mb-2" id="proteinFlavors" required>
-            <option value="" selected>Please select protein flavor</option>
+        <p class="flavor text">Availabe Protein Powder Flavors:</p>
 
-            @foreach (var proteinPowderFlavor in Model.ProteinPowder.ProteinFlavors)
-            {
-                if (proteinPowderFlavor.Quantity > 0)
+        <form id="form" asp-controller="ShoppingCart" asp-action="AddProteinToCart" method="post">
+            <select class="form-control mb-2" id="proteinFlavors" required>
+                <option value="" selected>Please select protein flavor</option>
+
+                @foreach (var proteinPowderFlavor in Model.ProteinPowder.ProteinFlavors)
                 {
-                    <option value="@($"{proteinPowderFlavor.FlavorName}|{proteinPowderFlavor.Quantity}")">@proteinPowderFlavor.FlavorName</option>
+                    if (proteinPowderFlavor.Quantity > 0)
+                    {
+                        <option value="@($"{proteinPowderFlavor.FlavorName}|{proteinPowderFlavor.Quantity}")">@proteinPowderFlavor.FlavorName</option>
+                    }
                 }
+            </select>
+
+            <input type="hidden" id="proteinFlavor" value="" />
+
+            @if (isAuthenticated)
+            {
+                <input type="number" class="form-control mb-2" id="quantity" min="1" value="1" step="1" required>
+                <button type="button" class="btn add" onclick="addToCart(@proteinId)">Add to cart</button>
             }
-        </select>
-
-        <input type="hidden" id="proteinFlavor" value="" />
-
-        @if (isAuthenticated)
-        {
-            <input type="number" class="form-control mb-2" id="quantity" min="1" value="1" step="1" required>
-            <button type="button" class="btn btn-primary mb-2" onclick="addToCart(@proteinId)">Add to cart</button>
-        }
-    </form>
+        </form>
+    </div>
 </div>
 <div class="review">
     @if (!await ReviewService.IsUserAddReviewToProteinPowderAsync(userId, proteinId) && isAuthenticated)
