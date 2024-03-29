@@ -75,6 +75,10 @@ img {
         background-color: rgb(65, 85, 102);
     }
 
+.review {
+    margin-top: 10px;
+}
+
 .review .form {
     display: flex;
     flex-direction: column;

@@ -70,6 +70,8 @@
             <input type="hidden" name="clothId" value="@clothId" />
             <input type="hidden" name="userId" value="@userId" />
 
+            <strong><p>Add a review</p></strong>
+
             <label asp-for="Review.Rating">Rating:</label>
             <select asp-for="Review.Rating" asp-items="new SelectList(new List<int> { 1, 2, 3, 4, 5 })" class="form-control rating" required id="raiting">
                 <option value="">Select Rating</option>

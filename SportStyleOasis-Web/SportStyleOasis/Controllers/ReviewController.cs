@@ -64,10 +64,10 @@
                 return RedirectToAction("ViewProteinPowder", "ProteinPowder", new { id = proteinPowderId });
             }
 
-            var userFullName = await userService.GetUserFullNameByIdAsync(User.GetId());
-
             try
             {
+                var userFullName = await userService.GetUserFullNameByIdAsync(User.GetId());
+
                 await reviewService.AddReviewAsync(model.Review, 0, proteinPowderId, userFullName);
 
                 return RedirectToAction("ViewProteinPowder", "ProteinPowder", new { id = proteinPowderId });

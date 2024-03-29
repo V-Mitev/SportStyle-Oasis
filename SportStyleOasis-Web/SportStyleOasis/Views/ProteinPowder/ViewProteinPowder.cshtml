@@ -47,28 +47,61 @@
             <button type="button" class="btn btn-primary mb-2" onclick="addToCart(@proteinId)">Add to cart</button>
         }
     </form>
+</div>
+<div class="review">
+    @if (!await ReviewService.IsUserAddReviewToProteinPowderAsync(userId, proteinId) && isAuthenticated)
+    {
+        <form asp-controller="Review" asp-action="AddProteinPowderReview" method="post" class="form">
+            <input type="hidden" name="proteinPowderId" value="@proteinId" />
 
-    <p><strong>Ratings:</strong></p>
+            <strong><p>Add a review</p></strong>
+
+            <label asp-for="Review.Rating">Rating:</label>
+            <select asp-for="Review.Rating" asp-items="new SelectList(new List<int> { 1, 2, 3, 4, 5 })" class="form-control rating" id="raiting" required>
+                <option value="">Select Rating</option>
+            </select>
+            <span asp-validation-for="Review.Rating" class="text-danger"></span>
+
+            <label asp-for="Review.Comment">Comment:</label>
+            <textarea asp-for="Review.Comment" class="form-control mb-2 comment"></textarea>
+            <span asp-validation-for="Review.Comment" class="text-danger"></span>
+
+            <input type="submit" value="Submit Rating" class="btn btn-primary mb-2" />
+        </form>
+    }
+
+    <p><strong>Reviews:</strong></p>
     @if (Model.ProteinPowder.Reviews != null && Model.ProteinPowder.Reviews.Any())
     {
         <ul>
             @foreach (var review in Model.ProteinPowder.Reviews)
             {
-                <li>
-                    <div class="comment-content" data-review-id="@review.Id" data-initial-comment="@review.Comment" data-initial-rating="@review.Rating">
-                        <span>
-                            Rating: <span class="rating">@review.Rating</span>,
-                            @if (review.Comment != null)
-                            {
-                                <span>Comment: <span class="comment">@review.Comment,</span></span>
-                            }
-                            CreateAt: @review.CreatedAt, UserName: @review.UserName
-                        </span>
-                        @if (await UserService.IsThisUserPostThisReview(userId, review.Id, isUserAdmin))
-                        {
-                            <button class="edit-btn btn btn-primary mb-2" onclick="editBtnClickHandler(this)">Edit</button>
-                            <button class="btn btn-danger space delete-btn" data-review-id="@review.Id" onclick="deleteBtnClickHandler(this)">Delete</button>
-                        }
+                <li class="review list item">
+                    <div class="full-review" data-review-id="@review.Id" data-initial-comment="@review.Comment" data-initial-rating="@review.Rating">
+                        <div class="review">
+                            <div class="review-content">
+                                <p class="username">@review.UserName</p>
+                                <div class="user-data">
+                                    <p class="rating">
+                                        @for (int i = 0; i < review.Rating; i++)
+                                        {
+                                            <span class="star">★</span>
+                                        }
+                                    </p>
+                                    <p class="createdAt">@review.CreatedAt.ToString("MMMM dd, yyyy")</p>
+                                </div>
+                                <p class="comment">
+                                    @review.Comment
+                                    <span class="buttons-container">
+                                        @if (await UserService.IsThisUserPostThisReview(userId, review.Id, isUserAdmin))
+                                        {
+                                            <button class="btn edit-btn" onclick="editBtnClickHandler(this)"><i class="fa-solid fa-pencil"></i></button>
+                                            <button class="btn delete-btn" data-review-id="@review.Id" onclick="deleteBtnClickHandler(this)">X</button>
+                                        }
+                                    </span>
+                                </p>
+                            </div>
+                        </div>
                     </div>
                 </li>
             }
@@ -78,37 +111,18 @@
     {
         <p>There are no reviews yet.</p>
     }
-
-    @if (!await ReviewService.IsUserAddReviewToProteinPowderAsync(userId, Model.ProteinPowder.Id) && isAuthenticated)
-    {
-        <form asp-controller="Review" asp-action="AddProteinPowderReview" method="post">
-            <input type="hidden" name="proteinPowderId" value="@Model.ProteinPowder.Id" />
-
-            <label asp-for="Review.Rating">Rating:</label>
-            <select asp-for="Review.Rating" asp-items="new SelectList(new List<int> { 1, 2, 3, 4, 5 })" class="form-control" required>
-                <option value="">Select Rating</option>
-            </select>
-            <span asp-validation-for="Review.Rating" class="text-danger"></span>
-
-            <label asp-for="Review.Comment">Comment:</label>
-            <textarea asp-for="Review.Comment" class="form-control mb-2"></textarea>
-            <span asp-validation-for="Review.Comment" class="text-danger"></span>
-
-            <input type="submit" value="Submit Rating" class="btn btn-primary mb-2" />
-        </form>
-    }
 </div>
 
 @if (isUserAdmin)
 {
     <div class="d-flex align-items-center">
-        <a asp-controller="ProteinPowder" asp-action="Edit" asp-route-id="@Model.ProteinPowder.Id" class="btn btn-warning">Edit</a>
+        <a asp-controller="ProteinPowder" asp-action="Edit" asp-route-id="@proteinId" class="btn btn-warning">Edit</a>
 
-        <button class="btn btn-danger space" onclick="deleteProteinPowder(`@Model.ProteinPowder.Id`, `@Model.ProteinPowder.Name`)">Delete</button>
+        <button class="btn btn-danger space" onclick="deleteProteinPowder(`@proteinId`, `@Model.ProteinPowder.Name`)">Delete</button>
 
-        <a asp-controller="Flavor" asp-action="Add" asp-route-id="@Model.ProteinPowder.Id" class="btn btn-primary space">Add flavor</a>
+        <a asp-controller="Flavor" asp-action="Add" asp-route-id="@proteinId" class="btn btn-primary space">Add flavor</a>
 
-        <a asp-controller="Flavor" asp-action="EditProteinFlavors" asp-route-proteinPowderId="@Model.ProteinPowder.Id" class="btn btn-primary space">Edit Flavors</a>
+        <a asp-controller="Flavor" asp-action="EditProteinFlavors" asp-route-proteinPowderId="@proteinId" class="btn btn-primary space">Edit Flavors</a>
     </div>
 }
 
