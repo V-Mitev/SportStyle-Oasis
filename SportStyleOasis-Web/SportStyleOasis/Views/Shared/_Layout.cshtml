@@ -87,21 +87,6 @@
     <partial name="_NotificationsPartial">
         @await RenderSectionAsync("Scripts", required: false)
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+        <script src="/js/shared/loginPartial.js"></script>
 </body>
 </html>
-
-<script>
-    function goToShoppingCart(cartId) {
-        $.ajax({
-            url: '/ShoppingCart/ViewShoppingCart',
-            type: 'GET',
-            data: { cartId },
-            success: function (response) {
-                window.location.href = '/ShoppingCart/ViewShoppingCart?cartId=' + cartId;
-            },
-            error: function (error) {
-                alert("An error occurred while processing your request. Please try again later.");
-            }
-        });
-    }
-</script>
