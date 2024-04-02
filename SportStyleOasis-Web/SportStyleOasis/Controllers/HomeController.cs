@@ -1,5 +1,6 @@
 ﻿namespace SportStyleOasis.Controllers
 {
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using SendGrid;
     using SendGrid.Helpers.Mail;
@@ -44,6 +45,7 @@
         }
 
         [HttpGet]
+        [Authorize]
         public IActionResult Contact()
         {
             var model = new ContactViewModel();
@@ -52,6 +54,7 @@
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> Contact(ContactViewModel model)
         {
             var email = User?.Identity?.Name;

@@ -129,8 +129,12 @@
 
             var user = await userManager.FindByEmailAsync(model.Email);
 
-            var isPasswordMatch =
-                await signInManager.CheckPasswordSignInAsync(user, model.Password, false);
+            if (user == null)
+            {
+                TempData[ErrorMessage] = "Email or password are invalid";
+
+                return View(model);
+            }
 
             if (user.EmailConfirmed == false)
             {
@@ -140,7 +144,10 @@
                 return View(model);
             }
 
-            if (user == null || !isPasswordMatch.Succeeded)
+            var isPasswordMatch =
+                await signInManager.CheckPasswordSignInAsync(user, model.Password, false);
+
+            if (!isPasswordMatch.Succeeded)
             {
                 TempData[ErrorMessage] = "Email or password are invalid";
 

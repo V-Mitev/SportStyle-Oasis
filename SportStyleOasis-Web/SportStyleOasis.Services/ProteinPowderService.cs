@@ -48,6 +48,12 @@
                     .Where(c => c.ProteinPowderBrands == queryModel.ProteinPowderBrand);
             }
 
+            if (queryModel.TypeOfProtein.HasValue)
+            {
+                proteinPowderQuery = proteinPowderQuery
+                    .Where(c => c.TypeOfProtein == queryModel.TypeOfProtein);
+            }
+
             if (!string.IsNullOrEmpty(queryModel.SearchString))
             {
                 var wildCard = $"%{queryModel.SearchString.ToLower()}%";

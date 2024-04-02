@@ -26,6 +26,7 @@
         public async Task<IActionResult> All([FromQuery] AllProteinsQueryModel queryModel)
         {
             queryModel.ProteinBrands = Enum.GetValues<ProteinPowderBrands>();
+            queryModel.TypeOfProteins = Enum.GetValues<TypeOfProtein>();
 
             var serviceModel = await proteinPowderService.AllAsync(queryModel);
 
