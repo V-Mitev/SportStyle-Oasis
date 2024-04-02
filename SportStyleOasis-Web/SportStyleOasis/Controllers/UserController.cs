@@ -225,12 +225,65 @@
 
             try
             {
-                var code = await userManager.GeneratePasswordResetTokenAsync(user);
-                code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
+                var token = await userManager.GeneratePasswordResetTokenAsync(user);
+                token = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(token));
 
-                var callbackUrl = Url.Action("ResetPassword", "User", new { email = model.Email, code = code }, Request.Scheme);
+                var callbackUrl = Url.Action("ResetPassword", "User", new { email = model.Email, token = token }, Request.Scheme);
                 model.IsEmailSend = SendEmail(model.Email, "Reset Password",
                     $"Please reset your password by <a href='{HtmlEncoder.Default.Encode(callbackUrl!)}'>clicking here</a>.");
+
+                return View(model);
+            }
+            catch (Exception)
+            {
+                return GeneralError();
+            }
+        }
+
+        [HttpGet]
+        public IActionResult ResetPassword(string email, string token)
+        {
+            var model = new ResetPasswordViewModel()
+            {
+                Email = email,
+                Token = token
+            };
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ResetPassword(ResetPasswordViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            var user = await userManager.FindByEmailAsync(model.Email);
+
+            if (user == null)
+            {
+                TempData[ErrorMessage] = "Please check your email. User not found with this email.";
+                return View(model);
+            }
+
+            if (string.IsNullOrEmpty(model.Token))
+            {
+                return GeneralError();
+            }
+
+            try
+            {
+                var token = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(model.Token));
+                var result = await userManager.ResetPasswordAsync(user, token, model.Password);
+
+                if (!result.Succeeded)
+                {
+                    return GeneralError();
+                }
+
+                model.IsPasswordReset = result.Succeeded;
 
                 return View(model);
             }

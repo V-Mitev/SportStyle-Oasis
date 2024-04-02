@@ -8,6 +8,7 @@ namespace SportStyleOasis
     using SportStyleOasis.Web.Infrastructure.ModelBinders;
     using static SportStyleOasis.Web.Infrastructure.Extensions.WebApplicationBuilderExtensions;
     using static Common.GeneralApplicationConstants;
+    using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
     public class Program
     {
@@ -60,14 +61,19 @@ namespace SportStyleOasis
             builder.Services.AddRecaptchaService();
 
             builder.Services.AddSession(options =>
-            {
-                options.IdleTimeout = TimeSpan.FromMinutes(30);
-            });
+             {
+                 options.IdleTimeout = TimeSpan.FromMinutes(30);
+             });
 
             builder.Services.ConfigureApplicationCookie(cfg =>
             {
                 cfg.LoginPath = "/User/Login";
                 cfg.AccessDeniedPath = "/Home/Error/401";
+            });
+
+            builder.Services.Configure<DataProtectionTokenProviderOptions>(options =>
+            {
+                options.TokenLifespan = TimeSpan.FromHours(1);
             });
 
             var app = builder.Build();
