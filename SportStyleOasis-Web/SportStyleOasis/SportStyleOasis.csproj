@@ -39,7 +39,6 @@
 	<ItemGroup>
 		<Folder Include="Areas\Admin\ViewModels\" />
 		<Folder Include="Areas\Identity\Pages\" />
-		<Folder Include="wwwroot\images\" />
 	</ItemGroup>
 
 </Project>
