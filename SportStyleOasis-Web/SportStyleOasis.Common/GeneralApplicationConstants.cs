@@ -7,7 +7,7 @@
         public const string AdminEmail = "admin@sportstyleoasis.bg";
 
         public const int DefaultPage = 1;
-        public const int EntitiesPerPage = 3;
+        public const int EntitiesPerPage = 6;
 
         public const int FullNameMinLenght = 3;
         public const int FullNameMaxLenght = 35;

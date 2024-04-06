@@ -1,7 +1,16 @@
-﻿.card {
+﻿.main {
+    margin: 10px 60px 50px 60px !important;
+}
+
+.searchField {
+    margin: 0 25px 0 100px;
+}
+
+.card {
     position: relative;
-    width: 360px; /* can be omitted for a regular non-lazy image */
+    width: 300px; /* can be omitted for a regular non-lazy image */
     max-width: 100%;
+    align-items: center;
 }
 
 .card-img-container {
@@ -18,11 +27,7 @@
 
 .card .second.image {
     position: absolute;
-    top: 0;
-    right: 0;
-    left: 0;
-    bottom: 0;
-    object-fit: cover;
+    bottom: 104px;
     opacity: 0;
     transition: opacity .2s;
 }

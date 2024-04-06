@@ -2,111 +2,106 @@
 @inject IProteinPowderService ProteinPowderService;
 
 @{
-    TempData["Title"] = "Here you can see all our protein powders";
-
     var allProteinPowdersCount = await ProteinPowderService.AllProteinsCount();
 }
 
 <link href="/css/proteinPowder/all.css" rel="stylesheet" />
+<script src="/js/proteinPowder/all.js"></script>
 
-<h1 class="text-center">@TempData["Title"]</h1>
+<div class="main">
+    <form method="get" class="searchField">
+        <div class="row text-center mb-3 justify-content-center align-items-center">
+            <div class="form-group col-md-2">
+                <label asp-for="ProteinPowderBrand"></label>
+                <select asp-for="ProteinPowderBrand" class="form-control">
+                    <option value="">All</option>
+                    @foreach (ProteinPowderBrands brand in Model.ProteinBrands)
+                    {
+                        <option value="@brand">@brand.GetDisplayName()</option>
+                    }
+                </select>
+            </div>
 
-<form method="get">
-    <div class="row text-center mb-3 justify-content-center align-items-center">
-        <div class="form-group col-md-2">
-            <label asp-for="ProteinPowderBrand"></label>
-            <select asp-for="ProteinPowderBrand" class="form-control">
-                <option value="">All</option>
-                @foreach (ProteinPowderBrands brand in Model.ProteinBrands)
-                {
-                    <option value="@brand">@brand.GetDisplayName()</option>
-                }
-            </select>
-        </div>
+            <div class="form-group col-md-2">
+                <label asp-for="TypeOfProtein"></label>
+                <select asp-for="TypeOfProtein" class="form-control">
+                    <option value="">All</option>
+                    @foreach (TypeOfProtein typeOfProtein in Model.TypeOfProteins)
+                    {
+                        <option value="@typeOfProtein">@typeOfProtein.GetDisplayName()</option>
+                    }
+                </select>
+            </div>
 
-        <div class="form-group col-md-2">
-            <label asp-for="TypeOfProtein"></label>
-            <select asp-for="TypeOfProtein" class="form-control">
-                <option value="">All</option>
-                @foreach (TypeOfProtein typeOfProtein in Model.TypeOfProteins)
-                {
-                    <option value="@typeOfProtein">@typeOfProtein.GetDisplayName()</option>
-                }
-            </select>
-        </div>
+            <div class="form-group col-md-2">
+                <label asp-for="ProteinsPerPage"></label>
+                <select asp-for="ProteinsPerPage" class="form-control">
+                    <option value="6">6</option>
+                    <option value="9">9</option>
+                    <option value="12">12</option>
+                    <option value="@allProteinPowdersCount">All</option>
+                </select>
+            </div>
 
-        <div class="form-group col-md-2">
-            <label asp-for="ProteinsPerPage"></label>
-            <select asp-for="ProteinsPerPage" class="form-control">
-                <option value="3">3</option>
-                <option value="6">6</option>
-                <option value="9">9</option>
-                <option value="@allProteinPowdersCount">All</option>
-            </select>
-        </div>
+            <div class="form-group col-md-3">
+                <label asp-for="SearchString"></label>
+                <input asp-for="SearchString" class="form-control" placeholder="..." autocomplete="off">
+            </div>
 
-        <div class="form-group col-md-3">
-            <label asp-for="SearchString"></label>
-            <input asp-for="SearchString" class="form-control" placeholder="..." autocomplete="off">
-        </div>
-
-        <div class="col-md-3">
-            <div class="form-group mt-4">
-                <input type="submit" value="Search" class="btn btn-primary" />
+            <div class="col-md-3">
+                <div class="form-group mt-4">
+                    <input type="submit" value="Search" class="btn btn-primary" />
+                </div>
             </div>
         </div>
-    </div>
-</form>
-
-@{
-    var previousPage = Model.CurrentPage - 1;
-
-    if (previousPage < 1)
-    {
-        previousPage = 1;
-    }
-
-    var maxPage = Math.Ceiling((double)Model.TotalProteins / Model.ProteinsPerPage);
-}
-
-<div class="row mb-5">
-    <div class="col-md-6 d-grid gap-2 d-md-flex justify-content-md-start">
-        <a class="btn btn-primary @(Model.CurrentPage == 1 ? "disabled" : string.Empty)"
-           asp-controller="ProteinPowder"
-           asp-action="All"
-           asp-route-currentPage="@previousPage"
-           asp-route-proteinPowderBrand="@Model.ProteinPowderBrand"
-           asp-route-typeOfProtein="@Model.TypeOfProtein"
-           asp-route-searchTerm="@Model.SearchString"><<</a>
-    </div>
+    </form>
 
     @{
-        var shouldButtonBeDisabled = Model.CurrentPage == maxPage || !Model.ProteinPowders.Any();
+        var previousPage = Model.CurrentPage - 1;
+
+        if (previousPage < 1)
+        {
+            previousPage = 1;
+        }
+
+        var maxPage = Math.Ceiling((double)Model.TotalProteins / Model.ProteinsPerPage);
     }
 
-    <div class="col-md-6 d-grid gap-2 d-md-flex justify-content-md-end">
-        <a class="btn btn-primary @(shouldButtonBeDisabled ? "disabled" : string.Empty)"
-           asp-controller="ProteinPowder"
-           asp-action="All"
-           asp-route-currentPage="@(Model.CurrentPage + 1)"
-           asp-route-proteinPowderBrand="@Model.ProteinPowderBrand"
-           asp-route-typeOfProtein="@Model.TypeOfProtein"
-           asp-route-searchTerm="@Model.SearchString">>></a>
+    <div class="row mb-5">
+        <div class="col-md-6 d-grid gap-2 d-md-flex justify-content-md-start">
+            <a class="btn btn-primary @(Model.CurrentPage == 1 ? "disabled" : string.Empty)"
+               asp-controller="ProteinPowder"
+               asp-action="All"
+               asp-route-currentPage="@previousPage"
+               asp-route-proteinPowderBrand="@Model.ProteinPowderBrand"
+               asp-route-typeOfProtein="@Model.TypeOfProtein"
+               asp-route-searchTerm="@Model.SearchString"><<</a>
+        </div>
+
+        @{
+            var shouldButtonBeDisabled = Model.CurrentPage == maxPage || !Model.ProteinPowders.Any();
+        }
+
+        <div class="col-md-6 d-grid gap-2 d-md-flex justify-content-md-end">
+            <a class="btn btn-primary @(shouldButtonBeDisabled ? "disabled" : string.Empty)"
+               asp-controller="ProteinPowder"
+               asp-action="All"
+               asp-route-currentPage="@(Model.CurrentPage + 1)"
+               asp-route-proteinPowderBrand="@Model.ProteinPowderBrand"
+               asp-route-typeOfProtein="@Model.TypeOfProtein"
+               asp-route-searchTerm="@Model.SearchString">>></a>
+        </div>
+    </div>
+
+    @if (!Model.ProteinPowders.Any())
+    {
+        <h2 class="text-center">No protein powders found by the given criteria!</h2>
+    }
+
+    <div class="row mb-5">
+        @foreach (var protein in Model.ProteinPowders)
+        {
+            <partial name="_ProteinPartial" model="@protein" />
+        }
     </div>
 </div>
-
-@if (!Model.ProteinPowders.Any())
-{
-    <h2 class="text-center">No protein powders found by the given criteria!</h2>
-}
-
-<div class="row">
-    @foreach (var protein in Model.ProteinPowders)
-    {
-        <partial name="_ProteinPartial" model="@protein" />
-    }
-</div>
-
-@section scripts {
-    <script src="/js/proteinPowder/all.js"></script>
-}
