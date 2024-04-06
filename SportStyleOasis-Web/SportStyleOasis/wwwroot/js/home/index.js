@@ -1,5 +1,5 @@
 ﻿function goToClothes() {
-    var url = '/Clothes/All';
+    var url = '/Home/Indexx';
 
     window.location.href = url;
 }

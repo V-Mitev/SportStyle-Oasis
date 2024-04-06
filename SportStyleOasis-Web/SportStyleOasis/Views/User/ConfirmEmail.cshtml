@@ -1,7 +1,6 @@
 ﻿@model ConfirmEmailViewModel
 
 @{
-    ViewData["Title"] = "Confirm email";
     TempData["Message"] = Model.Message;
 }
 
@@ -15,6 +14,10 @@
         font-weight: bold;
         font-size: 18px;
     }
+
+    footer {
+        visibility: hidden;
+    }
 </style>
 
-<p class="text">@TempData["Message"]</p>
+<p class="text">@TempData["Message"] <a href="/User/Login" class="ms-2">Log in</a></p>
