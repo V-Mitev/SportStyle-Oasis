@@ -1,0 +1,33 @@
+﻿@model ResendEmailConfirmationViewModel
+@{
+    ViewData["Title"] = "Resend email confirmation";
+}
+
+<link href="/css/user/hideFooter.css" rel="stylesheet" />
+
+@if (Model.IsSuccessfulResendEmail)
+{
+    <p class="alert alert-success" role="alert">Successfully resend email. Please check it to confirm your account.</p>
+}
+else
+{
+    <h1 class="text-center">@ViewData["Title"]</h1>
+    <hr />
+    <div class="row justify-content-center">
+        <div class="col-md-3">
+            <form asp-controller="User" asp-action="ResendEmailConfirmation" method="post">
+                <div class="form-group mb-2">
+                    <label asp-for="Email" class="form-label">Enter your email:</label>
+                    <input asp-for="Email" class="form-control" aria-required="true" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Resend</button>
+            </form>
+        </div>
+    </div>
+}
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -4,6 +4,7 @@
     using Microsoft.AspNetCore.Authentication;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
+    using Microsoft.AspNetCore.Identity.UI.Services;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.WebUtilities;
     using SportStyleOasis.Data.Models;
@@ -291,6 +292,50 @@
                 }
 
                 model.IsPasswordReset = result.Succeeded;
+
+                return View(model);
+            }
+            catch (Exception)
+            {
+                return GeneralError();
+            }
+        }
+
+        [HttpGet]
+        public IActionResult ResendEmailConfirmation()
+        {
+            var model = new ResendEmailConfirmationViewModel();
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ResendEmailConfirmation(ResendEmailConfirmationViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            var user = await userManager.FindByEmailAsync(model.Email);
+
+            if (user == null)
+            {
+                TempData[ErrorMessage] = "This email is not valid!";
+                return View(model);
+            }
+
+            try
+            {
+                var userId = await userManager.GetUserIdAsync(user);
+                var code = await userManager.GenerateEmailConfirmationTokenAsync(user);
+                code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
+
+                var callbackUrl =
+                    Url.Action("ConfirmEmail", "User", values: new { userId, code }, protocol: Request.Scheme);
+
+                model.IsSuccessfulResendEmail = SendEmail(model.Email, "Confirm your email",
+                    $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl!)}'>clicking here</a>.");
 
                 return View(model);
             }

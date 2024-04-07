@@ -1,23 +1,5 @@
 ﻿@model ConfirmEmailViewModel
 
-@{
-    TempData["Message"] = Model.Message;
-}
+<link href="/css/user/hideFooter.css" rel="stylesheet" />
 
-<style>
-    .text {
-        display: flex;
-        background-color: aquamarine;
-        justify-content: center;
-        align-items: center;
-        height: 100px;
-        font-weight: bold;
-        font-size: 18px;
-    }
-
-    footer {
-        visibility: hidden;
-    }
-</style>
-
-<p class="text">@TempData["Message"] <a href="/User/Login" class="ms-2">Log in</a></p>
+<p class="alert alert-success" role="alert">@Model.Message <a href="/User/Login" class="ms-2">Log in</a></p>
