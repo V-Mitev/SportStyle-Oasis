@@ -77,3 +77,36 @@ img {
         font-weight: bold;
         font-size: 24px;
     }
+
+.model {
+    display: flex;
+    justify-content: space-between;
+}
+
+    .model .male, .model .female, .model .protein {
+        width: 40%;
+        height: 650px;
+    }
+
+        .model .male:hover, .model .female:hover, .model .protein:hover {
+            opacity: .7;
+        }
+
+    .model .button {
+        position: relative;
+        left: 30%;
+        bottom: 20%;
+        background-color: #007bff;
+        color: white;
+        padding: 10px 5px;
+        border-radius: 4px;
+        cursor: pointer;
+        border: 2px solid white;
+    }
+
+        .model .button:hover {
+            background-color: white;
+            border: 2px solid #007bff;
+            cursor: pointer;
+            color: #007bff;
+        }
