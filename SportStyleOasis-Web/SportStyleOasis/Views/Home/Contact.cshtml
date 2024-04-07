@@ -7,45 +7,30 @@
     var apiKey = configuration["GoogleMapsApiKey:googleApiKey"];
 }
 
-<style>
-    #map {
-        height: 400px;
-        width: 500px;
-    }
+<link href="/css/home/contact.css" rel="stylesheet" />
 
-    .contact.form {
-        display: inline-block;
-    }
-</style>
+<h2 class="text-center">Contact Form</h2>
 
-<div class="col-sm-6">
-    <h2 class="text-center">Contact Form</h2>
-</div>
-
-<div class="row">
-    <div class="col-sm-6">
-        <div class="contact-form">
-            <form asp-controller="Home" asp-action="Contact" method="post">
-                <div class="form-group">
-                    <label asp-for="FullName" class="form-label-add-edit">Name</label>
-                    <input asp-for="FullName" class="form-control" required placeholder="Your name" value="@userFullName" min="@FullNameMinLenght" max="@FullNameMaxLenght"/>
-                    <span asp-validation-for="FullName" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Subject" class="form-label-add-edit">Email</label>
-                    <input asp-for="Subject" class="form-control" required placeholder="Your subject"/>
-                    <span asp-validation-for="Subject" class="text-danger"></span>
-                </div>
-                <div class="form-group mb-2">
-                    <label asp-for="Message" class="form-label-add-edit">Message</label>
-                    <textarea asp-for="Message" class="form-control" required rows="3" placeholder="Your message to us"></textarea>
-                    <span asp-validation-for="Message" class="text-danger"></span>
-                </div>
-
-                <button type="submit" class="btn btn-primary mb-2">Submit</button>
-            </form>
+<div class="contact-form">
+    <form asp-controller="Home" asp-action="Contact" method="post">
+        <div class="form-group">
+            <label asp-for="FullName" class="form-label-add-edit">Name</label>
+            <input asp-for="FullName" class="form-control" required placeholder="Your name" value="@userFullName" min="@FullNameMinLenght" max="@FullNameMaxLenght" />
+            <span asp-validation-for="FullName" class="text-danger"></span>
         </div>
-    </div>
+        <div class="form-group">
+            <label asp-for="Subject" class="form-label-add-edit">Email</label>
+            <input asp-for="Subject" class="form-control" required placeholder="Your subject" />
+            <span asp-validation-for="Subject" class="text-danger"></span>
+        </div>
+        <div class="form-group mb-2">
+            <label asp-for="Message" class="form-label-add-edit">Message</label>
+            <textarea asp-for="Message" class="form-control" required rows="3" placeholder="Your message to us"></textarea>
+            <span asp-validation-for="Message" class="text-danger"></span>
+        </div>
+
+        <button type="submit" class="btn btn-primary mb-2">Submit</button>
+    </form>
 
     <div id="map"></div>
 </div>

@@ -1,0 +1,18 @@
+﻿#map {
+    height: 400px;
+    width: 500px;
+}
+
+.contact-form {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+.form-control {
+    width: 550px;
+}
+
+.footer {
+    position: fixed !important;
+}
