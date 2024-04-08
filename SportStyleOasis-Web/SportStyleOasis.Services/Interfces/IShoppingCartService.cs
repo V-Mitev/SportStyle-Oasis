@@ -17,5 +17,7 @@
         Task RemoveClothFromCart(int shoppingCartId, int clothId, string size);
 
         Task RemoveProteinFromCart(int shoppingCartId, int proteinId, string flavor);
+
+        Task<bool> FinishOrder(int shoppingCartId);
     }
 }

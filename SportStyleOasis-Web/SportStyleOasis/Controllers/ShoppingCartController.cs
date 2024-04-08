@@ -4,6 +4,7 @@
     using Microsoft.AspNetCore.Mvc;
     using SportStyleOasis.Services.Interfces;
     using SportStyleOasis.Web.Infrastructure.Extensions;
+    using SportStyleOasis.Web.ViewModels.ShoppingCart;
     using static SportStyleOasis.Common.NotificationMessagesConstant;
 
     [Authorize]
@@ -14,7 +15,7 @@
         private readonly IProteinPowderService proteinPowderService;
 
         public ShoppingCartController(
-            IShoppingCartService shoppingCartService, 
+            IShoppingCartService shoppingCartService,
             IClothesService clothesService,
             IProteinPowderService proteinPowderService)
         {
@@ -121,6 +122,36 @@
                 TempData[SuccessMessage] = $"Successfully remove {proteinPowderName} from the cart.";
 
                 return Ok();
+            }
+            catch (Exception)
+            {
+                return GeneralError();
+            }
+        }
+
+        //[HttpGet]
+        //public async Task<IActionResult> FinishOrder(int shoppingCartId)
+        //{
+        //    var model = await shoppingCartService.FindShoppingCartAsync(shoppingCartId);
+
+        //    return View(model);
+        //}
+
+        [HttpPost]
+        public async Task<IActionResult> FinishOrder(int shoppingCartId)
+        {
+            try
+            {
+                var isOrderCompleted = await shoppingCartService.FinishOrder(shoppingCartId);
+
+                if (isOrderCompleted)
+                {
+                    TempData[SuccessMessage] = "Order successfully completed.";
+
+                    return RedirectToAction("Index", "Home");
+                }
+
+                return GeneralError();
             }
             catch (Exception)
             {

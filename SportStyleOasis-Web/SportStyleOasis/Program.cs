@@ -6,9 +6,8 @@ namespace SportStyleOasis
     using SportStyleOasis.Data.Models;
     using SportStyleOasis.Services.Interfces;
     using SportStyleOasis.Web.Infrastructure.ModelBinders;
-    using static SportStyleOasis.Web.Infrastructure.Extensions.WebApplicationBuilderExtensions;
     using static Common.GeneralApplicationConstants;
-    using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+    using static SportStyleOasis.Web.Infrastructure.Extensions.WebApplicationBuilderExtensions;
 
     public class Program
     {

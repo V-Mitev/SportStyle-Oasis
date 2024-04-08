@@ -132,6 +132,44 @@
             return shoppingCart;
         }
 
+        public async Task<bool> FinishOrder(int shoppingCartId)
+        {
+            var shoppingCart = await dbContext.ShoppingCarts
+                .Include(sc => sc.ClotheInventories)
+                .ThenInclude(ci => ci.ClotheOrderQuantity)
+                .Include(sc => sc.ProteinFlavors)
+                .ThenInclude(pf => pf.ProteinOrderQuantity)
+                .FirstOrDefaultAsync(sc => sc.Id == shoppingCartId);
+
+            if (shoppingCart == null)
+            {
+                return false;
+            }
+
+            var clothes = shoppingCart.ClotheInventories;
+
+            if (clothes != null)
+            {
+                foreach (var cloth in clothes)
+                {
+                    cloth.AvailableQuantity -= cloth.ClotheOrderQuantity!.Quantity;
+                }
+            }
+
+            var proteinFlavors = shoppingCart.ProteinFlavors;
+
+            if (proteinFlavors != null)
+            {
+                foreach (var protein in proteinFlavors)
+                {
+                    protein.Quantity -= protein.ProteinOrderQuantity!.Quantity;
+                }
+            }
+
+            await dbContext.SaveChangesAsync();
+            return true;
+        }
+
         public async Task<int> GetShoppingCartIdAsync(string userId)
         {
             var shoppingCart = await dbContext.ShoppingCarts

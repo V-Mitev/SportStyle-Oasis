@@ -48,4 +48,10 @@
     }
 </div>
 
+<form asp-controller="ShoppingCart" asp-action="FinishOrder">
+    <input type="hidden" name="shoppingCartId" value="@Model.Id"/>
+
+    <input type="submit" class="btn btn-primary" value="Finish order"/>
+</form>
+
 <script src="/js/shoppingCart/viewShoppingCart.js"></script>
