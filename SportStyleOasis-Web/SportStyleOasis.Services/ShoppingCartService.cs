@@ -146,23 +146,21 @@
                 return false;
             }
 
-            var clothes = shoppingCart.ClotheInventories;
-
-            if (clothes != null)
+            foreach (var cloth in shoppingCart.ClotheInventories)
             {
-                foreach (var cloth in clothes)
+                if (cloth.AvailableQuantity >= cloth.ClotheOrderQuantity!.Quantity)
                 {
                     cloth.AvailableQuantity -= cloth.ClotheOrderQuantity!.Quantity;
+                    shoppingCart.ClotheInventories.Remove(cloth);
                 }
             }
 
-            var proteinFlavors = shoppingCart.ProteinFlavors;
-
-            if (proteinFlavors != null)
+            foreach (var protein in shoppingCart.ProteinFlavors)
             {
-                foreach (var protein in proteinFlavors)
+                if (protein.Quantity >= protein.ProteinOrderQuantity!.Quantity)
                 {
                     protein.Quantity -= protein.ProteinOrderQuantity!.Quantity;
+                    shoppingCart.ProteinFlavors.Remove(protein);
                 }
             }
 
