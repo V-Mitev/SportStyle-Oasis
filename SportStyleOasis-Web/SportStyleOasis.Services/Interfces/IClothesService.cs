@@ -24,6 +24,6 @@
 
         public Task<int> AllClothesCount();
 
-        public Task<IEnumerable<Clothes>> GetAvailableColorsForClothAsync(string clothName);
+        public Task<IEnumerable<Clothes>> GetAvailableColorsForClothAsync(string clothName, bool isUserAdmin);
     }
 }

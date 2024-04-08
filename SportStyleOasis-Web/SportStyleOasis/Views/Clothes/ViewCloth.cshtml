@@ -8,7 +8,7 @@
     var isUserAdmin = User.IsAdmin();
     var isAuthenticated = User?.Identity?.IsAuthenticated ?? false;
     var clothId = Model.Cloth.Id;
-    var availableClothes = await ClothService.GetAvailableColorsForClothAsync(Model.Cloth.Name);
+    var availableClothes = await ClothService.GetAvailableColorsForClothAsync(Model.Cloth.Name, isUserAdmin);
 }
 
 <link href="/css/clothes/viewCloth.css" rel="stylesheet" />

@@ -9,6 +9,8 @@
 
         public Task<EditClothInventoryViewModel> GetClothInventoryAsync(int clothId);
 
+        public Task<ClotheInventory?> ReturnClothInventoryAsync(int clothId);
+
         public Task UpdateClothInventoryAsync(EditClothInventoryViewModel model);
     }
 }

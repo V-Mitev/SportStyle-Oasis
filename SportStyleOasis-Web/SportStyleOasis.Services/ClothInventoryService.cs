@@ -73,6 +73,12 @@
             return clothInvenotory;
         }
 
+        public async Task<ClotheInventory?> ReturnClothInventoryAsync(int clothId)
+        {
+            return await dbContext.ClotheInventories
+                .FirstOrDefaultAsync(c => c.ClothId == clothId) ?? null;
+        }
+
         public async Task UpdateClothInventoryAsync(EditClothInventoryViewModel model)
         {
             var clothInventories = await dbContext.ClotheInventories

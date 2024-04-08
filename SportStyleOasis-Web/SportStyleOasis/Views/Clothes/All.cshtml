@@ -1,5 +1,6 @@
 ﻿@model AllClothesQueryModel
 @inject IClothesService ClothService;
+@inject IClothInventoryService ClothInventoryService;
 <link href="/css/clothes/all.css" rel="stylesheet" />
 <script src="/js/clothe/all.js"></script>
 
@@ -108,7 +109,19 @@
     <div class="row">
         @foreach (var clothe in Model.Clothes)
         {
-            <partial name="_ClothesPartial" model="@clothe" />
+            var clotheInventory = await ClothInventoryService.ReturnClothInventoryAsync(clothe.Id);
+
+            if (User.IsAdmin())
+            {
+                <partial name="_ClothesPartial" model="@clothe" />
+            }
+            else
+            {
+                if (clotheInventory != null && clotheInventory.AvailableQuantity > 0)
+                {
+                    <partial name="_ClothesPartial" model="@clothe" />
+                }
+            }
         }
     </div>
 </div>

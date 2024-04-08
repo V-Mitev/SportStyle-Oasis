@@ -148,7 +148,7 @@
             return oldGarment;
         }
 
-        public async Task<IEnumerable<Clothes>> GetAvailableColorsForClothAsync(string clothName)
+        public async Task<IEnumerable<Clothes>> GetAvailableColorsForClothAsync(string clothName, bool isUserAdmin)
         {
             if (string.IsNullOrEmpty(clothName))
             {
@@ -159,6 +159,11 @@
                 .Include(c => c.ClotheInventories)
                 .Where(c => c.Name == clothName)
                 .ToListAsync();
+
+            if (isUserAdmin)
+            {
+                return equalsClothes;
+            }
 
             var availableColors = new HashSet<Clothes>();
 
