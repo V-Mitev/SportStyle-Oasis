@@ -23,10 +23,10 @@
                 <p>Color: @cloth.Color</p>
                 <p>Price: $@cloth.Price</p>
                 <p>Ordered quantity:</p>
-                <div id="qauntity-form">
-                    <button type="button" id="sub" class="sub" onclick="decreaseQuantity()">-</button>
-                    <input type="number" max="" value="@cloth.OrderedQuantity" id="quantity" class="quantity">
-                    <button type="button" id="add" class="add" onclick="increaseQuantity()">+</button>
+                <div class="quantity-form">
+                    <button type="button" id="sub" class="sub" onclick="decreaseQuantity(this)">-</button>
+                    <input type="number" value="@cloth.OrderedQuantity" class="quantity" oninput="checkValue(this, @cloth.AvailableQuantity)">
+                    <button type="button" id="add" class="add" onclick="increaseQuantity(this, @cloth.AvailableQuantity)">+</button>
                 </div>
                 <button class="remove-item-btn cloth" data-cart-id="@Model.Id" data-cloth-id="@cloth.Id" data-cloth-size="@cloth.Size" data-cloth-name="@cloth.Name" onclick="removeClothe(this)">X</button>
             </div>
@@ -46,7 +46,12 @@
                 <p>Brand: @proteinPowder.ProteinPowderBrand</p>
                 <p>Weight: @proteinPowder.Weight grams.</p>
                 <p>Price: $@proteinPowder.Price</p>
-                <p>Quantity: @proteinPowder.OrderedQuantity</p>
+                <p>Ordered quantity:</p>
+                <div class="quantity-form">
+                    <button type="button" id="sub" class="sub" onclick="decreaseQuantity(this)">-</button>
+                    <input type="number" value="@proteinPowder.OrderedQuantity" class="quantity" oninput="checkValue(this, @proteinPowder.AvailableQuantity)">
+                    <button type="button" id="add" class="add" onclick="increaseQuantity(this ,@proteinPowder.AvailableQuantity)">+</button>
+                </div>
                 <button class="remove-item-btn protein" data-cart-id="@Model.Id" data-protein-id="@proteinPowder.Id" data-protein-flavor="@proteinPowder.FlavorName" data-protein-name="@proteinPowder.Name" onclick="removeProtein(this)">X</button>
             </div>
         </div>

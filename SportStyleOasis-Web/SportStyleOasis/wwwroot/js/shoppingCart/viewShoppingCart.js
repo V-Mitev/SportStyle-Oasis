@@ -1,4 +1,7 @@
-﻿function removeClothe(element) {
+﻿const step = 1;
+const minimumQuantityForOrder = 1;
+
+function removeClothe(element) {
     const url = '/ShoppingCart/RemoveClothFromCart';
 
     var shoppingCartId = $(element).data("cart-id");
@@ -44,19 +47,43 @@ function removeProtein(element) {
     }
 };
 
-function decreaseQuantity() {
-    var quantityField = document.getElementById('quantity');
+function findInputField(element) {
+    return element.closest('.quantity-form').querySelector('input');
+}
+
+function decreaseQuantity(element) {
+    const quantityField = findInputField(element);
     var currentValue = parseInt(quantityField.value);
 
-    if (currentValue > 1) {
-        quantityField.value = currentValue - 1;
+    if (currentValue > minimumQuantityForOrder) {
+        quantityField.value = currentValue - step;
     } else {
         alert('The minimin quantity for order is 1.');
     }
 }
 
-function increaseQuantity() {
-    var quantityField = document.getElementById('quantity');
+function increaseQuantity(element, availableQuantity) {
+    const quantityField = findInputField(element);
     var currentValue = parseInt(quantityField.value);
-    quantityField.value = currentValue + 1;
+
+    if (currentValue + step > availableQuantity) {
+        alert(`The available quantity of this product is ${availableQuantity}.`);
+    } else {
+        quantityField.value = currentValue + step;
+    }
+}
+
+function checkValue(inputField, maxQuantity) {
+    var currentValue = parseInt(inputField.value);
+    var isNan = isNaN(currentValue);
+
+    if (currentValue < minimumQuantityForOrder || isNan) {
+        alert('Quantity cannot be less than 1 or empty.');
+
+        inputField.value = minimumQuantityForOrder;
+    } else if (currentValue > maxQuantity) {
+        alert('Quantity cannot exceed available stock.');
+
+        inputField.value = maxQuantity;
+    }
 }

@@ -106,6 +106,7 @@
                         Image = ci.Clothe.Image,
                         Price = ci.Clothe.Price,
                         Size = ci.ClothesSize.ToString()!,
+                        AvailableQuantity = ci.AvailableQuantity,
                         OrderedQuantity = ci.ClotheOrderQuantity!.Quantity
                     }).ToList(),
                     ProteinPowders = sc.ProteinFlavors
@@ -118,6 +119,7 @@
                         Weight = pf.Protein.Weight,
                         FlavorName = pf.FlavorName,
                         TypeOfProtein = pf.Protein.TypeOfProtein,
+                        AvailableQuantity = pf.Quantity,
                         ProteinPowderBrand = pf.Protein.ProteinPowderBrands,
                         OrderedQuantity = pf.ProteinOrderQuantity!.Quantity
                     }).ToList()

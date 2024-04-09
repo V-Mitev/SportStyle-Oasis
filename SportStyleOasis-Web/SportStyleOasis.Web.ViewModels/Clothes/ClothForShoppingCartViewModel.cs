@@ -15,5 +15,7 @@
         public string Size { get; set; } = null!;
 
         public int? OrderedQuantity { get; set; }
+
+        public int AvailableQuantity { get; set; }
     }
 }
