@@ -1,0 +1,18 @@
+﻿* {
+    font-family: 'Times New Roman';
+}
+
+.content {
+    margin: 0 55px;
+    font-size: 18px;
+}
+
+.heading {
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 24px;
+}
+
+.footer {
+    position: fixed !important;
+}

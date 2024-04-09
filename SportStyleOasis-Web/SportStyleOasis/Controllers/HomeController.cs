@@ -28,11 +28,6 @@
             return View();
         }
 
-        public IActionResult Indexx()
-        {
-            return View();
-        }
-
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error(int statusCode)
         {
@@ -84,6 +79,12 @@
             {
                 return GeneralError();
             }
+        }
+
+        [HttpGet]
+        public IActionResult AboutUs()
+        {
+            return View();
         }
 
         private async Task SendMail(string email, ContactViewModel model)
