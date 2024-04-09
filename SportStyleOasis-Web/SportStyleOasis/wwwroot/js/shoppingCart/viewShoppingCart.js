@@ -43,3 +43,20 @@ function removeProtein(element) {
         });
     }
 };
+
+function decreaseQuantity() {
+    var quantityField = document.getElementById('quantity');
+    var currentValue = parseInt(quantityField.value);
+
+    if (currentValue > 1) {
+        quantityField.value = currentValue - 1;
+    } else {
+        alert('The minimin quantity for order is 1.');
+    }
+}
+
+function increaseQuantity() {
+    var quantityField = document.getElementById('quantity');
+    var currentValue = parseInt(quantityField.value);
+    quantityField.value = currentValue + 1;
+}

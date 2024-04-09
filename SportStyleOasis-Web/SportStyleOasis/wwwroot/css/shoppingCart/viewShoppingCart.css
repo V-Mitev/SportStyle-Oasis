@@ -55,3 +55,28 @@
         color: white;
         background-color: red;
     }
+
+.quantity {
+    margin: 0 5px;
+    width: 40px;
+    text-align: center;
+}
+
+.add, .sub {
+    font-size: unset !important;
+    font-family: unset !important;
+}
+
+.footer {
+    position: fixed!important;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type="number"] {
+    -moz-appearance: textfield;
+}

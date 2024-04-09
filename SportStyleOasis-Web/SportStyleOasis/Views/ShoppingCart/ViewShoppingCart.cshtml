@@ -22,7 +22,12 @@
                 <p>Size: @cloth.Size</p>
                 <p>Color: @cloth.Color</p>
                 <p>Price: $@cloth.Price</p>
-                <p>Quantity: @cloth.OrderedQuantity</p>
+                <p>Ordered quantity:</p>
+                <div id="qauntity-form">
+                    <button type="button" id="sub" class="sub" onclick="decreaseQuantity()">-</button>
+                    <input type="number" max="" value="@cloth.OrderedQuantity" id="quantity" class="quantity">
+                    <button type="button" id="add" class="add" onclick="increaseQuantity()">+</button>
+                </div>
                 <button class="remove-item-btn cloth" data-cart-id="@Model.Id" data-cloth-id="@cloth.Id" data-cloth-size="@cloth.Size" data-cloth-name="@cloth.Name" onclick="removeClothe(this)">X</button>
             </div>
         </div>
