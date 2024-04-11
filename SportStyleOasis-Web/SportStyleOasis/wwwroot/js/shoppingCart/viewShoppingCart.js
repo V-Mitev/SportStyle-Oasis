@@ -62,18 +62,20 @@ function decreaseQuantity(element) {
     }
 }
 
-function increaseQuantity(element, availableQuantity) {
+function increaseQuantity(element, availableQuantity, clothInventoryId) {
     const quantityField = findInputField(element);
-    var currentValue = parseInt(quantityField.value);
+    var currentValue = parseInt(quantityField.value) + step;
 
-    if (currentValue + step > availableQuantity) {
+    if (currentValue > availableQuantity) {
         alert(`The available quantity of this product is ${availableQuantity}.`);
     } else {
-        quantityField.value = currentValue + step;
+        quantityField.value = currentValue;
     }
+
+    updateClothOrderedQuantity(clothInventoryId, currentValue);
 }
 
-function checkValue(inputField, maxQuantity) {
+function checkValue(inputField, maxQuantity, inventoryId, type) {
     var currentValue = parseInt(inputField.value);
     var isNan = isNaN(currentValue);
 
@@ -86,4 +88,34 @@ function checkValue(inputField, maxQuantity) {
 
         inputField.value = maxQuantity;
     }
+
+    if (type == 'cloth') {
+        updateClothOrderedQuantity(inventoryId, currentValue);
+    } else {
+        updateProteinOrderedQuantity(inventoryId, currentValue);
+    }
+}
+
+function updateClothOrderedQuantity(clothInventoryId, orderedQuantity) {
+    const url = '/ShoppingCart/UpdateClothInventory';
+
+    $.ajax({
+        url: url,
+        type: 'POST',
+        data: { clothInventoryId, orderedQuantity },
+        success: function (result) {
+            location.reload();
+        },
+        error: function (error) {
+            alert(`An error occurred while updating the ordered quantity. Please try again later.`);
+        }
+    });
+}
+
+function updateProteinOrderedQuantity(proteinOrderedQuantityId, orderedQuantity) {
+
+}
+
+function notEnoughQuantity() {
+    const className = '';
 }

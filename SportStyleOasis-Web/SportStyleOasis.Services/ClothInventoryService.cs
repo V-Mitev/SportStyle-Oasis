@@ -99,5 +99,17 @@
 
             await dbContext.SaveChangesAsync();
         }
+
+        public async Task<bool> UpdateClothInventoryByShoppingCartAsync(int clothInventoryId, int orderedQuantity)
+        {
+            var clothInventory = await dbContext.ClotheInventories
+                .Include(ci => ci.ClotheOrderQuantity)
+                .FirstAsync(ci => ci.Id == clothInventoryId);
+
+            clothInventory.ClotheOrderQuantity!.Quantity = orderedQuantity;
+
+            await dbContext.SaveChangesAsync();
+            return true;
+        }
     }
 }

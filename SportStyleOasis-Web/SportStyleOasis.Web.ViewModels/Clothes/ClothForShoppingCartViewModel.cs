@@ -17,5 +17,7 @@
         public int? OrderedQuantity { get; set; }
 
         public int AvailableQuantity { get; set; }
+
+        public int ClothInventoryId { get; set; }
     }
 }

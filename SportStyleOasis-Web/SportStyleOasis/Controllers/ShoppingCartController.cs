@@ -2,9 +2,9 @@
 {
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
+    using SportStyleOasis.Services;
     using SportStyleOasis.Services.Interfces;
     using SportStyleOasis.Web.Infrastructure.Extensions;
-    using SportStyleOasis.Web.ViewModels.ShoppingCart;
     using static SportStyleOasis.Common.NotificationMessagesConstant;
 
     [Authorize]
@@ -13,15 +13,18 @@
         private readonly IShoppingCartService shoppingCartService;
         private readonly IClothesService clothesService;
         private readonly IProteinPowderService proteinPowderService;
+        private readonly IClothInventoryService clothInventoryService;
 
         public ShoppingCartController(
             IShoppingCartService shoppingCartService,
             IClothesService clothesService,
-            IProteinPowderService proteinPowderService)
+            IProteinPowderService proteinPowderService,
+            IClothInventoryService clothInventoryService)
         {
             this.shoppingCartService = shoppingCartService;
             this.clothesService = clothesService;
             this.proteinPowderService = proteinPowderService;
+            this.clothInventoryService = clothInventoryService;
         }
 
         [HttpGet]
@@ -152,6 +155,27 @@
                 }
 
                 return GeneralError();
+            }
+            catch (Exception)
+            {
+                return GeneralError();
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateClothInventory(int clothInventoryId, int orderedQuantity)
+        {
+            if (clothInventoryId == 0)
+            {
+                return GeneralError();
+            }
+
+            try
+            {
+                var result =
+                    await clothInventoryService.UpdateClothInventoryByShoppingCartAsync(clothInventoryId, orderedQuantity);
+
+                return Ok();
             }
             catch (Exception)
             {

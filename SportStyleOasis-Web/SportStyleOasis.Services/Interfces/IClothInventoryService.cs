@@ -12,5 +12,7 @@
         public Task<ClotheInventory?> ReturnClothInventoryAsync(int clothId);
 
         public Task UpdateClothInventoryAsync(EditClothInventoryViewModel model);
+
+        public Task<bool> UpdateClothInventoryByShoppingCartAsync(int clothInventoryId, int orderedQuantity);
     }
 }

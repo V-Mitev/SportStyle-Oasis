@@ -7,5 +7,7 @@
         public int? OrderedQuantity { get; set; }
 
         public int AvailableQuantity { get; set; }
+
+        public int ProteinOrderedQuantityId { get; set; }
     }
 }

@@ -105,6 +105,7 @@
                         Color = ci.Clothe.Color,
                         Image = ci.Clothe.Image,
                         Price = ci.Clothe.Price,
+                        ClothInventoryId = ci.Id,
                         Size = ci.ClothesSize.ToString()!,
                         AvailableQuantity = ci.AvailableQuantity,
                         OrderedQuantity = ci.ClotheOrderQuantity!.Quantity
@@ -118,10 +119,11 @@
                         Price = pf.Protein.Price,
                         Weight = pf.Protein.Weight,
                         FlavorName = pf.FlavorName,
-                        TypeOfProtein = pf.Protein.TypeOfProtein,
                         AvailableQuantity = pf.Quantity,
+                        TypeOfProtein = pf.Protein.TypeOfProtein,
                         ProteinPowderBrand = pf.Protein.ProteinPowderBrands,
-                        OrderedQuantity = pf.ProteinOrderQuantity!.Quantity
+                        OrderedQuantity = pf.ProteinOrderQuantity!.Quantity,
+                        ProteinOrderedQuantityId = pf.ProteinOrderQuantity.Id
                     }).ToList()
                 })
                 .FirstOrDefaultAsync();
