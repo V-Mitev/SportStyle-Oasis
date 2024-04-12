@@ -28,9 +28,9 @@
                 <p>Price: $@cloth.Price</p>
                 <p>Ordered quantity:</p>
                 <div class="quantity-form">
-                    <button type="button" id="sub" class="sub" onclick="decreaseQuantity(this)">-</button>
+                    <button type="button" id="sub" class="sub" onclick="decreaseQuantity(this, @cloth.ClothInventoryId, 'cloth')">-</button>
                     <input type="number" value="@cloth.OrderedQuantity" class="quantity" oninput="checkValueDebounced(this, @cloth.AvailableQuantity, @cloth.ClothInventoryId, 'cloth')">
-                    <button type="button" id="add" class="add" onclick="increaseQuantity(this, @cloth.AvailableQuantity, @cloth.ClothInventoryId)">+</button>
+                    <button type="button" id="add" class="add" onclick="increaseQuantity(this, @cloth.AvailableQuantity, @cloth.ClothInventoryId, 'cloth')">+</button>
                 </div>
                 <button class="remove-item-btn cloth" data-cart-id="@Model.Id" data-cloth-id="@cloth.Id" data-cloth-size="@cloth.Size" data-cloth-name="@cloth.Name" onclick="removeClothe(this)">X</button>
             </div>

@@ -52,26 +52,37 @@ function findInputField(element) {
     return element.closest('.quantity-form').querySelector('input');
 }
 
-function decreaseQuantity(element) {
+function decreaseQuantity(element, inventoryId, type) {
     const quantityField = findInputField(element);
-    var currentValue = parseInt(quantityField.value);
+    var decreasedValue = parseInt(quantityField.value) - step;
 
-    if (currentValue > minimumQuantityForOrder) {
-        quantityField.value = currentValue - step;
+    if (decreasedValue >= minimumQuantityForOrder) {
+        quantityField.value = decreasedValue;
+
+        if (type == 'cloth') {
+            updateClothOrderedQuantity(inventoryId, decreasedValue);
+        } else {
+            updateProteinOrderedQuantity(inventoryId, decreasedValue);
+        }
     } else {
         alert('The minimin quantity for order is 1.');
     }
 }
 
-function increaseQuantity(element, availableQuantity, clothInventoryId) {
+function increaseQuantity(element, availableQuantity, inventoryId, type) {
     const quantityField = findInputField(element);
-    var currentValue = parseInt(quantityField.value) + step;
+    var increasedValue = parseInt(quantityField.value) + step;
 
-    if (currentValue > availableQuantity) {
+    if (increasedValue > availableQuantity) {
         alert(`The available quantity of this product is ${availableQuantity}.`);
     } else {
-        quantityField.value = currentValue;
-        updateClothOrderedQuantity(clothInventoryId, currentValue);
+        quantityField.value = increasedValue;
+
+        if (type == 'cloth') {
+            updateClothOrderedQuantity(inventoryId, increasedValue);
+        } else {
+            updateProteinOrderedQuantity(inventoryId, increasedValue);
+        }
     }
 }
 
