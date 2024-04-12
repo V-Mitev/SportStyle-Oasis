@@ -93,7 +93,7 @@ function checkValueDebounced(inputField, maxQuantity, inventoryId, type) {
     // Set a new timer to run the validation function after a delay
     debounceTimer = setTimeout(function () {
         checkValue(inputField, maxQuantity, inventoryId, type);
-    }, 500); // Adjust the delay as needed (e.g., 500 milliseconds)
+    }, 600); // Adjust the delay as needed (e.g., 600 milliseconds)
 }
 
 function checkValue(inputField, maxQuantity, inventoryId, type) {
@@ -141,7 +141,19 @@ function updateClothOrderedQuantity(clothInventoryId, orderedQuantity) {
 }
 
 function updateProteinOrderedQuantity(proteinOrderedQuantityId, orderedQuantity) {
+    const url = '/ShoppingCart/UpdateProteinPowderInventory';
 
+    $.ajax({
+        url: url,
+        type: 'POST',
+        data: { proteinOrderedQuantityId, orderedQuantity },
+        success: function (result) {
+            location.reload();
+        },
+        error: function (error) {
+            alert(`An error occurred while updating the ordered quantity. Please try again later.`);
+        }
+    });
 }
 
 function notEnoughQuantity() {

@@ -52,9 +52,9 @@
                 <p>Price: $@proteinPowder.Price</p>
                 <p>Ordered quantity:</p>
                 <div class="quantity-form">
-                    <button type="button" id="sub" class="sub" onclick="decreaseQuantity(this)">-</button>
-                    <input type="number" value="@proteinPowder.OrderedQuantity" class="quantity" oninput="checkValue(this, @proteinPowder.AvailableQuantity, @proteinPowder.ProteinOrderedQuantityId, 'protein')">
-                    <button type="button" id="add" class="add" onclick="increaseQuantity(this ,@proteinPowder.AvailableQuantity)">+</button>
+                    <button type="button" id="sub" class="sub" onclick="decreaseQuantity(this, @proteinPowder.ProteinOrderedQuantityId, 'protein')">-</button>
+                    <input type="number" value="@proteinPowder.OrderedQuantity" class="quantity" oninput="checkValueDebounced(this, @proteinPowder.AvailableQuantity, @proteinPowder.ProteinOrderedQuantityId, 'protein')">
+                    <button type="button" id="add" class="add" onclick="increaseQuantity(this ,@proteinPowder.AvailableQuantity, @proteinPowder.ProteinOrderedQuantityId, 'protein')">+</button>
                 </div>
                 <button class="remove-item-btn protein" data-cart-id="@Model.Id" data-protein-id="@proteinPowder.Id" data-protein-flavor="@proteinPowder.FlavorName" data-protein-name="@proteinPowder.Name" onclick="removeProtein(this)">X</button>
             </div>

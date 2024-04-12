@@ -13,6 +13,8 @@
 
         public Task UpdateClothInventoryAsync(EditClothInventoryViewModel model);
 
-        public Task<bool> UpdateClothInventoryByShoppingCartAsync(int clothInventoryId, int orderedQuantity);
+        public Task UpdateClothInventoryByShoppingCartAsync(int clothInventoryId, int orderedQuantity);
+
+        public Task UpdateProteinPowderInventoryByShoppingCartAsync(int proteinPowderInventoryId, int orderedQuantity);
     }
 }

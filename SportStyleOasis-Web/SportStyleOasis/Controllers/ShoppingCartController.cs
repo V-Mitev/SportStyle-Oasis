@@ -2,7 +2,6 @@
 {
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
-    using SportStyleOasis.Services;
     using SportStyleOasis.Services.Interfces;
     using SportStyleOasis.Web.Infrastructure.Extensions;
     using static SportStyleOasis.Common.NotificationMessagesConstant;
@@ -165,15 +164,36 @@
         [HttpPost]
         public async Task<IActionResult> UpdateClothInventory(int clothInventoryId, int orderedQuantity)
         {
-            if (clothInventoryId == 0)
+            if (clothInventoryId == 0 || orderedQuantity == 0)
             {
                 return GeneralError();
             }
 
             try
             {
-                var result =
-                    await clothInventoryService.UpdateClothInventoryByShoppingCartAsync(clothInventoryId, orderedQuantity);
+                await clothInventoryService
+                    .UpdateClothInventoryByShoppingCartAsync(clothInventoryId, orderedQuantity);
+
+                return Ok();
+            }
+            catch (Exception)
+            {
+                return GeneralError();
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateProteinPowderInventory(int proteinOrderedQuantityId, int orderedQuantity)
+        {
+            if (proteinOrderedQuantityId == 0 || orderedQuantity == 0)
+            {
+                return GeneralError();
+            }
+
+            try
+            {
+                await clothInventoryService
+                    .UpdateProteinPowderInventoryByShoppingCartAsync(proteinOrderedQuantityId, orderedQuantity);
 
                 return Ok();
             }
