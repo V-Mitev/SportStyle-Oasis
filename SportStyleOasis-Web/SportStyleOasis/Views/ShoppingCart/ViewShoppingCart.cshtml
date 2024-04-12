@@ -14,12 +14,8 @@
     @foreach (var cloth in Model.Clothes)
     {
         <div class="cart-item">
-            <div class="item-image">
-                <img src="/images/@cloth.Image" alt="@cloth.Name" onclick="openCloth(@cloth.Id)">
-                @if (cloth.AvailableQuantity < cloth.OrderedQuantity)
-                {
-                    <div class="out-of-stock-label">Out of Stock</div>
-                }
+            <div class="item-image" id="@cloth.Id" style="position: relative;">
+                <img src="/images/@cloth.Image" alt="@cloth.Name" onclick="openCloth(@cloth.Id)" onload="checkQuantity(@cloth.Id, @cloth.AvailableQuantity, @cloth.OrderedQuantity)">
             </div>
             <div class="item-details">
                 <h3>@cloth.Name</h3>
@@ -67,7 +63,7 @@
     <form asp-controller="ShoppingCart" asp-action="FinishOrder">
         <input type="hidden" name="shoppingCartId" value="@Model.Id" />
 
-        <input type="submit" class="btn btn-primary" value="Finish order" />
+        <input type="submit" class="btn btn-primary" value="Finish order" id="finishOrder"/>
     </form>
 }
 

@@ -156,6 +156,22 @@ function updateProteinOrderedQuantity(proteinOrderedQuantityId, orderedQuantity)
     });
 }
 
-function notEnoughQuantity() {
-    const className = '';
+function checkQuantity(clothId, availableQuantity, orderedQuantity) {
+    var div = document.getElementById(clothId);
+    var text = '';
+    var label = document.createElement('span');
+    var button = document.getElementById('finishOrder');
+
+    if (availableQuantity < orderedQuantity) {
+        text = 'Not enough quantity';
+        label.classList.add('out-of-stock-label');
+        button.disabled = true;
+    } else if (availableQuantity === 0) {
+        text = 'Out of stock';
+        label.classList.add('out-of-stock-label');
+        button.disabled = true;
+    }
+
+    label.textContent = text;
+    div.appendChild(label);
 }
