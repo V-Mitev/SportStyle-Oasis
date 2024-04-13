@@ -18,7 +18,7 @@
 
         public ClothesService(SportStyleOasisDbContext data)
         {
-            this.dbContext = data;
+            dbContext = data;
         }
 
         public async Task AddClotheAsync(AddClotheViewModel model)
@@ -155,7 +155,7 @@
                 throw new InvalidOperationException("This cloth name doesn't exist.");
             }
 
-            var equalsClothes =  await dbContext.Clothes
+            var equalsClothes = await dbContext.Clothes
                 .Include(c => c.ClotheInventories)
                 .Where(c => c.Name == clothName)
                 .ToListAsync();
