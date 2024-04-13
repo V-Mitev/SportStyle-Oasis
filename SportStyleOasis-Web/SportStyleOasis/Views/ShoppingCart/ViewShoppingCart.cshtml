@@ -10,7 +10,7 @@
 
 <h1 class="text-center">@TempData["Title"]</h1>
 
-<div class="shopping-cart">
+<div class="shopping-cart mb-3">
     @foreach (var cloth in Model.Clothes)
     {
         <div class="cart-item">
@@ -63,7 +63,7 @@
     <form asp-controller="ShoppingCart" asp-action="FinishOrder">
         <input type="hidden" name="shoppingCartId" value="@Model.Id" />
 
-        <input type="submit" class="btn btn-primary" value="Finish order" id="finishOrder"/>
+        <input type="submit" class="btn btn-primary" value="Finish order" id="finishOrderBtn" />
     </form>
 }
 

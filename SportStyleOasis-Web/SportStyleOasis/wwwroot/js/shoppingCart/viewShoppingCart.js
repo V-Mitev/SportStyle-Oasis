@@ -158,20 +158,20 @@ function updateProteinOrderedQuantity(proteinOrderedQuantityId, orderedQuantity)
 
 function checkQuantity(clothId, availableQuantity, orderedQuantity) {
     var div = document.getElementById(clothId);
-    var text = '';
     var label = document.createElement('span');
-    var button = document.getElementById('finishOrder');
+    var button = document.getElementById('finishOrderBtn');
 
-    if (availableQuantity < orderedQuantity) {
-        text = 'Not enough quantity';
-        label.classList.add('out-of-stock-label');
+    if (availableQuantity === 0) {
+        label.textContent = 'Out of stock';
         button.disabled = true;
-    } else if (availableQuantity === 0) {
-        text = 'Out of stock';
-        label.classList.add('out-of-stock-label');
-        button.disabled = true;
+    } else if (availableQuantity < orderedQuantity) {
+        label.textContent = 'Not enough quantity';
+    } else {
+        return;
     }
 
-    label.textContent = text;
+    button.disabled = true;
+    label.classList.add('stock-issue-label');
+
     div.appendChild(label);
 }
