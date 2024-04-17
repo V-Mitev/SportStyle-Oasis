@@ -7,6 +7,7 @@
     using SportStyleOasis.Web.ViewModels.Clothes;
     using SportStyleOasis.Web.ViewModels.ProteinPowder;
     using SportStyleOasis.Web.ViewModels.ShoppingCart;
+    using System.Linq;
     using System.Threading.Tasks;
 
     public class ShoppingCartService : IShoppingCartService
@@ -86,6 +87,22 @@
 
             shoppingCart.ProteinFlavors.Add(protein);
             await dbContext.SaveChangesAsync();
+        }
+
+        public async Task<string> CalculateTotalPriceAsync(int shoppingCartId)
+        {
+            var shoppingCart = await dbContext.ShoppingCarts
+                .FirstAsync(sc => sc.Id == shoppingCartId);
+
+            var clothesPrice = await dbContext.ClotheInventories
+                .Where(ci => ci.ShoppingCarts.Contains(shoppingCart))
+                .SumAsync(ci => ci.Clothe.Price * ci.ClotheOrderQuantity!.Quantity);
+
+            var proteinsPrice = await dbContext.ProteinFlavor
+                .Where(pf => pf.ShoppingCarts.Contains(shoppingCart))
+                .SumAsync(pf => pf.Protein.Price * pf.ProteinOrderQuantity!.Quantity);
+
+            return $"Total: ${clothesPrice + proteinsPrice:f2}";
         }
 
         public async Task<ShoppingCartViewModel> FindShoppingCartAsync(int cartId)

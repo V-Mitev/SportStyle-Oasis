@@ -1,5 +1,6 @@
 ﻿@model ShoppingCartViewModel
 @inject IUserService UserService;
+@inject IShoppingCartService ShoppingCartService;
 @{
     var userName = await UserService.GetUserFullNameByIdAsync(User.GetId());
 
@@ -57,7 +58,9 @@
         </div>
     }
 </div>
-
+<div>
+    <h2>@Model.Total</h2>
+</div>
 @if (Model.Clothes.Any() || Model.ProteinPowders.Any())
 {
     <form asp-controller="ShoppingCart" asp-action="FinishOrder">

@@ -32,6 +32,7 @@
             try
             {
                 var shoppingCart = await shoppingCartService.FindShoppingCartAsync(cartId);
+                shoppingCart.Total = await shoppingCartService.CalculateTotalPriceAsync(cartId);
 
                 return View(shoppingCart);
             }

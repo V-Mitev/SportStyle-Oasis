@@ -13,6 +13,8 @@
 
         public int Id { get; set; }
 
+        public string Total { get; set; } = null!;
+
         public ICollection<ClothForShoppingCartViewModel> Clothes { get; set; }
 
         public ICollection<ProteinPowderForShoppingCartViewModel> ProteinPowders { get; set; }
