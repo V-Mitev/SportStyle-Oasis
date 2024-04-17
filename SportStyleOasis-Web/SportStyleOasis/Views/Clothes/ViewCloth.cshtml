@@ -129,18 +129,17 @@
         <p>There are no reviews yet</p>
     }
 </div>
-<div>
-    @if (isUserAdmin)
-    {
-        <div class="d-flex">
-            <a asp-controller="Clothes" asp-action="Edit" asp-route-id="@clothId" class="btn btn-warning me-2">Edit</a>
-            <form asp-controller="Clothes" asp-action="Delete" method="post" asp-route-id="@clothId">
-                <input type="submit" value="Delete" class="btn btn-danger me-2" onclick="return confirm('Are you sure you want to delete this garment: @Model.Cloth.Name')" />
-            </form>
-            <a asp-controller="ClothInventory" asp-action="Edit" asp-route-id="@clothId" class="btn btn-primary">Edit cloth inventory</a>
-        </div>
-    }
-</div>
+
+@if (isUserAdmin)
+{
+    <div class="d-flex mb-2 ms-2">
+        <a asp-controller="Clothes" asp-action="Edit" asp-route-id="@clothId" class="btn btn-warning me-2">Edit</a>
+        <form asp-controller="Clothes" asp-action="Delete" method="post" asp-route-id="@clothId">
+            <input type="submit" value="Delete" class="btn btn-danger me-2" onclick="return confirm('Are you sure you want to delete this garment: @Model.Cloth.Name')" />
+        </form>
+        <a asp-controller="ClothInventory" asp-action="Edit" asp-route-id="@clothId" class="btn btn-primary">Edit cloth inventory</a>
+    </div>
+}
 
 @section scripts {
     <script src="~/js/clothe/viewCloth.js"></script>

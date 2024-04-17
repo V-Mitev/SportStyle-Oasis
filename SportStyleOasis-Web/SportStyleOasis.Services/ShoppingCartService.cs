@@ -102,7 +102,7 @@
                 .Where(pf => pf.ShoppingCarts.Contains(shoppingCart))
                 .SumAsync(pf => pf.Protein.Price * pf.ProteinOrderQuantity!.Quantity);
 
-            return $"Total: ${clothesPrice + proteinsPrice:f2}";
+            return $"{clothesPrice + proteinsPrice:f2}";
         }
 
         public async Task<ShoppingCartViewModel> FindShoppingCartAsync(int cartId)

@@ -1,4 +1,8 @@
-﻿img:hover {
+﻿main {
+    padding: 0px 50px;
+}
+
+img:hover {
     cursor: pointer;
 }
 
@@ -6,6 +10,7 @@
     width: 100%;
     overflow-x: auto;
     white-space: nowrap;
+    margin-top: 15px;
 }
 
 .cart-item {
@@ -91,4 +96,8 @@ input[type="number"]::-webkit-outer-spin-button {
     font-size: 20px;
     font-weight: bold;
     opacity: 0.8;
+}
+
+.total {
+    font-size: 24px;
 }

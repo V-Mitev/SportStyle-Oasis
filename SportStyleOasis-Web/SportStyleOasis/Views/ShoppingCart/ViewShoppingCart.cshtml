@@ -1,17 +1,10 @@
 ﻿@model ShoppingCartViewModel
 @inject IUserService UserService;
 @inject IShoppingCartService ShoppingCartService;
-@{
-    var userName = await UserService.GetUserFullNameByIdAsync(User.GetId());
-
-    TempData["Title"] = $"Hello {userName} this is your shopping cart!";
-}
 
 <link href="/css/shoppingCart/viewShoppingCart.css" rel="stylesheet" />
 
-<h1 class="text-center">@TempData["Title"]</h1>
-
-<div class="shopping-cart mb-3">
+<div class="shopping-cart">
     @foreach (var cloth in Model.Clothes)
     {
         <div class="cart-item">
@@ -58,9 +51,9 @@
         </div>
     }
 </div>
-<div>
-    <h2>@Model.Total</h2>
-</div>
+
+<p class="total">Total: <span class="fw-bold">$@Model.Total</span></p>
+
 @if (Model.Clothes.Any() || Model.ProteinPowders.Any())
 {
     <form asp-controller="ShoppingCart" asp-action="FinishOrder">

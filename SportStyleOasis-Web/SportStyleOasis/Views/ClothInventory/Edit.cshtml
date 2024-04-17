@@ -8,13 +8,15 @@
     TempData["Title"] = $"This is the inventory of {clothName}";
 }
 
+<link href="/css/clothInventory/edit.css" rel="stylesheet" />
+
 <h1 class="text-center">@TempData["Title"]</h1>
 
 <form asp-controller="ClothInventory" asp-action="Edit" method="post" id="editForm">
     @foreach (var clothInventory in Model.ClotheQuantityAndSize)
     {
         <div class="form-group mb-2">
-            <label asp-for="@clothInventory.Value" class="form-label-add-edit">Available quantity for size: @clothInventory.Key</label>
+            <label asp-for="@clothInventory.Value" class="form-label-add-edit fw-bold">Available quantity for size: @clothInventory.Key</label>
             <input type="number" asp-for="@clothInventory.Value" class="form-control cloth-quantity" required min="@AvailableQuantityMinValue" max="@AvailableQuantityMaxValue" />
             <span asp-validation-for="@clothInventory.Value" class="text-danger"></span>
             <input type="hidden" name="ClotheQuantityAndSize[@clothInventory.Key]" class="hidden-quantity" value="@clothInventory.Value" />
