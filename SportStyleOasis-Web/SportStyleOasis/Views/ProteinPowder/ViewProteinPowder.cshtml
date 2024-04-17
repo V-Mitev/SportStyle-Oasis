@@ -118,14 +118,14 @@
 
 @if (isUserAdmin)
 {
-    <div class="d-flex align-items-center">
-        <a asp-controller="ProteinPowder" asp-action="Edit" asp-route-id="@proteinId" class="btn btn-warning">Edit</a>
+    <div class="d-flex mb-2 ms-2">
+        <a asp-controller="ProteinPowder" asp-action="Edit" asp-route-id="@proteinId" class="btn btn-warning me-2">Edit</a>
 
-        <button class="btn btn-danger space" onclick="deleteProteinPowder(`@proteinId`, `@Model.ProteinPowder.Name`)">Delete</button>
+        <button class="btn btn-danger me-2" onclick="deleteProteinPowder(`@proteinId`, `@Model.ProteinPowder.Name`)">Delete</button>
 
-        <a asp-controller="Flavor" asp-action="Add" asp-route-id="@proteinId" class="btn btn-primary space">Add flavor</a>
+        <a asp-controller="Flavor" asp-action="Add" asp-route-id="@proteinId" class="btn btn-primary me-2">Add flavor</a>
 
-        <a asp-controller="Flavor" asp-action="EditProteinFlavors" asp-route-proteinPowderId="@proteinId" class="btn btn-primary space">Edit Flavors</a>
+        <a asp-controller="Flavor" asp-action="EditProteinFlavors" asp-route-proteinPowderId="@proteinId" class="btn btn-primary">Edit Flavors</a>
     </div>
 }
 
