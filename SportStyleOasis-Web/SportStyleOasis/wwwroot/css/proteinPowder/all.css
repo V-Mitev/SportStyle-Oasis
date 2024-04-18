@@ -39,3 +39,7 @@
 img:hover {
     cursor: pointer;
 }
+
+.footer {
+    position: absolute !important;
+}
