@@ -74,6 +74,21 @@
             }
         }
 
+        [HttpPost]
+        public async Task<IActionResult> DeleteProteinFlavor(int proteinFlavorId)
+        {
+            try
+            {
+                await flavorService.DeleteProteinFlavorByIdAsync(proteinFlavorId);
+
+                return Ok();
+            }
+            catch (Exception)
+            {
+                return GeneralError();
+            }
+        }
+
         private IActionResult GeneralError()
         {
             TempData[ErrorMessage] =

@@ -3,32 +3,44 @@
 
 <link href="/css/flavor/edit.css" rel="stylesheet" />
 
-<form asp-controller="Flavor" asp-action="EditProteinFlavors" method="post" asp-route-proteinPowderId="@Model[0].ProteinPowderId" id="editForm">
-    <table>
-        <tbody>
-            @for (int i = 0; i < Model.Count; i++)
-            {
-                <tr>
-                    <td>
-                        <div class="form-group mb-2 me-2">
-                            <label asp-for="@Model[i].FlavorName" class="form-label-add-edit fw-bold">Flavor Name</label>
-                            <input asp-for="@Model[i].FlavorName" class="form-control" required minlength="@ProteinFlavorNameMinLength" maxlength="@ProteinFlavorNameMaxLength" value="@Model[i].FlavorName" />
-                            <span asp-validation-for="@Model[i].FlavorName" class="text-danger"></span>
-                        </div>
-                    </td>
-                    <td>
-                        <div class="form-group mb-2">
-                            <label asp-for="@Model[i].Quantity" class="form-label-add-edit fw-bold">Quantity</label>
-                            <input asp-for="@Model[i].Quantity" class="form-control" required step="1" min="@ProteinFlavorMinQuantity" max="@ProteinFlavorMaxQuantity" value="@Model[i].Quantity" />
-                            <span asp-validation-for="@Model[i].Quantity" class="text-danger"></span>
-                        </div>
-                    </td>
-                </tr>
+@if (Model.Count > 0)
+{
+    <form asp-controller="Flavor" asp-action="EditProteinFlavors" method="post" asp-route-proteinPowderId="@Model[0].ProteinPowderId" id="editForm">
+        <table>
+            <tbody>
+                @for (int i = 0; i < Model.Count; i++)
+                {
+                    <tr>
+                        <td>
+                            <div class="form-group mb-2 me-2">
+                                <label asp-for="@Model[i].FlavorName" class="form-label-add-edit fw-bold">Flavor Name</label>
+                                <input asp-for="@Model[i].FlavorName" class="form-control" required minlength="@ProteinFlavorNameMinLength" maxlength="@ProteinFlavorNameMaxLength" value="@Model[i].FlavorName" />
+                                <span asp-validation-for="@Model[i].FlavorName" class="text-danger"></span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="form-group mb-2">
+                                <label asp-for="@Model[i].Quantity" class="form-label-add-edit fw-bold">Quantity</label>
+                                <input asp-for="@Model[i].Quantity" class="form-control" required step="1" min="@ProteinFlavorMinQuantity" max="@ProteinFlavorMaxQuantity" value="@Model[i].Quantity" />
+                                <span asp-validation-for="@Model[i].Quantity" class="text-danger"></span>
+                            </div>
+                        </td>
+                        <td class="remove btn" onclick="deleteFlavor(@Model[i].Id)">X</td>
+                    </tr>
 
-                <input asp-for="@Model[i].Id" type="hidden" />
-            }
-        </tbody>
-    </table>
+                    <input asp-for="@Model[i].Id" type="hidden" />
+                }
+            </tbody>
+        </table>
 
-    <button type="submit" class="btn btn-primary">Save Changes</button>
-</form>
+        <button type="submit" class="btn btn-primary">Save Changes</button>
+    </form>
+}
+else
+{
+    <p class="text-center fw-bold mt-3 fs-28">There aren't any protein flavors.</p>
+
+    <button class="btn btn-primary">Save Changes</button>
+}
+
+<script src="/js/flavor/edit.js"></script>

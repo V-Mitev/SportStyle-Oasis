@@ -8,7 +8,7 @@
 
 .card {
     position: relative;
-    width: 300px; /* can be omitted for a regular non-lazy image */
+    width: 300px; 
     max-width: 100%;
     align-items: center;
 }

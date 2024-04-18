@@ -14,5 +14,7 @@
         public Task EditFlavor(ICollection<ProteinFlavorViewModel> model, int proteinPowderId);
 
         Task<ProteinFlavor> GetProteinFlavorAsync(int proteinId, string proteinFlavor);
+
+        Task DeleteProteinFlavorByIdAsync(int proteinFlavorId);
     }
 }

@@ -100,5 +100,14 @@
 
             return proteinFlavorModel;
         }
+
+        public async Task DeleteProteinFlavorByIdAsync(int proteinFlavorId)
+        {
+            var proteinFlavor = await dbContext.ProteinFlavor
+                .FirstAsync(pf => pf.Id == proteinFlavorId);
+
+            dbContext.ProteinFlavor.Remove(proteinFlavor);
+            await dbContext.SaveChangesAsync();
+        }
     }
 }
