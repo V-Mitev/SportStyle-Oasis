@@ -1,0 +1,9 @@
+﻿.footer {
+    position: absolute !important;
+}
+
+.table{
+    width: 100% !important;
+    padding-left: 50px;
+    padding-right: 50px;
+}
