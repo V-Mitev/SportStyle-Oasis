@@ -5,88 +5,92 @@
     TempData["Title"] = "Add new Protein Powder";
 }
 
-<h1 class="text-center">@TempData["Title"]</h1>
+<h1 class="ms-5">@TempData["Title"]</h1>
+
+<link href="/css/proteinPowder/add.css" rel="stylesheet" />
 
 <form asp-controller="ProteinPowder" asp-action="Add" method="post">
-    <div class="form-group">
-        <label asp-for="Name" class="form-label-add-edit">Name</label>
-        <input asp-for="Name" class="form-control" required minlength="@ProteinPowderNameMinLength" maxlength="@ProteinPowderNameMaxLength" />
-        <span asp-validation-for="Name" class="text-danger"></span>
-    </div>
+    <div class="protein-fields">
+        <div class="form-group">
+            <label asp-for="Name" class="form-label-add-edit">Name</label>
+            <input asp-for="Name" class="form-control" required minlength="@ProteinPowderNameMinLength" maxlength="@ProteinPowderNameMaxLength" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
 
-    <div class="form-group">
-        <label asp-for="Image">Image:</label>
-        <input type="file" class="form-control" asp-for="Image" accept="image/*" required>
-        <span asp-validation-for="Image" class="text-danger"></span>
-    </div>
+        <div class="form-group">
+            <label asp-for="Image">Image:</label>
+            <input type="file" class="form-control" asp-for="Image" accept="image/*" required>
+            <span asp-validation-for="Image" class="text-danger"></span>
+        </div>
 
-    <div class="form-group">
-        <label asp-for="Price" class="form-label-add-edit">Price</label>
-        <input asp-for="Price" class="form-control" required step="1" min="@MinProteinPowderPrice" max="@MaxProteinPowderPrice" />
-        <span asp-validation-for="Price" class="text-danger"></span>
-    </div>
+        <div class="form-group">
+            <label asp-for="Price" class="form-label-add-edit">Price</label>
+            <input asp-for="Price" class="form-control" required step="1" min="@MinProteinPowderPrice" max="@MaxProteinPowderPrice" />
+            <span asp-validation-for="Price" class="text-danger"></span>
+        </div>
 
-    <div class="form-group">
-        <label asp-for="Weight">Weight in grams:</label>
-        <input asp-for="Weight" class="form-control" required step="1" min="@ProteinPowderTasteMinWeight" max="@ProteinPowderTasteMaxWeight" />
-        <span asp-validation-for="Weight" class="text-danger"></span>
-    </div>
+        <div class="form-group">
+            <label asp-for="Weight">Weight in grams:</label>
+            <input asp-for="Weight" class="form-control" required step="1" min="@ProteinPowderTasteMinWeight" max="@ProteinPowderTasteMaxWeight" />
+            <span asp-validation-for="Weight" class="text-danger"></span>
+        </div>
 
-    <div class="form-group">
-        <label asp-for="Description" class="form-label-add-edit">Description</label>
-        <input asp-for="Description" class="form-control" required minlength="@ProteinPowderDescriptionMinLength" maxlength="@ProteinPowderDescriptionMaxLength" />
-        <span asp-validation-for="Description" class="text-danger"></span>
-    </div>
+        <div class="form-group">
+            <label asp-for="Description" class="form-label-add-edit">Description</label>
+            <input asp-for="Description" class="form-control" required minlength="@ProteinPowderDescriptionMinLength" maxlength="@ProteinPowderDescriptionMaxLength" />
+            <span asp-validation-for="Description" class="text-danger"></span>
+        </div>
 
-    <div class="form-group mb-2">
-        <label asp-for="TypeOfProtein">Please select type of protein:</label>
-        <select class="form-control" id="typeOfProtein" name="TypeOfProtein" required>
-            @if (!String.IsNullOrEmpty(Model.TypeOfProtein.ToString()))
-            {
-                <option value="@Model.TypeOfProtein">@Model.TypeOfProtein</option>
-            }
-            else
-            {
-                <option value="">Select a type of protein powder</option>
-
-            }
-
-            @foreach (var typeOfProtein in Enum.GetValues(typeof(TypeOfProtein)))
-            {
-                @if (typeOfProtein.ToString() == Model.TypeOfProtein.ToString())
+        <div class="form-group mb-2">
+            <label asp-for="TypeOfProtein">Please select type of protein:</label>
+            <select class="form-control" id="typeOfProtein" name="TypeOfProtein" required>
+                @if (!String.IsNullOrEmpty(Model.TypeOfProtein.ToString()))
                 {
-                    continue;
+                    <option value="@Model.TypeOfProtein">@Model.TypeOfProtein</option>
+                }
+                else
+                {
+                    <option value="">Select a type of protein powder</option>
+
                 }
 
-                <option value="@typeOfProtein">@typeOfProtein</option>
-            }
-        </select>
-    </div>
-
-    <div class="form-group mb-2">
-        <label asp-for="ProteinPowderBrands">Please select protein powder brand:</label>
-        <select class="form-control" id="proteinPowderBrands" name="ProteinPowderBrands" required>
-            @if (!String.IsNullOrEmpty(Model.ProteinPowderBrands.ToString()))
-            {
-                <option value="@Model.ProteinPowderBrands">@Model.ProteinPowderBrands</option>
-            }
-            else
-            {
-                <option value="">Select a brand of protein powder</option>
-
-            }
-
-            @foreach (ProteinPowderBrands proteinPowderBrands in Enum.GetValues(typeof(ProteinPowderBrands)))
-            {
-                @if (proteinPowderBrands.ToString() == Model.ProteinPowderBrands.ToString())
+                @foreach (var typeOfProtein in Enum.GetValues(typeof(TypeOfProtein)))
                 {
-                    continue;
+                    @if (typeOfProtein.ToString() == Model.TypeOfProtein.ToString())
+                    {
+                        continue;
+                    }
+
+                    <option value="@typeOfProtein">@typeOfProtein</option>
+                }
+            </select>
+        </div>
+
+        <div class="form-group mb-2">
+            <label asp-for="ProteinPowderBrands">Please select protein powder brand:</label>
+            <select class="form-control" id="proteinPowderBrands" name="ProteinPowderBrands" required>
+                @if (!String.IsNullOrEmpty(Model.ProteinPowderBrands.ToString()))
+                {
+                    <option value="@Model.ProteinPowderBrands">@Model.ProteinPowderBrands</option>
+                }
+                else
+                {
+                    <option value="">Select a brand of protein powder</option>
+
                 }
 
-                <option value="@proteinPowderBrands">@proteinPowderBrands.GetDisplayName()</option>
-            }
-        </select>
-    </div>
+                @foreach (ProteinPowderBrands proteinPowderBrands in Enum.GetValues(typeof(ProteinPowderBrands)))
+                {
+                    @if (proteinPowderBrands.ToString() == Model.ProteinPowderBrands.ToString())
+                    {
+                        continue;
+                    }
 
-    <button type="submit" class="btn btn-primary">Add Protein</button>
+                    <option value="@proteinPowderBrands">@proteinPowderBrands.GetDisplayName()</option>
+                }
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Add Protein</button>
+    </div>
 </form>
