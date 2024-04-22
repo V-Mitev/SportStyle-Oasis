@@ -6,118 +6,117 @@
     TempData["Title"] = "Add new clothe";
 }
 
-<style>
-    .smaller-input {
-        width: 100px;
-    }
-</style>
+<link href="/css/clothes/add.css" rel="stylesheet" />
 
 <h1 class="text-center">@TempData["Title"]</h1>
 
 <form asp-controller="Clothes" asp-action="Add" method="post">
-    <div class="form-group">
-        <label asp-for="Name" class="form-label-add-edit">Name</label>
-        <input asp-for="Name" class="form-control" required minlength="@ClothesNameMinLength" maxlength="@ClothesNameMaxLength" />
-        <span asp-validation-for="Name" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="Color" class="form-label-add-edit">Color</label>
-        <input asp-for="Color" class="form-control" required minlength="@MinColorLength" maxlength="@MaxColorLength" />
-        <span asp-validation-for="Color" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="Image">Image:</label>
-        <input type="file" class="form-control" asp-for="Image" accept="image/*" required>
-        <span asp-validation-for="Image" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="Price" class="form-label-add-edit">Price</label>
-        <input asp-for="Price" class="form-control" required step="1" min="@MinClothePrice" max="@MaxClothePrice" />
-        <span asp-validation-for="Price" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="Description" class="form-label-add-edit">Description</label>
-        <input asp-for="Description" class="form-control" required minlength="@DescriptionMinLength" maxlength="@DescriptionMaxLength" />
-        <span asp-validation-for="Description" class="text-danger"></span>
-    </div>
-
-    <div class="form-group mb-2">
-        <label asp-for="ClothesBrands">Please select clothe brand for this garment:</label>
-        <select class="form-control" id="clothesBrands" name="ClothesBrands" required>
-            @if (Model.ClothesBrands.HasValue)
-            {
-                <option value="@Model.ClothesBrands">@Model.ClothesBrands</option>
-            }
-            else
-            {
-                <option value="">Select a clothe brands</option>
-
-            }
-
-            @foreach (ClothesBrands clothebrand in Enum.GetValues(typeof(ClothesBrands)))
-            {
-                @if (clothebrand.ToString() == Model.ClothesBrands.ToString())
-                {
-                    continue;
-                }
-
-                <option value="@clothebrand">@clothebrand.GetDisplayName()</option>
-            }
-        </select>
-    </div>
-    <div class="form-group mb-2">
-        <label asp-for="ClothesForGender">Please select the gender for this garment:</label>
-        <select class="form-control" id="gender" name="ClothesForGender" required>
-            @if (Model.ClothesForGender.HasValue)
-            {
-                <option value="@Model.ClothesForGender">@Model.ClothesForGender</option>
-            }
-            else
-            {
-                <option value="">Select a gender</option>
-            }
-
-            @foreach (var gender in Enum.GetValues(typeof(Gender)))
-            {
-                @if (gender.ToString() == Model.ClothesForGender.ToString())
-                {
-                    continue;
-                }
-                <option value="@gender">@gender</option>
-            }
-        </select>
-    </div>
-    <div class="form-group mb-2">
-        <label asp-for="TypeOfClothes">Please slecet type for this garment:</label>
-        <select class="form-control" id="typeOfClothes" name="TypeOfClothes" required>
-            @if (Model.TypeOfClothes.HasValue)
-            {
-                <option value="@Model.TypeOfClothes">@Model.TypeOfClothes</option>
-            }
-            else
-            {
-                <option value="">Select a type of clothes</option>
-            }
-
-            @foreach (TypeOfClothes typeOfClothes in Enum.GetValues(typeof(TypeOfClothes)))
-            {
-                @if (typeOfClothes.ToString() == Model.TypeOfClothes.ToString())
-                {
-                    continue;
-                }
-                <option value="@typeOfClothes">@typeOfClothes.GetDisplayName()</option>
-            }
-        </select>
-    </div>
-
-    @foreach (var clotheSize in Model.SizesAndQuantities)
-    {
+    <div class="clothe mb-3">
         <div class="form-group">
-            <label asp-for="SizesAndQuantities">@clotheSize.Key</label>
-            <input name="SizesAndQuantities[@clotheSize.Key]" type="number" value="@clotheSize.Value" class="form-control" required step="1" min="@AvailableQuantityMinValue" max="@AvailableQuantityMaxValue" />
-            <span asp-validation-for="SizesAndQuantities" class="text-danger"></span>
+            <label asp-for="Name" class="form-label-add-edit">Name</label>
+            <input asp-for="Name" class="form-control" required minlength="@ClothesNameMinLength" maxlength="@ClothesNameMaxLength" />
+            <span asp-validation-for="Name" class="text-danger"></span>
         </div>
-    }
+        <div class="form-group">
+            <label asp-for="Color" class="form-label-add-edit">Color</label>
+            <input asp-for="Color" class="form-control" required minlength="@MinColorLength" maxlength="@MaxColorLength" />
+            <span asp-validation-for="Color" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Image">Image:</label>
+            <input type="file" class="form-control image" asp-for="Image" accept="image/*" required>
+            <span asp-validation-for="Image" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Price" class="form-label-add-edit">Price</label>
+            <input asp-for="Price" class="form-control" required step="1" min="@MinClothePrice" max="@MaxClothePrice" />
+            <span asp-validation-for="Price" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Description" class="form-label-add-edit">Description</label>
+            <input asp-for="Description" class="form-control" required minlength="@DescriptionMinLength" maxlength="@DescriptionMaxLength" />
+            <span asp-validation-for="Description" class="text-danger"></span>
+        </div>
 
-    <button type="submit" class="btn btn-primary">Add Clothe</button>
+        <div class="form-group mb-2">
+            <label asp-for="ClothesBrands">Please select clothe brand for this garment:</label>
+            <select class="form-control" id="clothesBrands" name="ClothesBrands" required>
+                @if (Model.ClothesBrands.HasValue)
+                {
+                    <option value="@Model.ClothesBrands">@Model.ClothesBrands</option>
+                }
+                else
+                {
+                    <option value="">Select a clothe brands</option>
+
+                }
+
+                @foreach (ClothesBrands clothebrand in Enum.GetValues(typeof(ClothesBrands)))
+                {
+                    @if (clothebrand.ToString() == Model.ClothesBrands.ToString())
+                    {
+                        continue;
+                    }
+
+                    <option value="@clothebrand">@clothebrand.GetDisplayName()</option>
+                }
+            </select>
+        </div>
+        <div class="form-group mb-2">
+            <label asp-for="ClothesForGender">Please select the gender for this garment:</label>
+            <select class="form-control" id="gender" name="ClothesForGender" required>
+                @if (Model.ClothesForGender.HasValue)
+                {
+                    <option value="@Model.ClothesForGender">@Model.ClothesForGender</option>
+                }
+                else
+                {
+                    <option value="">Select a gender</option>
+                }
+
+                @foreach (var gender in Enum.GetValues(typeof(Gender)))
+                {
+                    @if (gender.ToString() == Model.ClothesForGender.ToString())
+                    {
+                        continue;
+                    }
+                    <option value="@gender">@gender</option>
+                }
+            </select>
+        </div>
+        <div class="form-group mb-2">
+            <label asp-for="TypeOfClothes">Please slecet type for this garment:</label>
+            <select class="form-control" id="typeOfClothes" name="TypeOfClothes" required>
+                @if (Model.TypeOfClothes.HasValue)
+                {
+                    <option value="@Model.TypeOfClothes">@Model.TypeOfClothes</option>
+                }
+                else
+                {
+                    <option value="">Select a type of clothes</option>
+                }
+
+                @foreach (TypeOfClothes typeOfClothes in Enum.GetValues(typeof(TypeOfClothes)))
+                {
+                    @if (typeOfClothes.ToString() == Model.TypeOfClothes.ToString())
+                    {
+                        continue;
+                    }
+                    <option value="@typeOfClothes">@typeOfClothes.GetDisplayName()</option>
+                }
+            </select>
+        </div>
+    </div>
+    <div class="sizes">
+        <p class="fw-bold">Enter available quantity for every size of clothe:</p>
+        @foreach (var clotheSize in Model.SizesAndQuantities)
+        {
+            <div class="form-group">
+                <label asp-for="SizesAndQuantities">@clotheSize.Key</label>
+                <input name="SizesAndQuantities[@clotheSize.Key]" type="number" value="@clotheSize.Value" class="form-control size" required step="1" min="@AvailableQuantityMinValue" max="@AvailableQuantityMaxValue" />
+                <span asp-validation-for="SizesAndQuantities" class="text-danger"></span>
+            </div>
+        }
+    </div>
+    <button type="submit" class="btn btn-primary ms-5">Add Clothe</button>
 </form>

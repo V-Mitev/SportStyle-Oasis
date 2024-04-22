@@ -1,0 +1,34 @@
+﻿.smaller-input {
+    width: 100px;
+}
+
+.form-control {
+    width: 30%;
+}
+
+    .form-control.image {
+        width: 35%;
+    }
+
+    .form-control.size {
+        width: 10%;
+    }
+
+.fw-bold {
+    margin:0;
+}
+
+.clothe {
+    padding-left: 50px;
+    display: inline-block;
+    width: 59%;
+}
+
+.sizes {
+    display: inline-block;
+    width: 40%;
+}
+
+footer {
+    position: absolute !important;
+}
