@@ -79,25 +79,25 @@ img {
     margin: 10px 35px;
 }
 
-.review .form {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-content: center;
-    flex-wrap: wrap;
-}
-
-    .review .form .rating {
-        width: 150px;
+    .review .form {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-content: center;
+        flex-wrap: wrap;
     }
 
-    .review .form .comment {
-        width: 50%;
-    }
+        .review .form .rating {
+            width: 150px;
+        }
 
-.review.list.item {
-    list-style: none;
-}
+        .review .form .comment {
+            width: 50%;
+        }
+
+    .review.list.item {
+        list-style: none;
+    }
 
 .full-review {
     width: 50%;
@@ -152,12 +152,16 @@ img {
     color: red;
 }
 
-.delete-btn:hover {
-    color: white;
-    background-color: red;
-}
+    .delete-btn:hover {
+        color: white;
+        background-color: red;
+    }
 
 .edit-btn:hover {
     color: white;
     background-color: blue;
+}
+
+footer {
+    position: fixed !important;
 }

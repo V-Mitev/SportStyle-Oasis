@@ -2,6 +2,8 @@ namespace SportStyleOasis
 {
     using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
+    using Sidio.Sitemap.AspNetCore;
+    using Sidio.Sitemap.Core.Services;
     using SportStyleOasis.Data;
     using SportStyleOasis.Data.Models;
     using SportStyleOasis.Services.Interfces;
@@ -54,6 +56,10 @@ namespace SportStyleOasis
                 {
                     options.ModelBinderProviders.Insert(0, new DecimalModelBinderProvider());
                 });
+
+            builder.Services
+                .AddHttpContextAccessor()
+                .AddDefaultSitemapServices<HttpContextBaseUrlProvider>();
 
             builder.Services.AddApplicationServices(typeof(IClothesService));
 
